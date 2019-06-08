@@ -25,6 +25,12 @@
         <activity android:name="com.myroom.activity.CreateRoomActivity"
             android:label="Create Room"
             android:parentActivityName=".activity.MainActivity">
+        </activity>
+
+        <activity android:name="com.myroom.activity.RoomDetailActivity"
+            android:label="Room Detail"
+            android:parentActivityName=".activity.MainActivity">
+
 
         </activity>
     </application>

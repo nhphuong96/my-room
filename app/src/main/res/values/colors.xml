@@ -3,6 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="roomItem">#4cbaf4</color>
-    <color name="roomNameItem">#fff</color>
+    <color name="roomItemBackground">#fff</color>
+    <color name="roomItemProps">#888</color>
+    <color name="guestItemBackground">#fff</color>
+    <color name="guestItemProps">#888</color>
+    <color name="actionBarBackground">#46bff8</color>
+    <color name="roomDetailTabIndicatorColor">#fff</color>
 </resources>
