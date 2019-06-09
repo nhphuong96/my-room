@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:padding="15dp"
     android:orientation="horizontal"
-    android:background="@color/roomItemBackground"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -45,7 +45,5 @@
             android:textColor="@color/roomItemProps"
             android:textSize="14dp" />
     </LinearLayout>
-
-
 
 </LinearLayout>

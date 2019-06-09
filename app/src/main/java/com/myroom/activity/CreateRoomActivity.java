@@ -2,6 +2,7 @@ package com.myroom.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import com.myroom.database.dao.RoomDAO;
 import com.myroom.model.Guest;
 import com.myroom.model.Room;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class CreateRoomActivity extends AppCompatActivity {
 
     private EditText etRoomName;
@@ -21,6 +24,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     private EditText etBirthDate;
     private EditText etIdCard;
     private EditText etPhoneNo;
+    private AppCompatButton btnSubmit;
 
     private RoomDAO roomDAO = new RoomDAO(this);
     private GuestDAO guestDAO = new GuestDAO(this);
@@ -37,6 +41,8 @@ public class CreateRoomActivity extends AppCompatActivity {
         etBirthDate = (EditText)findViewById(R.id.create_guest_birthdate);
         etIdCard = (EditText)findViewById(R.id.create_guest_id_card);
         etPhoneNo = (EditText)findViewById(R.id.create_guest_phone_number);
+        btnSubmit = (AppCompatButton) findViewById(R.id.create_room_submit);
+        btnSubmit.setOnClickListener(btnSubmitClickedListener());
     }
 
     @Override
@@ -50,29 +56,42 @@ public class CreateRoomActivity extends AppCompatActivity {
         }
     }
 
-    public void submitNewRoom(View view) {
-        String roomName = etRoomName.getText().toString();
-        String guestName = etGuestName.getText().toString();
-        String birthDate = etBirthDate.getText().toString();
-        String phoneNumber = etPhoneNo.getText().toString();
-        String idCard = etIdCard.getText().toString();
-
-        Room newRoom = new Room();
-        newRoom.setRoomName(roomName);
-        long roomId = roomDAO.addRoom(newRoom);
-        if (roomId != -1) {
-            Guest guestInRoom = new Guest();
-            guestInRoom.setGuestName(guestName);
-            guestInRoom.setBirthDate(birthDate);
-            guestInRoom.setIdCard(idCard);
-            guestInRoom.setPhoneNumber(phoneNumber);
-            guestInRoom.setRoomId(roomId);
-            long guestId = guestDAO.addGuest(guestInRoom);
-            if (guestId > 0) {
-                Toast.makeText(CreateRoomActivity.this, "Create room successfully.", Toast.LENGTH_SHORT).show();
-                finish();
+    public View.OnClickListener btnSubmitClickedListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String roomName = etRoomName.getText().toString();
+                String guestName = etGuestName.getText().toString();
+                String birthDate = etBirthDate.getText().toString();
+                String phoneNumber = etPhoneNo.getText().toString();
+                String idCard = etIdCard.getText().toString();
+                if (assertNotEmpty(etRoomName, roomName) && assertNotEmpty(etGuestName, guestName)) {
+                    Room newRoom = new Room();
+                    newRoom.setRoomName(roomName);
+                    long roomId = roomDAO.addRoom(newRoom);
+                    if (roomId != -1) {
+                        Guest guestInRoom = new Guest();
+                        guestInRoom.setGuestName(guestName);
+                        guestInRoom.setBirthDate(birthDate);
+                        guestInRoom.setIdCard(idCard);
+                        guestInRoom.setPhoneNumber(phoneNumber);
+                        guestInRoom.setRoomId(roomId);
+                        long guestId = guestDAO.addGuest(guestInRoom);
+                        if (guestId > 0) {
+                            Toast.makeText(CreateRoomActivity.this, "Create room successfully.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                }
             }
-        }
+        };
     }
 
+    private boolean assertNotEmpty(EditText etField, String fieldValue) {
+        if (StringUtils.isEmpty(fieldValue)) {
+            etField.setError("This field is required.");
+            return false;
+        }
+        return true;
+    }
 }

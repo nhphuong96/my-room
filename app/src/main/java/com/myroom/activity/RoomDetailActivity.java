@@ -34,7 +34,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(RoomDetailActivity.this, tab.getText(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

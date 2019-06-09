@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRoomList() {
-        adapter = new RoomAdapter(this, roomDAO.findAllRooms());
+        adapter = new RoomAdapter(this);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);

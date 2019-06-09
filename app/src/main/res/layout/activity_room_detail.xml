@@ -16,6 +16,9 @@
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabIndicatorColor="@color/roomDetailTabIndicatorColor"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabTextColor="@android:color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     </android.support.design.widget.TabLayout>
@@ -23,7 +26,6 @@
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="10dp"
         android:id="@+id/pager">
 
     </android.support.v4.view.ViewPager>
