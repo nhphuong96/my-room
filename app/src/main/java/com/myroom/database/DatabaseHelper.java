@@ -8,6 +8,8 @@ import com.myroom.core.Constant;
 import com.myroom.model.BaseModel;
 import com.myroom.model.Guest;
 import com.myroom.model.Room;
+import com.myroom.model.RoomUtility;
+import com.myroom.model.Utility;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,8 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String INTEGER = "INTEGER";
     private static final String INTEGER_PRIMARY_KEY = "INTEGER PRIMARY KEY AUTOINCREMENT";
 
-    private static final String COLUMN_ID_NAME = "id";
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,12 +35,16 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createGuestTable());
         db.execSQL(createRoomTable());
+        db.execSQL(createUtilityTable());
+        db.execSQL(createRoomUtilityTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(dropTable(Guest.TABLE_NAME));
         db.execSQL(dropTable(Room.TABLE_NAME));
+        db.execSQL(dropTable(Utility.TABLE_NAME));
+        db.execSQL(dropTable(RoomUtility.TABLE_NAME));
         onCreate(db);
     }
 
@@ -64,6 +68,21 @@ public class DatabaseHelper extends SQLiteOpenHelper
         tableStructures.add(createColumn(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), TEXT));
         tableStructures.add(createColumn(Guest.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
         return buildCreateTableQuery(Guest.TABLE_NAME, tableStructures);
+    }
+
+    private String createUtilityTable() {
+        List<String> tableStructures = new ArrayList<>();
+        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_NAME.getColName(), TEXT));
+        return buildCreateTableQuery(Utility.TABLE_NAME, tableStructures);
+    }
+
+    private String createRoomUtilityTable() {
+        List<String> tableStructures = new ArrayList<>();
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(),TEXT));
+        return buildCreateTableQuery(RoomUtility.TABLE_NAME, tableStructures);
     }
 
     private String createColumn(String name, String type) {

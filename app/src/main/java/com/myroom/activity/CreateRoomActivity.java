@@ -1,11 +1,12 @@
 package com.myroom.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,8 +34,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        initializeToolbar();
 
         etRoomName = (EditText)findViewById(R.id.create_room_name);
         etGuestName = (EditText)findViewById(R.id.create_guest_name);
@@ -43,6 +43,13 @@ public class CreateRoomActivity extends AppCompatActivity {
         etPhoneNo = (EditText)findViewById(R.id.create_guest_phone_number);
         btnSubmit = (AppCompatButton) findViewById(R.id.create_room_submit);
         btnSubmit.setOnClickListener(btnSubmitClickedListener());
+    }
+
+    protected void initializeToolbar() {
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Create room");
     }
 
     @Override
