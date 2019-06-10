@@ -45,7 +45,7 @@ public class CreateRoomActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(btnSubmitClickedListener());
     }
 
-    protected void initializeToolbar() {
+    private void initializeToolbar() {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
