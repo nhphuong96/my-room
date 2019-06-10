@@ -12,12 +12,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.myroom.R;
 import com.myroom.adapter.RoomAdapter;
-import com.myroom.database.dao.RoomDAO;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,21 +29,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.room_list);
         drawerLayout = findViewById(R.id.drawer_layout);
-        toolbar = findViewById(R.id.main_toolbar);
         initializeToolbar();
         initializeNavigationView();
-        loadRoomList();
+        loadAllRooms();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadRoomList();
+        loadAllRooms();
     }
 
     private void initializeToolbar() {
+        toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -83,9 +80,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadRoomList() {
+    private void loadAllRooms() {
         adapter = new RoomAdapter(this);
         layoutManager = new LinearLayoutManager(this);
+        recyclerView = findViewById(R.id.room_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
