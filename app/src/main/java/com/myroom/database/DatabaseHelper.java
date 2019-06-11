@@ -79,14 +79,19 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createRoomUtilityTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), INTEGER_PRIMARY_KEY));
-        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), INTEGER));
         tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(),TEXT));
+        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), Room.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName()));
+        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), Utility.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName()));
         return buildCreateTableQuery(RoomUtility.TABLE_NAME, tableStructures);
     }
 
     private String createColumn(String name, String type) {
         return name + Constant.SPACE + type;
+    }
+    private String createForeignKey(String columnName, String foreignTable, String foreignColum) {
+        return String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", columnName, foreignTable, foreignColum);
     }
 
     private String buildCreateTableQuery(String tableName, List<String> tableStructure) {

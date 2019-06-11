@@ -36,12 +36,12 @@ public class CreateRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_room);
         initializeToolbar();
 
-        etRoomName = (EditText)findViewById(R.id.create_room_name);
-        etGuestName = (EditText)findViewById(R.id.create_guest_name);
-        etBirthDate = (EditText)findViewById(R.id.create_guest_birthdate);
-        etIdCard = (EditText)findViewById(R.id.create_guest_id_card);
-        etPhoneNo = (EditText)findViewById(R.id.create_guest_phone_number);
-        btnSubmit = (AppCompatButton) findViewById(R.id.create_room_submit);
+        etRoomName = findViewById(R.id.create_room_name);
+        etGuestName = findViewById(R.id.create_guest_name);
+        etBirthDate = findViewById(R.id.create_guest_birthdate);
+        etIdCard = findViewById(R.id.create_guest_id_card);
+        etPhoneNo = findViewById(R.id.create_guest_phone_number);
+        btnSubmit = findViewById(R.id.create_room_submit);
         btnSubmit.setOnClickListener(btnSubmitClickedListener());
     }
 

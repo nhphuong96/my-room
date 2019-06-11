@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.database.DatabaseHelper;
 import com.myroom.model.BaseModel;
+import com.myroom.model.Room;
 import com.myroom.model.Utility;
 
 import java.util.ArrayList;
@@ -55,5 +56,22 @@ public class UtilityDAO {
         values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), newUtility.getName());
         int rowAffected = db.update(Utility.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(newUtility.getId())});
         return rowAffected > 0;
+    }
+
+    public List<Utility> findAllUtilities() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Utility.TABLE_NAME, null);
+
+        List<Utility> result = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                Utility utility = new Utility();
+                utility.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+                utility.setName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+                result.add(utility);
+            }
+            while (c.moveToNext());
+        }
+        return result;
     }
 }

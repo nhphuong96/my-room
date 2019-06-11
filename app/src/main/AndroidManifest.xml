@@ -34,6 +34,15 @@
             android:parentActivityName=".activity.MainActivity">
 
         </activity>
+
+        <activity android:name=".activity.GeneralSettingUtilityActivity"
+            android:parentActivityName=".activity.GeneralSettingActivity">
+        </activity>
+
+        <activity android:name=".activity.GeneralSettingOtherActivity"
+            android:parentActivityName=".activity.GeneralSettingActivity">
+
+        </activity>
     </application>
 
 </manifest>

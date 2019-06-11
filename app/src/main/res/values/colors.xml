@@ -11,4 +11,5 @@
     <color name="roomDetailTabIndicatorColor">#fff</color>
     <color name="btnRoomEditBackground">#46bff8</color>
     <color name="btnRoomCreationSubmit">#46bff8</color>
+    <color name="btnCancel">#EE2C2C</color>
 </resources>

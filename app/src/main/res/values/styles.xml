@@ -21,4 +21,9 @@
         <item name="colorButtonNormal">@color/btnRoomCreationSubmit</item>
     </style>
 
+    <style name="ButtonCancelTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#ffa500</item>
+        <item name="colorButtonNormal">@color/btnCancel</item>
+    </style>
+
 </resources>

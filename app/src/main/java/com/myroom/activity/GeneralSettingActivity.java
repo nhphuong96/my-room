@@ -10,7 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.myroom.R;
-import com.myroom.adapter.UtilityAdapter;
+import com.myroom.adapter.GeneralSettingAdapter;
+import com.myroom.core.GeneralSettingId;
+import com.myroom.dto.GeneralSettingItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralSettingActivity extends AppCompatActivity {
 
@@ -23,17 +28,26 @@ public class GeneralSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_setting);
         initializeToolbar();
-        loadAllUtilities();
+        loadAllGeneralSettingItem();
     }
 
-    private void loadAllUtilities() {
+    private void loadAllGeneralSettingItem() {
         layoutManager = new LinearLayoutManager(this);
-        adapter = new UtilityAdapter(this);
-        recyclerView = findViewById(R.id.utility_list);
+        adapter = new GeneralSettingAdapter(this, initializeGeneralSettingItems());
+        recyclerView = findViewById(R.id.general_setting_list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    private List<GeneralSettingItem> initializeGeneralSettingItems() {
+        List<GeneralSettingItem> result = new ArrayList<>();
+        GeneralSettingItem utilitySetting = new GeneralSettingItem(GeneralSettingId.UTILITY,"Utility", R.drawable.ic_utility);
+        GeneralSettingItem otherSetting = new GeneralSettingItem(GeneralSettingId.OTHER,"Other", R.drawable.ic_dog);
+        result.add(utilitySetting);
+        result.add(otherSetting);
+        return result;
     }
 
     private void initializeToolbar() {
