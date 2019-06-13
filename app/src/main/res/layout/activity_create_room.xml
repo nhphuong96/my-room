@@ -19,26 +19,16 @@
         android:background="#fff"
         >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Create Room"
-            android:gravity="center"
-            android:textSize="40dp"
-            android:textAllCaps="true"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="40dp"
-            />
-
-
         <EditText
             android:id="@+id/create_room_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Room name"
             android:inputType="text"
+            android:textSize="14sp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
             />
 
@@ -47,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Guest name"
+            android:textSize="14sp"
             android:inputType="text"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -58,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Birthdate"
+            android:textSize="14sp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:inputType="date"
@@ -69,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Identifier card"
+            android:textSize="14sp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:inputType="number"
@@ -80,11 +73,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone number"
+            android:textSize="14sp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:inputType="phone"
             android:fontFamily="sans-serif-medium"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select utilities in room"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/create_room_utility_list"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content"
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/create_room_submit"
@@ -94,8 +109,11 @@
             android:textColor="#fff"
             android:theme="@style/ButtonTheme"
             android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
             />
     </LinearLayout>
+
+
 
 </LinearLayout>

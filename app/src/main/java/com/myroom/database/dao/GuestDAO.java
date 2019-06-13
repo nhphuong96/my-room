@@ -12,44 +12,11 @@ import com.myroom.model.Guest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuestDAO {
+public class GuestDAO implements IObjectDAO<Guest> {
     private DatabaseHelper dbHelper;
 
     public GuestDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
-
-    }
-
-    public long addGuest(Guest guest) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Guest.Column.COLUMN_GUEST_NAME.getColName(), guest.getGuestName());
-        values.put(Guest.Column.COLUMN_BIRTH_DATE.getColName(), guest.getBirthDate());
-        values.put(Guest.Column.COLUMN_ID_CARD.getColName(), guest.getIdCard());
-        values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), guest.getPhoneNumber());
-        values.put(Guest.Column.COLUMN_ROOM_ID.getColName(), guest.getRoomId());
-        long id = db.insertOrThrow(Guest.TABLE_NAME, null, values);
-        return id;
-    }
-
-    public Guest findGuest(long id) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
-                Guest.Column.COLUMN_GUEST_NAME.getColName(),
-                Guest.Column.COLUMN_BIRTH_DATE.getColName(),
-                Guest.Column.COLUMN_ID_CARD.getColName(),
-                Guest.Column.COLUMN_PHONE_NUMBER.getColName()
-        };
-        Cursor c = db.query(Guest.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
-
-        Guest result = new Guest();
-        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-        result.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
-        result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
-        result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
-        result.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
-        return result;
     }
 
     public List<Guest> findGuestByRoomId(long roomId) {
@@ -79,20 +46,61 @@ public class GuestDAO {
         return guestsInRoom;
     }
 
-    public boolean deleteGuest(long id) {
+    @Override
+    public long add(Guest entity) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Guest.Column.COLUMN_GUEST_NAME.getColName(), entity.getGuestName());
+        values.put(Guest.Column.COLUMN_BIRTH_DATE.getColName(), entity.getBirthDate());
+        values.put(Guest.Column.COLUMN_ID_CARD.getColName(), entity.getIdCard());
+        values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), entity.getPhoneNumber());
+        values.put(Guest.Column.COLUMN_ROOM_ID.getColName(), entity.getRoomId());
+        long id = db.insertOrThrow(Guest.TABLE_NAME, null, values);
+        return id;
+    }
+
+    @Override
+    public Guest find(long id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[] {
+                BaseModel.Column.COLUMN_ID.getColName(),
+                Guest.Column.COLUMN_GUEST_NAME.getColName(),
+                Guest.Column.COLUMN_BIRTH_DATE.getColName(),
+                Guest.Column.COLUMN_ID_CARD.getColName(),
+                Guest.Column.COLUMN_PHONE_NUMBER.getColName()
+        };
+        Cursor c = db.query(Guest.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+
+        Guest result = new Guest();
+        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+        result.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
+        result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
+        result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
+        result.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
+        return result;
+    }
+
+    @Override
+    public List<Guest> findAll() {
+        return null;
+    }
+
+    @Override
+    public boolean delete(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowAffected = db.delete(Guest.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
         return rowAffected > 0;
     }
 
-    public boolean updateGuest(Guest newGuest) {
+    @Override
+    public boolean update(Guest entity) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Guest.Column.COLUMN_GUEST_NAME.getColName(), newGuest.getGuestName());
-        values.put(Guest.Column.COLUMN_BIRTH_DATE.getColName(), newGuest.getBirthDate());
-        values.put(Guest.Column.COLUMN_ID_CARD.getColName(), newGuest.getIdCard());
-        values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), newGuest.getPhoneNumber());
-        int rowAffected = db.update(Guest.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(newGuest.getId())});
+        values.put(Guest.Column.COLUMN_GUEST_NAME.getColName(), entity.getGuestName());
+        values.put(Guest.Column.COLUMN_BIRTH_DATE.getColName(), entity.getBirthDate());
+        values.put(Guest.Column.COLUMN_ID_CARD.getColName(), entity.getIdCard());
+        values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), entity.getPhoneNumber());
+        int rowAffected = db.update(Guest.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
         return rowAffected > 0;
     }
 }

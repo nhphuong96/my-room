@@ -18,7 +18,7 @@
         android:textAllCaps="false"
         android:gravity="center"
         android:drawableLeft="@drawable/ic_property"
-        android:text="   Attribute"/>
+        android:text="   Utilities"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attribute_in_room_list"

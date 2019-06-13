@@ -40,6 +40,17 @@ public class Guest extends BaseModel {
     private String phoneNumber;
     private long roomId;
 
+    public Guest() {
+    }
+
+    public Guest(String guestName, String birthDate, String idCard, String phoneNumber, long roomId) {
+        this.guestName = guestName;
+        this.birthDate = birthDate;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.roomId = roomId;
+    }
+
     public String getGuestName() {
         return guestName;
     }

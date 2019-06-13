@@ -33,7 +33,7 @@ public class RoomDetailPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0: return "Guest In Room";
-            case 1: return "Attribute";
+            case 1: return "Utilities";
             default: return StringUtils.EMPTY;
         }
     }

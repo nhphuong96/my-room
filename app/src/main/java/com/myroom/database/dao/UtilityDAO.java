@@ -13,7 +13,7 @@ import com.myroom.model.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilityDAO {
+public class UtilityDAO implements IObjectDAO<Utility> {
 
     private DatabaseHelper dbHelper;
 
@@ -22,15 +22,17 @@ public class UtilityDAO {
 
     }
 
-    public long addUtility(Utility utility) {
+    @Override
+    public long add(Utility entity) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), utility.getName());
+        values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), entity.getName());
         long id = db.insertOrThrow(Utility.TABLE_NAME, null, values);
         return id;
     }
 
-    public Utility findUtility(long id) {
+    @Override
+    public Utility find(long id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 BaseModel.Column.COLUMN_ID.getColName(),
@@ -44,21 +46,8 @@ public class UtilityDAO {
         return result;
     }
 
-    public boolean deleteUtility(long id) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Utility.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
-        return rowAffected > 0;
-    }
-
-    public boolean updateUtility(Utility newUtility) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), newUtility.getName());
-        int rowAffected = db.update(Utility.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(newUtility.getId())});
-        return rowAffected > 0;
-    }
-
-    public List<Utility> findAllUtilities() {
+    @Override
+    public List<Utility> findAll() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + Utility.TABLE_NAME, null);
 
@@ -73,5 +62,21 @@ public class UtilityDAO {
             while (c.moveToNext());
         }
         return result;
+    }
+
+    @Override
+    public boolean delete(long id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowAffected = db.delete(Utility.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
+        return rowAffected > 0;
+    }
+
+    @Override
+    public boolean update(Utility entity) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), entity.getName());
+        int rowAffected = db.update(Utility.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        return rowAffected > 0;
     }
 }

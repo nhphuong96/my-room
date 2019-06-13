@@ -25,7 +25,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
     public UtilityAdapter(Context context) {
         this.context = context;
         utilityDAO = new UtilityDAO(context);
-        utilityList = utilityDAO.findAllUtilities();
+        utilityList = utilityDAO.findAll();
     }
 
     @NonNull
@@ -74,7 +74,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
                         public void onClick(DialogInterface dialog, int which) {
                             int pos = getAdapterPosition();
                             Utility utility = utilityList.get(pos);
-                            if (utilityDAO.deleteUtility(utility.getId())) {
+                            if (utilityDAO.delete(utility.getId())) {
                                 utilityList.remove(pos);
                                 Toast.makeText(context, "Delete utility " + utility.getName() + " successfully.", Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();

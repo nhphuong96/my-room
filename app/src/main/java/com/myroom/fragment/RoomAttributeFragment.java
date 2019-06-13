@@ -30,7 +30,7 @@ public class RoomAttributeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         parentContext = container.getContext();
-        View view = inflater.inflate(R.layout.fragment_attribute_in_room, container, false);
+        View view = inflater.inflate(R.layout.fragment_utility_in_room, container, false);
         recyclerView = view.findViewById(R.id.attribute_in_room_list);
         return view;
     }

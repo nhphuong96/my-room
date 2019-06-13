@@ -30,7 +30,15 @@ public class Room extends BaseModel {
             this.colName = colName;
         }
     }
+
     private String roomName;
+
+    public Room() {
+    }
+
+    public Room(String roomName) {
+        this.roomName = roomName;
+    }
 
     public String getRoomName() {
         return roomName;

@@ -17,8 +17,13 @@ import com.myroom.R;
 import com.myroom.activity.RoomDetailActivity;
 import com.myroom.database.dao.GuestDAO;
 import com.myroom.database.dao.RoomDAO;
+import com.myroom.exception.OperationException;
+import com.myroom.exception.ValidationException;
 import com.myroom.model.Guest;
 import com.myroom.model.Room;
+import com.myroom.service.IRoomService;
+import com.myroom.service.impl.RoomServiceImpl;
+import com.myroom.service.sdo.DeleteRoomIn;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -27,14 +32,16 @@ import java.util.List;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private Context context;
     private List<Room> roomList;
+
     private GuestDAO guestDAO;
-    private RoomDAO roomDAO;
+    private IRoomService roomService;
+
 
     public RoomAdapter(Context context) {
         this.context = context;
         guestDAO = new GuestDAO(context);
-        roomDAO = new RoomDAO(context);
-        roomList = roomDAO.findAllRooms();
+        roomService = new RoomServiceImpl(context);
+        initializeRoomList(context);
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -65,15 +72,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            int pos = getAdapterPosition();
-                            Room room = roomList.get(pos);
-                            if (roomDAO.deleteRoom(room.getId())) {
-                                roomList.remove(pos);
-                                Toast.makeText(context, "Delete room " + room.getRoomName() + " successfully.", Toast.LENGTH_SHORT).show();
+                            Room room = roomList.get(getAdapterPosition());
+                            try {
+                                roomService.deleteRoom(buildDeleteRoomIn(room));
+                                roomList.remove(room);
                                 notifyDataSetChanged();
-                            }
-                            else {
-                                Toast.makeText(context, "Could not delete this room!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Deleted room " + room.getRoomName(), Toast.LENGTH_SHORT).show();
+                            } catch (ValidationException e) {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (OperationException e) {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     })
@@ -106,6 +114,17 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         if (roomLeader != null) {
             txtLeaderName.setText(roomLeader.getGuestName());
         }
+    }
+
+    private DeleteRoomIn buildDeleteRoomIn(Room room) {
+        DeleteRoomIn deleteRoomIn = new DeleteRoomIn();
+        deleteRoomIn.getRoomIdList().add(room.getId());
+        return deleteRoomIn;
+    }
+
+    private void initializeRoomList(Context context) {
+        RoomDAO roomDAO = new RoomDAO(context);
+        roomList = roomDAO.findAllRooms();
     }
 
     private Guest findRoomLeader(Room room) {

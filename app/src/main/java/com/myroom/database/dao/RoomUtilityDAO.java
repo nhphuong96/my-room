@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.database.DatabaseHelper;
-import com.myroom.model.BaseModel;
-import com.myroom.model.Room;
 import com.myroom.model.RoomUtility;
 import com.myroom.model.Utility;
 
@@ -59,7 +57,15 @@ public class RoomUtilityDAO {
         return rowAffected > 0;
     }
 
-    public boolean updateUtility(RoomUtility newRoomUtility) {
+    public boolean deleteRoomUtilityByRoomId(long roomId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowAffected = db.delete(Utility.TABLE_NAME,
+                RoomUtility.Column.COLUMN_ROOM_ID.getColName() + " = ?",
+                new String[]{String.valueOf(roomId)});
+        return rowAffected > 0;
+    }
+
+    public boolean updateRoomUtility(RoomUtility newRoomUtility) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(), newRoomUtility.getUtilityFee());

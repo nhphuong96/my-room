@@ -12,48 +12,11 @@ import com.myroom.model.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAO {
+public class RoomDAO implements IObjectDAO<Room> {
     private DatabaseHelper dbHelper;
 
     public RoomDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
-
-    }
-
-    public long addRoom(Room room) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Room.Column.COLUMN_ROOM_NAME.getColName(), room.getRoomName());
-        long id = db.insertOrThrow(Room.TABLE_NAME, null, values);
-        return id;
-    }
-
-    public Room findRoom(long id) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
-                Room.Column.COLUMN_ROOM_NAME.getColName(),
-        };
-        Cursor c = db.query(Room.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
-
-        Room result = new Room();
-        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-        result.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
-        return result;
-    }
-
-    public boolean deleteRoom(long id) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Room.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
-        return rowAffected > 0;
-    }
-
-    public boolean updateRoom(Room newRoom) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Room.Column.COLUMN_ROOM_NAME.getColName(), newRoom.getRoomName());
-        int rowAffected = db.update(Room.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(newRoom.getId())});
-        return rowAffected > 0;
     }
 
     public List<Room> findAllRooms() {
@@ -71,5 +34,50 @@ public class RoomDAO {
             while (c.moveToNext());
         }
         return result;
+    }
+
+    @Override
+    public long add(Room entity) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Room.Column.COLUMN_ROOM_NAME.getColName(), entity.getRoomName());
+        long id = db.insertOrThrow(Room.TABLE_NAME, null, values);
+        return id;
+    }
+
+    @Override
+    public Room find(long id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[] {
+                BaseModel.Column.COLUMN_ID.getColName(),
+                Room.Column.COLUMN_ROOM_NAME.getColName(),
+        };
+        Cursor c = db.query(Room.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+
+        Room result = new Room();
+        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+        result.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+        return result;
+    }
+
+    @Override
+    public List<Room> findAll() {
+        return null;
+    }
+
+    @Override
+    public boolean delete(long id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowAffected = db.delete(Room.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
+        return rowAffected > 0;
+    }
+
+    @Override
+    public boolean update(Room entity) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Room.Column.COLUMN_ROOM_NAME.getColName(), entity.getRoomName());
+        int rowAffected = db.update(Room.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        return rowAffected > 0;
     }
 }

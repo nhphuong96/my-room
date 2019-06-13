@@ -100,7 +100,7 @@ public class GeneralSettingUtilityActivity extends AppCompatActivity {
 
                 Utility newUtility = new Utility();
                 newUtility.setName(value);
-                long utilityId = utilityDAO.addUtility(newUtility);
+                long utilityId = utilityDAO.add(newUtility);
                 if (utilityId > 0) {
                     Toast.makeText(v.getContext(), value + " is created.", Toast.LENGTH_SHORT).show();
 
