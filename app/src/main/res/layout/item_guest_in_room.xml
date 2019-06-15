@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="?android:attr/selectableItemBackground"
-    android:padding="15dp"
+    android:padding="10dp"
     >
     <LinearLayout
         android:layout_width="wrap_content"
@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/guestItemProps"
             android:fontFamily="sans-serif-medium"
-            android:textSize="18dp"
             android:text="TextView"/>
 
         <TextView
@@ -43,8 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/guestItemProps"
-            android:layout_marginTop="5dp"
-            android:textSize="14dp"
+            android:textSize="12sp"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"/>
 

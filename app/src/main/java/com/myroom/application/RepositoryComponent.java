@@ -8,6 +8,7 @@ import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
 import com.myroom.adapter.RoomAdapter;
 import com.myroom.adapter.UtilityAdapter;
+import com.myroom.adapter.UtilityInRoomAdapter;
 import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.RoomUtilityRepository;
@@ -27,9 +28,13 @@ public interface RepositoryComponent {
     void inject(RoomAdapter roomAdapter);
     void inject(CreateRoomUtilityAdapter createRoomUtilityAdapter);
     void inject(UtilityAdapter utilityAdapter);
-    void inject(IRoomService roomService);
+    void inject(UtilityInRoomAdapter utilityInRoomAdapter);
     void inject(GuestInRoomAdapter guestInRoomAdapter);
+
+    void inject(IRoomService roomService);
+
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
+
     RoomRepository getRoomRepository();
     GuestRepository getGuestRepository();
     UtilityRepository getUtilityRepository();

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:background="@color/colorAccent">
+
+        <TextView
+            android:id="@+id/dialog_edit_utility_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text View"
+            android:textColor="#fff"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="15sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fee: "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <EditText
+            android:id="@+id/edit_utility_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="end"
+        >
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/edit_utility_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Cancel"
+            android:textSize="12dp"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/ButtonCancelTheme"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/edit_utility_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Save"
+            android:textSize="12dp"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/ButtonTheme"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

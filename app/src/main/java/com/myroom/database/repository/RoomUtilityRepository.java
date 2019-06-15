@@ -98,10 +98,10 @@ public class RoomUtilityRepository {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(), newRoomUtility.getUtilityFee());
-        int rowAffected = db.update(Utility.TABLE_NAME,
+        int rowAffected = db.update(RoomUtility.TABLE_NAME,
                 values,
                 RoomUtility.Column.COLUMN_ROOM_ID.getColName() + " = ?"
-                + RoomUtility.Column.COLUMN_UTILITY_ID.getColName() + " = ?",
+                + " AND " + RoomUtility.Column.COLUMN_UTILITY_ID.getColName() + " = ?",
                 new String[]{String.valueOf(newRoomUtility.getRoomId()), String.valueOf(newRoomUtility.getUtilityId())});
         return rowAffected > 0;
     }

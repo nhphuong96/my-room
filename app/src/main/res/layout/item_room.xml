@@ -4,7 +4,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:layout_width="match_parent"
-    android:padding="15dp"
+    android:padding="10dp"
     android:orientation="horizontal"
     android:background="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content">
@@ -32,9 +32,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
-            android:textColor="@color/roomItemProps"
-            android:textSize="18dp"
-            android:layout_marginBottom="5dp"/>
+            android:textColor="@color/roomItemProps"/>
 
         <TextView
             android:id="@+id/guest_name_in_room_item"
@@ -43,7 +41,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
             android:textColor="@color/roomItemProps"
-            android:textSize="14dp" />
+            android:textSize="12dp" />
     </LinearLayout>
 
 </LinearLayout>
