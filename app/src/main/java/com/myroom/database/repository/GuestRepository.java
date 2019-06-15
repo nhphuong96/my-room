@@ -74,13 +74,16 @@ public class GuestRepository implements IObjectRepository<Guest> {
         };
         Cursor c = db.query(Guest.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
 
-        Guest result = new Guest();
-        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-        result.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
-        result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
-        result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
-        result.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
-        return result;
+        if (c.moveToFirst()) {
+            Guest result = new Guest();
+            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
+            result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
+            result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
+            result.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
+            return result;
+        }
+        return null;
     }
 
     @Override

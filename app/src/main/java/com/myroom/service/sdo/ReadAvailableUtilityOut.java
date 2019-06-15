@@ -1,17 +1,17 @@
 package com.myroom.service.sdo;
 
-import com.myroom.database.dao.Utility;
+import com.myroom.dto.UtilityInRoomItem;
 
-import java.util.Map;
+import java.util.List;
 
 public class ReadAvailableUtilityOut {
-    private Map<Utility, Double> utilityList;
+    private List<UtilityInRoomItem> utilityInRoomItemList;
 
-    public Map<Utility, Double> getUtilityList() {
-        return utilityList;
+    public List<UtilityInRoomItem> getUtilityInRoomItemList() {
+        return utilityInRoomItemList;
     }
 
-    public void setUtilityList(Map<Utility, Double> utilityList) {
-        this.utilityList = utilityList;
+    public void setUtilityInRoomItemList(List<UtilityInRoomItem> utilityInRoomItemList) {
+        this.utilityInRoomItemList = utilityInRoomItemList;
     }
 }

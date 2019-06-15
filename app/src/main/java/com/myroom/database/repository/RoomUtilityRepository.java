@@ -9,6 +9,8 @@ import com.myroom.database.DatabaseHelper;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,14 +44,22 @@ public class RoomUtilityRepository {
         StringBuilder preparedStatement = new StringBuilder();
         preparedStatement.append(RoomUtility.Column.COLUMN_ROOM_ID.getColName());
         preparedStatement.append(" = ? ");
+        Cursor c = null;
         if (utilityId != 0) {
             preparedStatement.append(" AND ");
             preparedStatement.append(RoomUtility.Column.COLUMN_UTILITY_ID.getColName());
             preparedStatement.append(" = ? ");
+
+            c = db.query(RoomUtility.TABLE_NAME, columns,
+                    preparedStatement.toString(),
+                    new String[] {String.valueOf(roomId), String.valueOf(utilityId)}, null, null, null, null);
         }
-        Cursor c = db.query(RoomUtility.TABLE_NAME, columns,
-                preparedStatement.toString(),
-                new String[] {String.valueOf(roomId), String.valueOf(utilityId)}, null, null, null, null);
+        else
+        {
+            c = db.query(RoomUtility.TABLE_NAME, columns,
+                    preparedStatement.toString(),
+                    new String[] {String.valueOf(roomId)}, null, null, null, null);
+        }
 
         List<RoomUtility> result = new ArrayList<>();
         if (c.moveToFirst()) {

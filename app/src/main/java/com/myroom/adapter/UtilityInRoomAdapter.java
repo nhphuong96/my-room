@@ -7,17 +7,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.myroom.R;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.dao.Utility;
+import com.myroom.dto.UtilityInRoomItem;
+import com.myroom.exception.OperationException;
+import com.myroom.exception.ValidationException;
 import com.myroom.service.IRoomService;
-import com.myroom.service.impl.RoomServiceImpl;
+import com.myroom.service.sdo.ReadAvailableUtilityIn;
+import com.myroom.service.sdo.ReadAvailableUtilityOut;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdapter.UtilityInRoomViewHolder> {
-
+    List<UtilityInRoomItem> utilityInRoomItemList;
     private Context context;
 
-    public UtilityInRoomAdapter(Context context) {
+    @Inject
+    public IRoomService roomService;
+
+    public UtilityInRoomAdapter(Context context, Long roomId) {
         this.context = context;
+        BaseApplication.getServiceComponent(context).inject(this);
+        loadAllUtilitiesInRoom(roomId);
+    }
+
+    private void loadAllUtilitiesInRoom(Long roomId) {
+        ReadAvailableUtilityIn readAvailableUtilityIn = new ReadAvailableUtilityIn();
+        readAvailableUtilityIn.setRoomId(roomId);
+        try {
+            ReadAvailableUtilityOut readAvailableUtilityOut = roomService.readAvailableUtility(readAvailableUtilityIn);
+            utilityInRoomItemList = readAvailableUtilityOut.getUtilityInRoomItemList();
+        } catch (ValidationException e) {
+            Toast.makeText(context, "ValidationException occurred while reading available utilities.", Toast.LENGTH_SHORT).show();
+        } catch (OperationException e) {
+            Toast.makeText(context, "OperationException occurred while reading available utilities.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @NonNull
@@ -31,11 +61,14 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
 
     @Override
     public void onBindViewHolder(@NonNull UtilityInRoomViewHolder utilityInRoomViewHolder, int i) {
+        UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(i);
+        utilityInRoomViewHolder.tvUtilityInRoomName.setText(utilityInRoomItem.getUtilityName());
+        utilityInRoomViewHolder.tvUtilityInRoomFee.setText(String.valueOf(utilityInRoomItem.getUtilityFee()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return utilityInRoomItemList.size();
     }
 
     public class UtilityInRoomViewHolder extends RecyclerView.ViewHolder {

@@ -42,10 +42,13 @@ public class UtilityRepository implements IObjectRepository<Utility> {
         };
         Cursor c = db.query(Utility.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
 
-        Utility result = new Utility();
-        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-        result.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
-        return result;
+        if (c.moveToFirst()) {
+            Utility result = new Utility();
+            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
+            return result;
+        }
+        return null;
     }
 
     @Override

@@ -42,11 +42,13 @@ public class RoomRepository implements IObjectRepository<Room> {
                 Room.Column.COLUMN_ROOM_NAME.getColName(),
         };
         Cursor c = db.query(Room.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
-
-        Room result = new Room();
-        result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-        result.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
-        return result;
+        if (c.moveToFirst()) {
+            Room result = new Room();
+            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+            return result;
+        }
+        return null;
     }
 
     @Override

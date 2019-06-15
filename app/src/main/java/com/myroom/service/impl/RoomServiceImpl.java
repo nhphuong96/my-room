@@ -8,6 +8,7 @@ import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.UtilityRepository;
+import com.myroom.dto.UtilityInRoomItem;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
 import com.myroom.database.dao.Guest;
@@ -22,6 +23,7 @@ import com.myroom.service.sdo.ReadAvailableUtilityOut;
 
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,14 +76,18 @@ public class RoomServiceImpl implements IRoomService {
         Assert.assertNotNull(readAvailableUtilityIn.getRoomId(), "ReadAvailableUtilityIn.roomId must not be null.");
 
         ReadAvailableUtilityOut readAvailableUtilityOut = new ReadAvailableUtilityOut();
-        readAvailableUtilityOut.setUtilityList(new HashMap<Utility, Double>());
+        readAvailableUtilityOut.setUtilityInRoomItemList(new ArrayList<UtilityInRoomItem>());
 
         //Read all utilities in room
         List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtility(readAvailableUtilityIn.getRoomId(), 0);
         if (CollectionUtils.isNotEmpty(roomUtilityList)) {
             for (RoomUtility rUtility: roomUtilityList) {
                 Utility utility = utilityRepository.find(rUtility.getUtilityId());
-                readAvailableUtilityOut.getUtilityList().put(utility, rUtility.getUtilityFee());
+                UtilityInRoomItem utilityInRoomItem = new UtilityInRoomItem();
+                utilityInRoomItem.setUtilityId(utility.getId());
+                utilityInRoomItem.setUtilityName(utility.getName());
+                utilityInRoomItem.setUtilityFee(rUtility.getUtilityFee());
+                readAvailableUtilityOut.getUtilityInRoomItemList().add(utilityInRoomItem);
             }
         }
         return readAvailableUtilityOut;
