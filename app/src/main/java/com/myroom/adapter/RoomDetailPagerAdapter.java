@@ -1,13 +1,12 @@
 package com.myroom.adapter;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.myroom.fragment.GuestInRoomFragment;
-import com.myroom.fragment.RoomAttributeFragment;
+import com.myroom.fragment.UtilityInRoomFragment;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,7 +22,7 @@ public class RoomDetailPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0: return GuestInRoomFragment.newInstance(roomId);
-            case 1: return RoomAttributeFragment.newInstance(roomId);
+            case 1: return UtilityInRoomFragment.newInstance(roomId);
             default: return null;
         }
     }

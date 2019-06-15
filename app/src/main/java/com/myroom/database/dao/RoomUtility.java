@@ -1,4 +1,4 @@
-package com.myroom.model;
+package com.myroom.database.dao;
 
 public class RoomUtility {
     public static final String TABLE_NAME = "room_utility";
@@ -62,7 +62,7 @@ public class RoomUtility {
 
     @Override
     public String toString() {
-        return "RoomUtilityDAO{" +
+        return "RoomUtilityRepository{" +
                 "roomId=" + roomId +
                 ", utilityId=" + utilityId +
                 ", utilityFee=" + utilityFee +

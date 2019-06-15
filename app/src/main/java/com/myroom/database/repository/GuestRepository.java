@@ -1,22 +1,25 @@
-package com.myroom.database.dao;
+package com.myroom.database.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.model.BaseModel;
-import com.myroom.model.Guest;
+import com.myroom.database.dao.BaseModel;
+import com.myroom.database.dao.Guest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuestDAO implements IObjectDAO<Guest> {
+import javax.inject.Inject;
+
+public class GuestRepository implements IObjectRepository<Guest> {
     private DatabaseHelper dbHelper;
 
-    public GuestDAO(Context context) {
-        dbHelper = new DatabaseHelper(context);
+    @Inject
+    public GuestRepository() {
+        dbHelper = new DatabaseHelper(BaseApplication.getContextComponent().getContext());
     }
 
     public List<Guest> findGuestByRoomId(long roomId) {

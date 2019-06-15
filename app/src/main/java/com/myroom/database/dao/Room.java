@@ -1,4 +1,4 @@
-package com.myroom.model;
+package com.myroom.database.dao;
 
 public class Room extends BaseModel {
     public static final String TABLE_NAME = "room";

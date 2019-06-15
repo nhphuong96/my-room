@@ -1,7 +1,6 @@
 package com.myroom.service.sdo;
 
-public class CreateRoomOut {
-
+public class ReadAvailableUtilityIn {
     private long roomId;
 
     public long getRoomId() {
@@ -11,6 +10,4 @@ public class CreateRoomOut {
     public void setRoomId(long roomId) {
         this.roomId = roomId;
     }
-
-
 }

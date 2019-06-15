@@ -1,7 +1,6 @@
 package com.myroom.activity;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -11,7 +10,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +19,28 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myroom.R;
-import com.myroom.adapter.GeneralSettingAdapter;
 import com.myroom.adapter.UtilityAdapter;
-import com.myroom.database.dao.UtilityDAO;
-import com.myroom.model.Utility;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.repository.UtilityRepository;
+import com.myroom.database.dao.Utility;
 
 import org.apache.commons.lang3.StringUtils;
+
+import javax.inject.Inject;
 
 public class GeneralSettingUtilityActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private UtilityDAO utilityDAO = new UtilityDAO(this);
+
+    @Inject
+    public UtilityRepository utilityDAO;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BaseApplication.getRepositoryComponent(this).inject(this);
         setContentView(R.layout.activity_utility);
         initializeToolbar();
         loadAllUtilities();
@@ -88,7 +93,6 @@ public class GeneralSettingUtilityActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

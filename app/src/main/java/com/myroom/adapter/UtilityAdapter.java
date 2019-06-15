@@ -12,20 +12,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myroom.R;
-import com.myroom.database.dao.UtilityDAO;
-import com.myroom.model.Utility;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.repository.UtilityRepository;
+import com.myroom.database.dao.Utility;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityViewHolder> {
     private Context context;
     private List<Utility> utilityList;
-    private UtilityDAO utilityDAO;
+
+    @Inject
+    public UtilityRepository utilityRepository;
 
     public UtilityAdapter(Context context) {
         this.context = context;
-        utilityDAO = new UtilityDAO(context);
-        utilityList = utilityDAO.findAll();
+        BaseApplication.getRepositoryComponent(context).inject(this);
+        loadAllUtilityList();
+    }
+
+    private void loadAllUtilityList() {
+        utilityList = utilityRepository.findAll();
     }
 
     @NonNull
@@ -74,7 +83,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
                         public void onClick(DialogInterface dialog, int which) {
                             int pos = getAdapterPosition();
                             Utility utility = utilityList.get(pos);
-                            if (utilityDAO.delete(utility.getId())) {
+                            if (utilityRepository.delete(utility.getId())) {
                                 utilityList.remove(pos);
                                 Toast.makeText(context, "Delete utility " + utility.getName() + " successfully.", Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();

@@ -1,25 +1,27 @@
-package com.myroom.database.dao;
+package com.myroom.database.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.model.BaseModel;
-import com.myroom.model.Room;
-import com.myroom.model.Utility;
+import com.myroom.database.dao.BaseModel;
+import com.myroom.database.dao.Room;
+import com.myroom.database.dao.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilityDAO implements IObjectDAO<Utility> {
+import javax.inject.Inject;
+
+public class UtilityRepository implements IObjectRepository<Utility> {
 
     private DatabaseHelper dbHelper;
 
-    public UtilityDAO(Context context) {
-        dbHelper = new DatabaseHelper(context);
-
+    @Inject
+    public UtilityRepository() {
+        dbHelper = new DatabaseHelper(BaseApplication.getContextComponent().getContext());
     }
 
     @Override

@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.adapter.GuestInRoomAdapter;
-import com.myroom.database.dao.GuestDAO;
-import com.myroom.model.Guest;
+import com.myroom.database.repository.GuestRepository;
+import com.myroom.database.dao.Guest;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class GuestInRoomFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private GuestDAO guestDAO;
 
     public static GuestInRoomFragment newInstance(long roomId) {
         Bundle args = new Bundle();
@@ -47,15 +46,13 @@ public class GuestInRoomFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        guestDAO = new GuestDAO(parentContext);
         loadGuestInRoom();
     }
 
     private void loadGuestInRoom() {
         long roomId = getArguments().getLong("roomId");
         if (roomId != -1) {
-            List<Guest> guests = guestDAO.findGuestByRoomId(roomId);
-            adapter = new GuestInRoomAdapter(guests);
+            adapter = new GuestInRoomAdapter(parentContext, roomId);
             layoutManager = new LinearLayoutManager(parentContext);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(layoutManager);

@@ -1,5 +1,6 @@
 package com.myroom.activity;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,22 +16,17 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
-import com.myroom.database.dao.GuestDAO;
-import com.myroom.database.dao.RoomDAO;
-import com.myroom.database.dao.RoomUtilityDAO;
+import com.myroom.application.BaseApplication;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
-import com.myroom.model.Guest;
-import com.myroom.model.Room;
 import com.myroom.service.IRoomService;
-import com.myroom.service.impl.RoomServiceImpl;
 import com.myroom.service.sdo.CreateRoomIn;
-import com.myroom.service.sdo.CreateRoomOut;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 public class CreateRoomActivity extends AppCompatActivity {
     private EditText etRoomName;
@@ -43,12 +39,14 @@ public class CreateRoomActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CreateRoomUtilityAdapter adapter;
 
-    private IRoomService roomService = new RoomServiceImpl(this);
+    @Inject
+    public IRoomService roomService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room);
+        BaseApplication.getServiceComponent(this).inject(this);
         initializeToolbar();
         loadAvailableUtilities();
 

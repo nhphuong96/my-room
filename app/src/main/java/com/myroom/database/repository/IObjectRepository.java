@@ -1,8 +1,8 @@
-package com.myroom.database.dao;
+package com.myroom.database.repository;
 
 import java.util.List;
 
-public interface IObjectDAO<T> {
+public interface IObjectRepository<T> {
     long add(T entity);
     T find(long id);
     List<T> findAll();

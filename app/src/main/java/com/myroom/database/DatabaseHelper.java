@@ -5,18 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.myroom.core.Constant;
-import com.myroom.model.BaseModel;
-import com.myroom.model.Guest;
-import com.myroom.model.Room;
-import com.myroom.model.RoomUtility;
-import com.myroom.model.Utility;
+import com.myroom.database.dao.BaseModel;
+import com.myroom.database.dao.Guest;
+import com.myroom.database.dao.Room;
+import com.myroom.database.dao.RoomUtility;
+import com.myroom.database.dao.Utility;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {

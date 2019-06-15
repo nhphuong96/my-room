@@ -11,19 +11,22 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.myroom.R;
-import com.myroom.database.dao.UtilityDAO;
-import com.myroom.model.Utility;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.repository.UtilityRepository;
+import com.myroom.database.dao.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class CreateRoomUtilityAdapter extends RecyclerView.Adapter<CreateRoomUtilityAdapter.CreateRoomUtilityViewHolder> {
 
-    private UtilityDAO utilityDAO;
+    @Inject public UtilityRepository utilityDAO;
     private List<UtilitySelection> utilitySelectionList;
 
     public CreateRoomUtilityAdapter(Context context) {
-        utilityDAO = new UtilityDAO(context);
+        BaseApplication.getRepositoryComponent(context).inject(this);
         initializeUtilitySelectionList();
     }
 

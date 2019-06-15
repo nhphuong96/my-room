@@ -9,18 +9,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.myroom.R;
-import com.myroom.model.Guest;
-
-import org.w3c.dom.Text;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.dao.Guest;
+import com.myroom.database.repository.GuestRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.GuestInRoomViewHolder> {
 
+    @Inject
+    public GuestRepository guestRepository;
     private List<Guest> guestList;
+    private Long roomId;
 
-    public GuestInRoomAdapter(List<Guest> guestList) {
-        this.guestList = guestList;
+    public GuestInRoomAdapter(Context context, Long roomId) {
+        BaseApplication.getRepositoryComponent(context).inject(this);
+        this.roomId = roomId;
+        loadGuestInRoomList();
+    }
+
+    private void loadGuestInRoomList() {
+        guestList = guestRepository.findGuestByRoomId(roomId);
     }
 
     @NonNull

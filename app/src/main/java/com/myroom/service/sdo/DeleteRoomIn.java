@@ -1,7 +1,5 @@
 package com.myroom.service.sdo;
 
-import com.myroom.model.Room;
-
 import java.util.ArrayList;
 import java.util.List;
 

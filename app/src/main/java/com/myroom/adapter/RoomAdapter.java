@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,33 +14,39 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.activity.RoomDetailActivity;
-import com.myroom.database.dao.GuestDAO;
-import com.myroom.database.dao.RoomDAO;
+import com.myroom.application.BaseApplication;
+import com.myroom.database.repository.GuestRepository;
+import com.myroom.database.repository.RoomRepository;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
-import com.myroom.model.Guest;
-import com.myroom.model.Room;
+import com.myroom.database.dao.Guest;
+import com.myroom.database.dao.Room;
 import com.myroom.service.IRoomService;
-import com.myroom.service.impl.RoomServiceImpl;
 import com.myroom.service.sdo.DeleteRoomIn;
 
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
-    private Context context;
-    private List<Room> roomList;
+import javax.inject.Inject;
 
-    private GuestDAO guestDAO;
-    private IRoomService roomService;
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
+    private List<Room> roomList;
+    private Context context;
+
+    @Inject
+    public RoomRepository roomRepository;
+    @Inject
+    public GuestRepository guestRepository;
+
+    @Inject
+    public IRoomService roomService;
 
 
     public RoomAdapter(Context context) {
         this.context = context;
-        guestDAO = new GuestDAO(context);
-        roomService = new RoomServiceImpl(context);
-        initializeRoomList(context);
+        BaseApplication.getRepositoryComponent(context).inject(this);
+        initializeRoomList();
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -122,14 +127,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         return deleteRoomIn;
     }
 
-    private void initializeRoomList(Context context) {
-        RoomDAO roomDAO = new RoomDAO(context);
-        roomList = roomDAO.findAllRooms();
+    private void initializeRoomList() {
+        roomList = roomRepository.findAll();
     }
 
     private Guest findRoomLeader(Room room) {
         long roomId = room.getId();
-        List<Guest> guestsInRoom = guestDAO.findGuestByRoomId(roomId);
+        List<Guest> guestsInRoom = guestRepository.findGuestByRoomId(roomId);
         if (CollectionUtils.isNotEmpty(guestsInRoom)) {
             return guestsInRoom.get(0);
         }

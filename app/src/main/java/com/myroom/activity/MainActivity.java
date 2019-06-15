@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import com.myroom.R;
 import com.myroom.adapter.RoomAdapter;
 
-
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;

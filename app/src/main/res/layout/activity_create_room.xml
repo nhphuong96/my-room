@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="#fff"
     tools:context=".activity.CreateRoomActivity">
 
     <include
@@ -13,72 +14,102 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
 
-        <EditText
-            android:id="@+id/create_room_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Room name"
-            android:inputType="text"
-            android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
 
-        <EditText
-            android:id="@+id/create_guest_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Guest name"
-            android:textSize="14sp"
-            android:inputType="text"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:fontFamily="sans-serif-medium"
-            />
+            <EditText
+                android:id="@+id/create_room_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Room name"
+                android:inputType="text"
+                android:textSize="14sp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                />
 
-        <EditText
-            android:id="@+id/create_guest_birthdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Birthdate"
-            android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:inputType="date"
-            android:fontFamily="sans-serif-medium"
-            />
+            <EditText
+                android:id="@+id/create_guest_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Guest name"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:fontFamily="sans-serif-medium"
+                />
 
-        <EditText
-            android:id="@+id/create_guest_id_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Identifier card"
-            android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:inputType="number"
-            android:fontFamily="sans-serif-medium"
-            />
+            <EditText
+                android:id="@+id/create_guest_birthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Birthdate"
+                android:textSize="14sp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:inputType="date"
+                android:fontFamily="sans-serif-medium"
+                />
 
-        <EditText
-            android:id="@+id/create_guest_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone number"
-            android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:inputType="phone"
-            android:fontFamily="sans-serif-medium"
-            />
+            <EditText
+                android:id="@+id/create_guest_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Identifier card"
+                android:textSize="14sp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:inputType="number"
+                android:fontFamily="sans-serif-medium"
+                />
+
+            <EditText
+                android:id="@+id/create_guest_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone number"
+                android:textSize="14sp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:inputType="phone"
+                android:fontFamily="sans-serif-medium"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_user"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,23 +126,31 @@
             android:layout_width="match_parent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
             android:layout_height="wrap_content"
             >
 
-
         </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/create_room_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
+            android:textAllCaps="false"
             android:textColor="#fff"
             android:theme="@style/ButtonTheme"
             android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="15dp"
             android:layout_gravity="center"
             />
+
     </LinearLayout>
 
 

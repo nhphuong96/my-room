@@ -1,39 +1,28 @@
-package com.myroom.database.dao;
+package com.myroom.database.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.model.BaseModel;
-import com.myroom.model.Room;
+import com.myroom.database.dao.BaseModel;
+import com.myroom.database.dao.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAO implements IObjectDAO<Room> {
+import javax.inject.Inject;
+
+
+public class RoomRepository implements IObjectRepository<Room> {
     private DatabaseHelper dbHelper;
 
-    public RoomDAO(Context context) {
+    @Inject
+    public RoomRepository() {
+        Context context = BaseApplication.getContextComponent().getContext();
         dbHelper = new DatabaseHelper(context);
-    }
-
-    public List<Room> findAllRooms() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + Room.TABLE_NAME, null);
-
-        List<Room> result = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
-                Room room = new Room();
-                room.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-                room.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
-                result.add(room);
-            }
-            while (c.moveToNext());
-        }
-        return result;
     }
 
     @Override
@@ -62,7 +51,20 @@ public class RoomDAO implements IObjectDAO<Room> {
 
     @Override
     public List<Room> findAll() {
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Room.TABLE_NAME, null);
+
+        List<Room> result = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                Room room = new Room();
+                room.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+                room.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+                result.add(room);
+            }
+            while (c.moveToNext());
+        }
+        return result;
     }
 
     @Override
