@@ -44,6 +44,11 @@
             android:parentActivityName=".activity.GeneralSettingActivity">
 
         </activity>
+
+        <activity android:name=".activity.CreateBillActivity"
+            android:parentActivityName=".activity.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

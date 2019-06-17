@@ -3,6 +3,7 @@ package com.myroom.application;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
+import com.myroom.activity.CreateBillActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
@@ -34,6 +35,7 @@ public interface RepositoryComponent {
     void inject(IRoomService roomService);
 
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
+    void inject(CreateBillActivity createBillActivity);
 
     RoomRepository getRoomRepository();
     GuestRepository getGuestRepository();

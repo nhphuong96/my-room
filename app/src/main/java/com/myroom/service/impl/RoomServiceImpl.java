@@ -79,7 +79,7 @@ public class RoomServiceImpl implements IRoomService {
         readAvailableUtilityOut.setUtilityInRoomItemList(new ArrayList<UtilityInRoomItem>());
 
         //Read all utilities in room
-        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtility(readAvailableUtilityIn.getRoomId(), 0);
+        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomId(readAvailableUtilityIn.getRoomId());
         if (CollectionUtils.isNotEmpty(roomUtilityList)) {
             for (RoomUtility rUtility: roomUtilityList) {
                 Utility utility = utilityRepository.find(rUtility.getUtilityId());

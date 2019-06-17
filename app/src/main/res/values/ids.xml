@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="electricity_last_index" type="id"></item>
+    <item name="electricity_current_index" type="id"></item>
+    <item name="water_counter" type="id"></item>
+</resources>

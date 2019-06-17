@@ -58,7 +58,7 @@ public class GeneralSettingUtilityActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_utility_setting, menu);
+        //getMenuInflater().inflate(R.menu.menu_utility_setting, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

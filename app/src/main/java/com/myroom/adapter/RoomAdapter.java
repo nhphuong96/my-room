@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myroom.R;
+import com.myroom.activity.CreateBillActivity;
 import com.myroom.activity.RoomDetailActivity;
 import com.myroom.application.BaseApplication;
 import com.myroom.database.repository.GuestRepository;
@@ -52,15 +54,25 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView txtRoomName;
         private TextView txtGuestName;
+        private AppCompatButton btnCreateBill;
         private long roomId;
 
         public RoomViewHolder(View v) {
             super(v);
             txtRoomName = v.findViewById(R.id.room_name_item);
             txtGuestName =v.findViewById(R.id.guest_name_in_room_item);
+            btnCreateBill = v.findViewById(R.id.item_room_create_bill);
 
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
+            btnCreateBill.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CreateBillActivity.class);
+                    intent.putExtra("roomId", roomId);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override

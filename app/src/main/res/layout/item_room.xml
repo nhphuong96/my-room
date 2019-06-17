@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:orientation="horizontal"
+    android:gravity="center"
     android:background="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content">
 
@@ -42,6 +43,29 @@
             android:text="TextView"
             android:textColor="@color/roomItemProps"
             android:textSize="12dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/item_room_create_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Create bill"
+            android:textSize="12dp"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/ButtonTheme"
+            android:fontFamily="sans-serif-medium"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -35,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(createRoomTable());
         db.execSQL(createUtilityTable());
         db.execSQL(createRoomUtilityTable());
+        
+        createUtilityData(db);
     }
 
     @Override
@@ -44,6 +46,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(dropTable(Utility.TABLE_NAME));
         db.execSQL(dropTable(RoomUtility.TABLE_NAME));
         onCreate(db);
+    }
+
+    private void createUtilityData(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (1, \"Electricity\")");
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (2, \"Water\")");
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (3, \"Cab\")");
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (4, \"Internet\")");
     }
 
     private String dropTable(String tableRoom) {

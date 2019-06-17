@@ -41,25 +41,10 @@ public class RoomUtilityRepository {
                 RoomUtility.Column.COLUMN_UTILITY_ID.getColName(),
                 RoomUtility.Column.COLUMN_UTILITY_FEE.getColName()
         };
-        StringBuilder preparedStatement = new StringBuilder();
-        preparedStatement.append(RoomUtility.Column.COLUMN_ROOM_ID.getColName());
-        preparedStatement.append(" = ? ");
-        Cursor c = null;
-        if (utilityId != 0) {
-            preparedStatement.append(" AND ");
-            preparedStatement.append(RoomUtility.Column.COLUMN_UTILITY_ID.getColName());
-            preparedStatement.append(" = ? ");
-
-            c = db.query(RoomUtility.TABLE_NAME, columns,
-                    preparedStatement.toString(),
-                    new String[] {String.valueOf(roomId), String.valueOf(utilityId)}, null, null, null, null);
-        }
-        else
-        {
-            c = db.query(RoomUtility.TABLE_NAME, columns,
-                    preparedStatement.toString(),
-                    new String[] {String.valueOf(roomId)}, null, null, null, null);
-        }
+        Cursor c = db.query(RoomUtility.TABLE_NAME, columns,
+                RoomUtility.Column.COLUMN_ROOM_ID.getColName() + " = ? AND "
+                        + RoomUtility.Column.COLUMN_UTILITY_ID.getColName() + " = ?",
+                    new String[] { String.valueOf(roomId), String.valueOf(utilityId) }, null, null, null, null);
 
         List<RoomUtility> result = new ArrayList<>();
         if (c.moveToFirst()) {
@@ -76,6 +61,31 @@ public class RoomUtilityRepository {
         return result;
     }
 
+    public List<RoomUtility> findRoomUtilityByRoomId(long roomId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[] {
+                RoomUtility.Column.COLUMN_ROOM_ID.getColName(),
+                RoomUtility.Column.COLUMN_UTILITY_ID.getColName(),
+                RoomUtility.Column.COLUMN_UTILITY_FEE.getColName()
+        };
+        Cursor c = db.query(RoomUtility.TABLE_NAME, columns,
+                    RoomUtility.Column.COLUMN_ROOM_ID.getColName() + " = ?",
+                    new String[] {String.valueOf(roomId)}, null, null, null, null);
+
+        List<RoomUtility> result = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                RoomUtility roomUtility = new RoomUtility();
+                roomUtility.setRoomId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_ROOM_ID.getIndex())));
+                roomUtility.setUtilityId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_UTILITY_ID.getIndex())));
+                roomUtility.setUtilityFee(Double.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
+                result.add(roomUtility);
+            }
+            while (c.moveToNext());
+        }
+
+        return result;
+    }
 
     public boolean deleteRoomUtility(long roomId, long utilityId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
