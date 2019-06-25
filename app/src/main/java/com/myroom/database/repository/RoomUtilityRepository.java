@@ -24,7 +24,7 @@ public class RoomUtilityRepository {
         dbHelper = new DatabaseHelper(BaseApplication.getContextComponent().getContext());
     }
 
-    public long addRoomUtility(long roomId, long utilityId, double utilityFee) {
+    public long addRoomUtility(long roomId, long utilityId, int utilityFee) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), roomId);
@@ -52,7 +52,7 @@ public class RoomUtilityRepository {
                 RoomUtility roomUtility = new RoomUtility();
                 roomUtility.setRoomId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_ROOM_ID.getIndex())));
                 roomUtility.setUtilityId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_UTILITY_ID.getIndex())));
-                roomUtility.setUtilityFee(Double.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
+                roomUtility.setUtilityFee(Integer.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
                 result.add(roomUtility);
             }
             while (c.moveToNext());
@@ -78,7 +78,7 @@ public class RoomUtilityRepository {
                 RoomUtility roomUtility = new RoomUtility();
                 roomUtility.setRoomId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_ROOM_ID.getIndex())));
                 roomUtility.setUtilityId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_UTILITY_ID.getIndex())));
-                roomUtility.setUtilityFee(Double.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
+                roomUtility.setUtilityFee(Integer.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
                 result.add(roomUtility);
             }
             while (c.moveToNext());

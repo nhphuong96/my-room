@@ -3,7 +3,7 @@ package com.myroom.dto;
 public class UtilityInRoomItem {
     private long utilityId;
     private String utilityName;
-    private Double utilityFee;
+    private Integer utilityFee;
 
     public long getUtilityId() {
         return utilityId;
@@ -21,11 +21,11 @@ public class UtilityInRoomItem {
         this.utilityName = utilityName;
     }
 
-    public Double getUtilityFee() {
+    public Integer getUtilityFee() {
         return utilityFee;
     }
 
-    public void setUtilityFee(Double utilityFee) {
+    public void setUtilityFee(Integer utilityFee) {
         this.utilityFee = utilityFee;
     }
 }

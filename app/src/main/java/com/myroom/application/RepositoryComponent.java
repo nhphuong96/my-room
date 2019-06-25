@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.myroom.activity.CreateBillActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
+import com.myroom.activity.SendMessageActivity;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
 import com.myroom.adapter.RoomAdapter;
@@ -36,6 +37,7 @@ public interface RepositoryComponent {
 
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
     void inject(CreateBillActivity createBillActivity);
+    void inject(SendMessageActivity sendMessageActivity);
 
     RoomRepository getRoomRepository();
     GuestRepository getGuestRepository();

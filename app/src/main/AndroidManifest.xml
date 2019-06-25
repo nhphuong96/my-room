@@ -5,6 +5,7 @@
     package="com.myroom">
 
     <dist:module dist:instant="true" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:name=".application.BaseApplication"
@@ -46,9 +47,13 @@
         </activity>
 
         <activity android:name=".activity.CreateBillActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".activity.MainActivity">
 
         </activity>
+
+        <activity android:name=".activity.SendMessageActivity"
+            android:parentActivityName=".activity.CreateBillActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send to: "
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/recipient_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:layout_marginTop="10dp"
+            >
+        </android.support.v7.widget.AppCompatSpinner>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message review: "
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <TextView
+            android:id="@+id/message_content"
+            android:layout_marginTop="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hahahahha"
+            android:background="@drawable/message_review_bg"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Send"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/ButtonTheme"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

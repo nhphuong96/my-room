@@ -137,11 +137,11 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
                     RoomUtility roomUtility = new RoomUtility();
                     roomUtility.setRoomId(roomId);
                     roomUtility.setUtilityId(utilityId);
-                    roomUtility.setUtilityFee(Double.valueOf(etUtilityFee.getText().toString()));
+                    roomUtility.setUtilityFee(Integer.valueOf(etUtilityFee.getText().toString()));
                     boolean success = roomUtilityRepository.updateRoomUtility(roomUtility);
                     if (success) {
                         UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(getAdapterPosition());
-                        utilityInRoomItem.setUtilityFee(Double.valueOf(etUtilityFee.getText().toString()));
+                        utilityInRoomItem.setUtilityFee(Integer.valueOf(etUtilityFee.getText().toString()));
                         notifyDataSetChanged();
                         Toast.makeText(context, "Updated utility fee successfully.", Toast.LENGTH_SHORT).show();
                     }

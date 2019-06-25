@@ -34,7 +34,7 @@ public class RoomUtility {
 
     private long roomId;
     private long utilityId;
-    private double utilityFee;
+    private int utilityFee;
 
     public long getRoomId() {
         return roomId;
@@ -52,11 +52,11 @@ public class RoomUtility {
         this.utilityId = utilityId;
     }
 
-    public double getUtilityFee() {
+    public int getUtilityFee() {
         return utilityFee;
     }
 
-    public void setUtilityFee(double utilityFee) {
+    public void setUtilityFee(int utilityFee) {
         this.utilityFee = utilityFee;
     }
 

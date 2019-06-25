@@ -59,7 +59,7 @@ public class RoomServiceImpl implements IRoomService {
         }
 
         for (Long utilityId : createRoomIn.getUtilityIdList()) {
-            long roomUtilityId = roomUtilityRepository.addRoomUtility(roomId, utilityId, 0D);
+            long roomUtilityId = roomUtilityRepository.addRoomUtility(roomId, utilityId, 0);
             if (roomUtilityId <= 0) {
                 throw new OperationException("Could not create utility in room");
             }
