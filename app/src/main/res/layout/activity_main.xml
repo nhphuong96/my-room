@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
+        android:background="#d1d9dd"
         android:orientation="vertical"
         android:gravity="center"
         tools:context=".activity.MainActivity">
@@ -27,18 +27,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="15dp"
-            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:textSize="15dp"
             android:textAllCaps="false"
             android:gravity="center"
             android:drawableLeft="@drawable/ic_bed"
-            android:text="   Rooms"/>
+            android:drawablePadding="10dp"
+            android:text="Phòng"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/room_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layoutAnimation="@anim/layout_animation_fall_down"
             />
 
     </LinearLayout>

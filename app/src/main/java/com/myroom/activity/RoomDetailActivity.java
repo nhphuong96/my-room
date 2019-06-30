@@ -54,7 +54,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Room Information");
+        actionBar.setTitle("Thông tin phòng");
     }
 
     private void getExtraInputs() {
@@ -64,7 +64,7 @@ public class RoomDetailActivity extends AppCompatActivity {
             this.roomId = Long.valueOf(roomId);
         }
         else {
-            Toast.makeText(this, "Could not load roomId.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không tìm thấy roomId.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -31,8 +31,8 @@ public class RoomDetailPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case 0: return "Guest In Room";
-            case 1: return "Utilities";
+            case 0: return "Khách phòng";
+            case 1: return "Tiện ích";
             default: return StringUtils.EMPTY;
         }
     }

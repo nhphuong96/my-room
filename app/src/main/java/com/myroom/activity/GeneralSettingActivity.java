@@ -43,8 +43,8 @@ public class GeneralSettingActivity extends AppCompatActivity {
 
     private List<GeneralSettingItem> initializeGeneralSettingItems() {
         List<GeneralSettingItem> result = new ArrayList<>();
-        GeneralSettingItem utilitySetting = new GeneralSettingItem(GeneralSettingId.UTILITY,"Utility", R.drawable.ic_utility);
-        GeneralSettingItem otherSetting = new GeneralSettingItem(GeneralSettingId.OTHER,"Other", R.drawable.ic_dog);
+        GeneralSettingItem utilitySetting = new GeneralSettingItem(GeneralSettingId.UTILITY,"Tiện ích", R.drawable.ic_utility);
+        GeneralSettingItem otherSetting = new GeneralSettingItem(GeneralSettingId.OTHER,"Khác", R.drawable.ic_dog);
         result.add(utilitySetting);
         result.add(otherSetting);
         return result;
@@ -54,6 +54,6 @@ public class GeneralSettingActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("General setting");
+        actionBar.setTitle("Cài đặt chung");
     }
 }

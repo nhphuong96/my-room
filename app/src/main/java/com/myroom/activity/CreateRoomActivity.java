@@ -63,7 +63,7 @@ public class CreateRoomActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Create room");
+        actionBar.setTitle("Tạo phòng");
     }
 
     @Override
@@ -100,7 +100,7 @@ public class CreateRoomActivity extends AppCompatActivity {
                     CreateRoomIn createRoomIn = buildCreateRoomIn(roomName, guestName, birthDate, idCard, phoneNumber);
                     try {
                         roomService.createRoom(createRoomIn);
-                        Toast.makeText(CreateRoomActivity.this, "Create room successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateRoomActivity.this, "Tạo phòng thành công.", Toast.LENGTH_SHORT).show();
                     } catch (ValidationException e) {
                         Toast.makeText(CreateRoomActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (OperationException e) {
@@ -130,7 +130,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 
     private boolean assertNotEmpty(EditText etField, String fieldValue) {
         if (StringUtils.isEmpty(fieldValue)) {
-            etField.setError("This field is required.");
+            etField.setError("Bắt buộc");
             return false;
         }
         return true;

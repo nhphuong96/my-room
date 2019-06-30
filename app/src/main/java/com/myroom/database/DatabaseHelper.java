@@ -49,8 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
     private void createUtilityData(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (1, \"Electricity\")");
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (2, \"Water\")");
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (1, \"Điện\")");
+        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (2, \"Nước\")");
         db.execSQL("INSERT INTO utility (id, utility_name) VALUES (3, \"Cab\")");
         db.execSQL("INSERT INTO utility (id, utility_name) VALUES (4, \"Internet\")");
     }

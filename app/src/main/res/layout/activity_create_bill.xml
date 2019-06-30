@@ -24,7 +24,7 @@
         android:id="@+id/create_bill_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="Xem tin nhắn"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:theme="@style/ButtonTheme"

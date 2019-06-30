@@ -75,7 +75,7 @@ public class CreateBillActivity extends AppCompatActivity {
             EditText counter = internetView.findViewById(R.id.internet_counter);
             TextView fee = internetView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
-                counter.setError("This field is required.");
+                counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
             intent.putExtra("internetCounter", counter.getText().toString());
@@ -89,7 +89,7 @@ public class CreateBillActivity extends AppCompatActivity {
             EditText counter = cabView.findViewById(R.id.cab_counter);
             TextView fee = cabView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
-                counter.setError("This field is required.");
+                counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
             intent.putExtra("cabCounter", counter.getText().toString());
@@ -103,7 +103,7 @@ public class CreateBillActivity extends AppCompatActivity {
             EditText counter = waterView.findViewById(R.id.water_counter);
             TextView fee = waterView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
-                counter.setError("This field is required.");
+                counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
             intent.putExtra("waterCounter", counter.getText().toString());
@@ -117,11 +117,11 @@ public class CreateBillActivity extends AppCompatActivity {
             EditText lastIndex = electricityView.findViewById(R.id.electricity_last_index);
             TextView fee = electricityView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(lastIndex.getText())) {
-                lastIndex.setError("This field is required.");
+                lastIndex.setError("Bắt buộc.");
                 throw new ValidationException();
             }
             if (StringUtils.isBlank(currentIndex.getText())) {
-                currentIndex.setError("This field is required.");
+                currentIndex.setError("Bắt buộc.");
                 throw new ValidationException();
             }
             intent.putExtra("electricityLastIndex", lastIndex.getText().toString());
@@ -202,6 +202,6 @@ public class CreateBillActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Create bill");
+        actionBar.setTitle("Tạo hóa đơn");
     }
 }

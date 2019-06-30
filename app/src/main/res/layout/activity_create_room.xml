@@ -25,81 +25,159 @@
             android:layout_weight="1"
             >
 
-            <EditText
-                android:id="@+id/create_room_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Room name"
-                android:inputType="text"
-                android:textSize="14sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-medium"
-                />
-
-            <EditText
-                android:id="@+id/create_guest_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Guest name"
-                android:textSize="14sp"
-                android:inputType="text"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:fontFamily="sans-serif-medium"
-                />
-
-            <EditText
-                android:id="@+id/create_guest_birthdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Birthdate"
-                android:textSize="14sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:inputType="date"
-                android:fontFamily="sans-serif-medium"
-                />
-
-            <EditText
-                android:id="@+id/create_guest_id_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Identifier card"
-                android:textSize="14sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:inputType="number"
-                android:fontFamily="sans-serif-medium"
-                />
-
-            <EditText
-                android:id="@+id/create_guest_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone number"
-                android:textSize="14sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:inputType="phone"
-                android:fontFamily="sans-serif-medium"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            >
-
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_user"/>
+                android:text="Thông tin khách phòng"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Tên phòng : "
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+                <EditText
+                    android:id="@+id/create_room_name"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Phòng 1"
+                    android:inputType="text"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Tên khách : "
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+                <EditText
+                    android:id="@+id/create_guest_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Trung"
+                    android:layout_weight="3"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:fontFamily="sans-serif-medium"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh : "
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+                <EditText
+                    android:id="@+id/create_guest_birthdate"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:hint="02/07/1964"
+                    android:textSize="14sp"
+                    android:inputType="date"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Số CMND : "
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+                <EditText
+                    android:id="@+id/create_guest_id_card"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="123456789"
+                    android:textSize="14sp"
+                    android:inputType="number"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại: "
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+                <EditText
+                    android:id="@+id/create_guest_phone_number"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:hint="0902.444.505"
+                    android:textSize="14sp"
+                    android:inputType="phone"
+                    android:fontFamily="sans-serif-medium"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -114,7 +192,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select utilities in room"
+            android:text="Chọn tiện ích trong phòng"
             android:fontFamily="sans-serif-medium"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
@@ -143,7 +221,7 @@
             android:id="@+id/create_room_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="Tạo phòng"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:theme="@style/ButtonTheme"

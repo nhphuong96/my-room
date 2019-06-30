@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Electricity: "
+            android:text="Điện : "
             android:textSize="12sp"
             android:fontFamily="sans-serif-medium"
             />
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:inputType="number"
             android:maxLines="1"
-            android:hint="Current (kWh)"
+            android:hint="Số mới (kWh)"
             android:fontFamily="sans-serif-medium"
             android:textSize="12dp"/>
 
@@ -67,7 +67,7 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"
-            android:hint="Last (kWh)"
+            android:hint="Số cũ (kWh)"
             android:fontFamily="sans-serif-medium"
             android:textSize="12dp"/>
 

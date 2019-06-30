@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fee: "
+            android:text="Chi phí : "
             android:textSize="12sp"
             android:fontFamily="sans-serif-medium"
             />
@@ -66,7 +66,7 @@
             android:id="@+id/edit_utility_cancel"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:text="Cancel"
+            android:text="Hủy"
             android:textSize="12dp"
             android:textAllCaps="false"
             android:textColor="#fff"
@@ -78,7 +78,7 @@
             android:id="@+id/edit_utility_submit"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:text="Save"
+            android:text="Lưu"
             android:textSize="12dp"
             android:textAllCaps="false"
             android:textColor="#fff"

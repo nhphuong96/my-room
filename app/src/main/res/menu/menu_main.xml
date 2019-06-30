@@ -4,10 +4,10 @@
     <item
         android:id="@+id/move_to_create_room"
         android:icon="@drawable/ic_plus"
-        android:title="Create room"/>
+        android:title="Tạo phòng"/>
     <item
         android:id="@+id/move_to_general_setting"
         android:icon="@drawable/ic_gear"
-        android:title="Settings" />
+        android:title="Cài đặt" />
 </group>
 </menu>
