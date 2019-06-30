@@ -7,7 +7,8 @@ public class Guest extends BaseModel {
         COLUMN_BIRTH_DATE(2, "birth_date"),
         COLUMN_ID_CARD(3, "id_card"),
         COLUMN_PHONE_NUMBER(4, "phone_number"),
-        COLUMN_ROOM_ID(5, "room_id");
+        COLUMN_ROOM_ID(5, "room_id"),
+        COLUMN_GENDER(6, "gender");
 
         private int index;
         private String colName;
@@ -39,16 +40,18 @@ public class Guest extends BaseModel {
     private String idCard;
     private String phoneNumber;
     private long roomId;
+    private int gender;
 
     public Guest() {
     }
 
-    public Guest(String guestName, String birthDate, String idCard, String phoneNumber, long roomId) {
+    public Guest(String guestName, String birthDate, String idCard, String phoneNumber, long roomId, int gender) {
         this.guestName = guestName;
         this.birthDate = birthDate;
         this.idCard = idCard;
         this.phoneNumber = phoneNumber;
         this.roomId = roomId;
+        this.gender = gender;
     }
 
     public String getGuestName() {
@@ -91,6 +94,14 @@ public class Guest extends BaseModel {
         this.roomId = roomId;
     }
 
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "Guest{" +
@@ -98,7 +109,8 @@ public class Guest extends BaseModel {
                 ", birthDate='" + birthDate + '\'' +
                 ", idCard='" + idCard + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", roomId='" + roomId + '\'' +
+                ", roomId=" + roomId +
+                ", gender=" + gender +
                 '}';
     }
 }

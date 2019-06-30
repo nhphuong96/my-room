@@ -29,7 +29,9 @@ public class GuestRepository implements IObjectRepository<Guest> {
                 Guest.Column.COLUMN_GUEST_NAME.getColName(),
                 Guest.Column.COLUMN_BIRTH_DATE.getColName(),
                 Guest.Column.COLUMN_ID_CARD.getColName(),
-                Guest.Column.COLUMN_PHONE_NUMBER.getColName()
+                Guest.Column.COLUMN_PHONE_NUMBER.getColName(),
+                Guest.Column.COLUMN_ROOM_ID.getColName(),
+                Guest.Column.COLUMN_GENDER.getColName()
         };
         Cursor c = db.query(Guest.TABLE_NAME, columns, Guest.Column.COLUMN_ROOM_ID.getColName() + " = ?", new String[] {String.valueOf(roomId)}, null, null, null, null);
 
@@ -42,6 +44,8 @@ public class GuestRepository implements IObjectRepository<Guest> {
                 guest.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
                 guest.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
                 guest.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
+                guest.setRoomId(Long.valueOf(c.getString(Guest.Column.COLUMN_ROOM_ID.getIndex())));
+                guest.setGender(Integer.valueOf(c.getString(Guest.Column.COLUMN_GENDER.getIndex())));
                 guestsInRoom.add(guest);
             }
             while (c.moveToNext());
@@ -58,6 +62,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
         values.put(Guest.Column.COLUMN_ID_CARD.getColName(), entity.getIdCard());
         values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), entity.getPhoneNumber());
         values.put(Guest.Column.COLUMN_ROOM_ID.getColName(), entity.getRoomId());
+        values.put(Guest.Column.COLUMN_GENDER.getColName(), entity.getGender());
         long id = db.insertOrThrow(Guest.TABLE_NAME, null, values);
         return id;
     }
@@ -70,7 +75,9 @@ public class GuestRepository implements IObjectRepository<Guest> {
                 Guest.Column.COLUMN_GUEST_NAME.getColName(),
                 Guest.Column.COLUMN_BIRTH_DATE.getColName(),
                 Guest.Column.COLUMN_ID_CARD.getColName(),
-                Guest.Column.COLUMN_PHONE_NUMBER.getColName()
+                Guest.Column.COLUMN_PHONE_NUMBER.getColName(),
+                Guest.Column.COLUMN_ROOM_ID.getColName(),
+                Guest.Column.COLUMN_GENDER.getColName()
         };
         Cursor c = db.query(Guest.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
 
@@ -81,6 +88,8 @@ public class GuestRepository implements IObjectRepository<Guest> {
             result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
             result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
             result.setPhoneNumber(c.getString(Guest.Column.COLUMN_PHONE_NUMBER.getIndex()));
+            result.setRoomId(Long.valueOf(c.getString(Guest.Column.COLUMN_ROOM_ID.getIndex())));
+            result.setGender(Integer.valueOf(c.getString(Guest.Column.COLUMN_GENDER.getIndex())));
             return result;
         }
         return null;
@@ -106,6 +115,8 @@ public class GuestRepository implements IObjectRepository<Guest> {
         values.put(Guest.Column.COLUMN_BIRTH_DATE.getColName(), entity.getBirthDate());
         values.put(Guest.Column.COLUMN_ID_CARD.getColName(), entity.getIdCard());
         values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), entity.getPhoneNumber());
+        values.put(Guest.Column.COLUMN_ROOM_ID.getColName(), entity.getRoomId());
+        values.put(Guest.Column.COLUMN_GENDER.getColName(), entity.getGender());
         int rowAffected = db.update(Guest.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
         return rowAffected > 0;
     }

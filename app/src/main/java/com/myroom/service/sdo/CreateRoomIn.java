@@ -8,6 +8,7 @@ public class CreateRoomIn {
     private String guestBirthDate;
     private String guestIdCard;
     private String guestPhoneNumber;
+    private int gender;
     private List<Long> utilityIdList;
 
     public String getRoomName() {
@@ -56,5 +57,13 @@ public class CreateRoomIn {
 
     public void setGuestPhoneNumber(String guestPhoneNumber) {
         this.guestPhoneNumber = guestPhoneNumber;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

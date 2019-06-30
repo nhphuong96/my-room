@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.myroom.R;
@@ -37,6 +38,7 @@ public class CreateRoomActivity extends AppCompatActivity {
     private AppCompatButton btnSubmit;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private RadioGroup radioGroupGender;
     private CreateRoomUtilityAdapter adapter;
 
     @Inject
@@ -55,6 +57,7 @@ public class CreateRoomActivity extends AppCompatActivity {
         etBirthDate = findViewById(R.id.create_guest_birthdate);
         etIdCard = findViewById(R.id.create_guest_id_card);
         etPhoneNo = findViewById(R.id.create_guest_phone_number);
+        radioGroupGender = findViewById(R.id.radioButton_gender);
         btnSubmit = findViewById(R.id.create_room_submit);
         btnSubmit.setOnClickListener(btnSubmitClickedListener());
     }
@@ -96,8 +99,9 @@ public class CreateRoomActivity extends AppCompatActivity {
                 String birthDate = etBirthDate.getText().toString();
                 String phoneNumber = etPhoneNo.getText().toString();
                 String idCard = etIdCard.getText().toString();
-                if (assertNotEmpty(etRoomName, roomName) && assertNotEmpty(etGuestName, guestName)) {
-                    CreateRoomIn createRoomIn = buildCreateRoomIn(roomName, guestName, birthDate, idCard, phoneNumber);
+                int selectedGenderId = radioGroupGender.getCheckedRadioButtonId();
+                if (assertNotEmpty(etRoomName, roomName) && assertNotEmpty(etGuestName, guestName) && assertNotEmpty(etPhoneNo, phoneNumber)) {
+                    CreateRoomIn createRoomIn = buildCreateRoomIn(roomName, guestName, birthDate, idCard, phoneNumber, selectedGenderId);
                     try {
                         roomService.createRoom(createRoomIn);
                         Toast.makeText(CreateRoomActivity.this, "Tạo phòng thành công.", Toast.LENGTH_SHORT).show();
@@ -112,13 +116,14 @@ public class CreateRoomActivity extends AppCompatActivity {
         };
     }
 
-    private CreateRoomIn buildCreateRoomIn(String roomName, String guestName, String birthDate, String idCard, String phoneNumber) {
+    private CreateRoomIn buildCreateRoomIn(String roomName, String guestName, String birthDate, String idCard, String phoneNumber, int selectedGenderId) {
         CreateRoomIn createRoomIn = new CreateRoomIn();
         createRoomIn.setRoomName(roomName);
         createRoomIn.setGuestName(guestName);
         createRoomIn.setGuestBirthDate(birthDate);
         createRoomIn.setGuestIdCard(idCard);
         createRoomIn.setGuestPhoneNumber(phoneNumber);
+        createRoomIn.setGender(getGenderAsInt(selectedGenderId));
         createRoomIn.setUtilityIdList(new ArrayList<Long>());
         for (CreateRoomUtilityAdapter.UtilitySelection utilitySelection : adapter.getUtilitySelectionList()) {
             if (utilitySelection.getSelected()) {
@@ -126,6 +131,13 @@ public class CreateRoomActivity extends AppCompatActivity {
             }
         }
         return createRoomIn;
+    }
+
+    private int getGenderAsInt(int genderId) {
+        if (genderId == R.id.radioButton_male) {
+            return 1;
+        }
+        return 0;
     }
 
     private boolean assertNotEmpty(EditText etField, String fieldValue) {

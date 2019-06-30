@@ -74,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         tableStructures.add(createColumn(Guest.Column.COLUMN_ID_CARD.getColName(), TEXT));
         tableStructures.add(createColumn(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), TEXT));
         tableStructures.add(createColumn(Guest.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
+        tableStructures.add(createColumn(Guest.Column.COLUMN_GENDER.getColName(), INTEGER));
         return buildCreateTableQuery(Guest.TABLE_NAME, tableStructures);
     }
 

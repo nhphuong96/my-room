@@ -120,6 +120,7 @@ public class RoomServiceImpl implements IRoomService {
         guest.setIdCard(createRoomIn.getGuestIdCard());
         guest.setPhoneNumber(createRoomIn.getGuestPhoneNumber());
         guest.setRoomId(roomId);
+        guest.setGender(createRoomIn.getGender());
         return guest;
     }
 
