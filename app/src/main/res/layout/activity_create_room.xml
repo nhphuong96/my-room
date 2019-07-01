@@ -118,14 +118,16 @@
 
                     <RadioButton
                         android:id="@+id/radioButton_male"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Nam"
                         />
 
                     <RadioButton
                         android:id="@+id/radioButton_female"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Nữ"
                         />

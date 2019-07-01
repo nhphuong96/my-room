@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,9 +61,9 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
             ReadAvailableUtilityOut readAvailableUtilityOut = roomService.readAvailableUtility(readAvailableUtilityIn);
             utilityInRoomItemList = readAvailableUtilityOut.getUtilityInRoomItemList();
         } catch (ValidationException e) {
-            Toast.makeText(context, "ValidationException occurred while reading available utilities.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "ValidationException: Có lỗi xảy ra, không thể tải tiện ích phòng.", Toast.LENGTH_SHORT).show();
         } catch (OperationException e) {
-            Toast.makeText(context, "OperationException occurred while reading available utilities.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "OperationException: Có lỗi xảy ra, không thể tải tiện ích phòng.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -81,6 +82,7 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         utilityInRoomViewHolder.utilityId = utilityInRoomItem.getUtilityId();
         utilityInRoomViewHolder.tvUtilityInRoomName.setText(utilityInRoomItem.getUtilityName());
         utilityInRoomViewHolder.tvUtilityInRoomFee.setText(String.valueOf(utilityInRoomItem.getUtilityFee()));
+        utilityInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(utilityInRoomItem.getUtilityIconName(), "drawable", context.getPackageName()));
     }
 
     @Override
@@ -92,11 +94,13 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         private TextView tvUtilityInRoomName;
         private TextView tvUtilityInRoomFee;
         private Long utilityId;
+        private ImageView ivAvatar;
 
         public UtilityInRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUtilityInRoomName = itemView.findViewById(R.id.item_utility_in_room_name);
             tvUtilityInRoomFee = itemView.findViewById(R.id.item_utility_in_room_fee);
+            ivAvatar = itemView.findViewById(R.id.item_utility_in_room_icon);
             itemView.setOnClickListener(this);
         }
 
@@ -130,7 +134,7 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
                 @Override
                 public void onClick(View v) {
                     if (StringUtils.isEmpty(etUtilityFee.getText())) {
-                        etUtilityFee.setError("This field is required.");
+                        etUtilityFee.setError("Bắt buộc");
                         return;
                     }
 
@@ -143,10 +147,10 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
                         UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(getAdapterPosition());
                         utilityInRoomItem.setUtilityFee(Integer.valueOf(etUtilityFee.getText().toString()));
                         notifyDataSetChanged();
-                        Toast.makeText(context, "Updated utility fee successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Toast.makeText(context, "Could not update utility fee. Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Không thể cập nhật phí, vui lòng thử lại.", Toast.LENGTH_SHORT).show();
                     }
                     dialog.dismiss();
                 }

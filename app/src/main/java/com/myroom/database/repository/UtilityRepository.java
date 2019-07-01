@@ -39,6 +39,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
         String[] columns = new String[] {
                 BaseModel.Column.COLUMN_ID.getColName(),
                 Utility.Column.COLUMN_UTILITY_NAME.getColName(),
+                Utility.Column.COLUMN_UTILITY_ICON.getColName()
         };
         Cursor c = db.query(Utility.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
 
@@ -46,6 +47,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
             Utility result = new Utility();
             result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
             result.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
+            result.setIcon(c.getString(Utility.Column.COLUMN_UTILITY_ICON.getIndex()));
             return result;
         }
         return null;
@@ -62,6 +64,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
                 Utility utility = new Utility();
                 utility.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
                 utility.setName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+                utility.setIcon(c.getString(Utility.Column.COLUMN_UTILITY_ICON.getIndex()));
                 result.add(utility);
             }
             while (c.moveToNext());
@@ -81,6 +84,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), entity.getName());
+        values.put(Utility.Column.COLUMN_UTILITY_ICON.getColName(), entity.getIcon());
         int rowAffected = db.update(Utility.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
         return rowAffected > 0;
     }

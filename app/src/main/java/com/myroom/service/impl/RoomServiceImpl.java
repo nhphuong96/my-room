@@ -87,6 +87,7 @@ public class RoomServiceImpl implements IRoomService {
                 utilityInRoomItem.setUtilityId(utility.getId());
                 utilityInRoomItem.setUtilityName(utility.getName());
                 utilityInRoomItem.setUtilityFee(rUtility.getUtilityFee());
+                utilityInRoomItem.setUtilityIconName(utility.getIcon());
                 readAvailableUtilityOut.getUtilityInRoomItemList().add(utilityInRoomItem);
             }
         }

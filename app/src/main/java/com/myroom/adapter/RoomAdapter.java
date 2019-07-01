@@ -88,8 +88,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         @Override
         public boolean onLongClick(View v) {
             new AlertDialog.Builder(context)
-                    .setTitle("Delete").setMessage("Are you sure you want to delete this room?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle("Xóa phòng").setMessage("Bạn có chắc muốn xóa phòng này?")
+                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Room room = roomList.get(getAdapterPosition());
@@ -97,7 +97,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                                 roomService.deleteRoom(buildDeleteRoomIn(room));
                                 roomList.remove(room);
                                 notifyDataSetChanged();
-                                Toast.makeText(context, "Deleted room " + room.getRoomName(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Xóa phòng thành công", Toast.LENGTH_SHORT).show();
                             } catch (ValidationException e) {
                                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                             } catch (OperationException e) {
@@ -105,7 +105,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                             }
                         }
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton("Không", null)
                     .setIcon(R.drawable.ic_alert)
                     .show();
             return true;
@@ -135,10 +135,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         if (roomLeader != null) {
             txtLeaderName.setText(roomLeader.getGuestName());
             if (roomLeader.getGender() == 1) {
-                imageView.setImageResource(context.getResources().getIdentifier("ic_man_avatar", "drawable", context.getPackageName()));
+                imageView.setImageResource(context.getResources().getIdentifier(context.getString(R.string.ic_man_avatar_name), "drawable", context.getPackageName()));
             }
             else {
-                imageView.setImageResource(context.getResources().getIdentifier("ic_woman_avatar", "drawable", context.getPackageName()));
+                imageView.setImageResource(context.getResources().getIdentifier(context.getString(R.string.ic_woman_avatar_name), "drawable", context.getPackageName()));
             }
 
         }

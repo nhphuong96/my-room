@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myroom.R;
@@ -21,10 +22,12 @@ public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.
 
     @Inject
     public GuestRepository guestRepository;
+    private Context context;
     private List<Guest> guestList;
     private Long roomId;
 
     public GuestInRoomAdapter(Context context, Long roomId) {
+        this.context = context;
         BaseApplication.getRepositoryComponent(context).inject(this);
         this.roomId = roomId;
         loadGuestInRoomList();
@@ -49,6 +52,12 @@ public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.
         Guest guest = guestList.get(i);
         guestInRoomViewHolder.tvGuestName.setText(guest.getGuestName());
         guestInRoomViewHolder.tvBirthDate.setText(guest.getBirthDate());
+        if (guest.getGender() == 1) {
+            guestInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(context.getString(R.string.ic_man_avatar_name), "drawable", context.getPackageName()));
+        }
+        else {
+            guestInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(context.getString(R.string.ic_woman_avatar_name), "drawable", context.getPackageName()));
+        }
     }
 
     @Override
@@ -61,11 +70,13 @@ public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.
         private TextView tvBirthDate;
         private TextView tvIdCard;
         private TextView tvPhoneNumber;
+        private ImageView ivAvatar;
 
         public GuestInRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             tvGuestName = itemView.findViewById(R.id.item_guest_in_room_name);
             tvBirthDate = itemView.findViewById(R.id.item_guest_in_room_birth_date);
+            ivAvatar = itemView.findViewById(R.id.item_guest_in_room_avatar);
         }
     }
 }

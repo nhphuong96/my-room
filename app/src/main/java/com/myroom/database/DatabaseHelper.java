@@ -49,10 +49,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
     private void createUtilityData(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (1, \"Điện\")");
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (2, \"Nước\")");
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (3, \"Cab\")");
-        db.execSQL("INSERT INTO utility (id, utility_name) VALUES (4, \"Internet\")");
+        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (1, \"Điện\", \"ic_electricity\")");
+        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (2, \"Nước\", \"ic_water\")");
+        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (3, \"Cab\", \"ic_tv\")");
+        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (4, \"Internet\", \"ic_internet\")");
     }
 
     private String dropTable(String tableRoom) {
@@ -82,6 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         List<String> tableStructures = new ArrayList<>();
         tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
         tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_NAME.getColName(), TEXT));
+        tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_ICON.getColName(), TEXT));
         return buildCreateTableQuery(Utility.TABLE_NAME, tableStructures);
     }
 

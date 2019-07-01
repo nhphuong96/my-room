@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Room</string>
+    <string name="ic_man_avatar_name">ic_man_avatar</string>
+    <string name="ic_woman_avatar_name">ic_woman_avatar</string>
+    <string name="ic_electricity_avatar_name">ic_electricity</string>
+    <string name="ic_water_avatar_name">ic_water</string>
+    <string name="ic_cab_avatar_name">ic_cab</string>
+    <string name="ic_internet_avatar_name">ic_internet</string>
 </resources>
