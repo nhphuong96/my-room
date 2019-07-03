@@ -41,7 +41,7 @@ public class GeneralSettingUtilityActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BaseApplication.getRepositoryComponent(this).inject(this);
-        setContentView(R.layout.activity_utility);
+        setContentView(R.layout.activity_setting_utility);
         initializeToolbar();
         loadAllUtilities();
     }
@@ -124,6 +124,6 @@ public class GeneralSettingUtilityActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Utility setting");
+        actionBar.setTitle("Cài đặt tiện ích");
     }
 }

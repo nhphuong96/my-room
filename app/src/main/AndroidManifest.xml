@@ -54,6 +54,8 @@
 
         <activity android:name=".activity.SendMessageActivity"
             android:parentActivityName=".activity.CreateBillActivity"/>
+        <activity android:name=".activity.GeneralSettingCurrencyActivity"
+            android:parentActivityName=".activity.GeneralSettingUtilityActivity"/>
     </application>
 
 </manifest>

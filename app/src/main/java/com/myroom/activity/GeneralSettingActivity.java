@@ -44,8 +44,10 @@ public class GeneralSettingActivity extends AppCompatActivity {
     private List<GeneralSettingItem> initializeGeneralSettingItems() {
         List<GeneralSettingItem> result = new ArrayList<>();
         GeneralSettingItem utilitySetting = new GeneralSettingItem(GeneralSettingId.UTILITY,"Tiện ích", R.drawable.ic_utility);
+        GeneralSettingItem currencySetting = new GeneralSettingItem(GeneralSettingId.CURRENCY,"Tiền tệ", R.drawable.ic_currency);
         GeneralSettingItem otherSetting = new GeneralSettingItem(GeneralSettingId.OTHER,"Khác", R.drawable.ic_dog);
         result.add(utilitySetting);
+        result.add(currencySetting);
         result.add(otherSetting);
         return result;
     }

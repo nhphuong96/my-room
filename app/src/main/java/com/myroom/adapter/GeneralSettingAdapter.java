@@ -2,14 +2,17 @@ package com.myroom.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myroom.R;
+import com.myroom.activity.GeneralSettingCurrencyActivity;
 import com.myroom.activity.GeneralSettingOtherActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
 import com.myroom.core.GeneralSettingId;
@@ -39,8 +42,8 @@ public class GeneralSettingAdapter extends RecyclerView.Adapter<GeneralSettingAd
     public void onBindViewHolder(@NonNull GeneralSettingViewHolder generalSettingViewHolder, int i) {
         GeneralSettingItem generalSettingItem = generalSettingItemList.get(i);
         generalSettingViewHolder.id = generalSettingItem.getId();
-        generalSettingViewHolder.tvGeneralSettingName.setText("   " + generalSettingItem.getName());
-        generalSettingViewHolder.tvGeneralSettingName.setCompoundDrawablesWithIntrinsicBounds(generalSettingItem.getImageRes(), 0, 0, 0);
+        generalSettingViewHolder.tvGeneralSettingName.setText(generalSettingItem.getName());
+        generalSettingViewHolder.ivGeneralSettingIcon.setImageResource(generalSettingItem.getImageRes());
     }
 
     @Override
@@ -49,12 +52,14 @@ public class GeneralSettingAdapter extends RecyclerView.Adapter<GeneralSettingAd
     }
 
     public class GeneralSettingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ImageView ivGeneralSettingIcon;
         private TextView tvGeneralSettingName;
         private GeneralSettingId id;
 
         public GeneralSettingViewHolder(@NonNull View itemView) {
             super(itemView);
             tvGeneralSettingName = itemView.findViewById(R.id.item_general_setting_name);
+            ivGeneralSettingIcon = itemView.findViewById(R.id.item_general_setting_icon);
             itemView.setOnClickListener(this);
         }
 
@@ -64,6 +69,10 @@ public class GeneralSettingAdapter extends RecyclerView.Adapter<GeneralSettingAd
                 case UTILITY:
                     Intent utilityIntent = new Intent(parentContext, GeneralSettingUtilityActivity.class);
                     parentContext.startActivity(utilityIntent);
+                    break;
+                case CURRENCY:
+                    Intent currencyIntent = new Intent(parentContext, GeneralSettingCurrencyActivity.class);
+                    parentContext.startActivity(currencyIntent);
                     break;
                 case OTHER:
                     Intent otherIntent = new Intent(parentContext, GeneralSettingOtherActivity.class);

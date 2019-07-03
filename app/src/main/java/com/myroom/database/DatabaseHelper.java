@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.myroom.core.Constant;
 import com.myroom.database.dao.BaseModel;
+import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
 import com.myroom.database.dao.Room;
 import com.myroom.database.dao.RoomUtility;
@@ -35,8 +36,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(createRoomTable());
         db.execSQL(createUtilityTable());
         db.execSQL(createRoomUtilityTable());
+        db.execSQL(createCurrencyTable());
         
         createUtilityData(db);
+        createCurrencyData(db);
     }
 
     @Override
@@ -55,8 +58,25 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (4, \"Internet\", \"ic_internet\")");
     }
 
+    private void createCurrencyData(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (1, \"VND\", \"ic_vietnam_flag\", 0)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (2, \"USD\", \"ic_american_flag\", 1)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (3, \"CNY\", \"ic_china_flag\", 1)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (4, \"JPY\", \"ic_japan_flag\", 1)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (5, \"EUR\", \"ic_europe_flag\", 1)");
+    }
+
     private String dropTable(String tableRoom) {
         return "DROP TABLE IF EXISTS " + tableRoom;
+    }
+
+    private String createCurrencyTable() {
+        List<String> tableStructures = new ArrayList<>();
+        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_CD.getColName(), TEXT));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_ICON.getColName(), TEXT));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_IS_DECIMAL.getColName(), INTEGER));
+        return buildCreateTableQuery(Currency.TABLE_NAME, tableStructures);
     }
 
     private String createRoomTable() {

@@ -24,7 +24,6 @@ import com.myroom.service.sdo.ReadAvailableUtilityOut;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;

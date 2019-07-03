@@ -2,7 +2,9 @@ package com.myroom.application;
 
 import android.content.Context;
 
+import com.myroom.service.ICurrencyService;
 import com.myroom.service.IRoomService;
+import com.myroom.service.impl.CurrencyServiceImpl;
 import com.myroom.service.impl.RoomServiceImpl;
 
 import javax.inject.Singleton;
@@ -16,4 +18,8 @@ public abstract class ServiceModule {
     @Binds
     @Singleton
     abstract IRoomService bindRoomService(RoomServiceImpl roomServiceImpl);
+
+    @Binds
+    @Singleton
+    abstract ICurrencyService bindCurrencyService(CurrencyServiceImpl currencyServiceImpl);
 }
