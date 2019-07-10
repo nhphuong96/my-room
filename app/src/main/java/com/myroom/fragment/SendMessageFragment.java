@@ -1,27 +1,33 @@
-package com.myroom.activity;
+package com.myroom.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
-import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myroom.R;
+import com.myroom.activity.MainActivity;
 import com.myroom.application.BaseApplication;
 import com.myroom.core.NumberFormatter;
+import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
 import com.myroom.database.repository.GuestRepository;
+import com.myroom.exception.OperationException;
+import com.myroom.service.ICurrencyService;
+import com.myroom.service.impl.CurrencyServiceImpl;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -32,33 +38,60 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class SendMessageActivity extends AppCompatActivity {
+public class SendMessageFragment extends Fragment {
 
+    private Context context;
+    private TextView tvMessage;
     private AppCompatSpinner recipientSelector;
-
-    private Long roomId;
+    private AppCompatButton btnSendMessage;
+    private long roomId;
+    private Currency selectedCurrency;
 
     @Inject
     public GuestRepository guestRepository;
+    @Inject
+    public ICurrencyService currencyService;
+
+    public static Fragment newInstance(Bundle bundle) {
+        SendMessageFragment sendMessageFragment = new SendMessageFragment();
+        sendMessageFragment.setArguments(bundle);
+        return sendMessageFragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        context = container.getContext();
+        View view = inflater.inflate(R.layout.fragment_send_message, container, false);
+        tvMessage = view.findViewById(R.id.message_content);
+        recipientSelector = view.findViewById(R.id.recipient_selector);
+        btnSendMessage = view.findViewById(R.id.send_message);
+        return view;
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_message);
-        BaseApplication.getRepositoryComponent(this).inject(this);
-        initializeToolbar();
-        Bundle bundle = getIntent().getExtras();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        BaseApplication.getRepositoryComponent(context).inject(this);
+        BaseApplication.getServiceComponent(context).inject(this);
+        loadSelectedCurrency();
+        Bundle bundle = getArguments();
         if (bundle != null) {
             loadRecipients(bundle);
             String messageContent = createBillMessage(bundle);
             sendMessage(messageContent);
         }
+    }
 
+    private void loadSelectedCurrency() {
+        try {
+            selectedCurrency = currencyService.readSelectedCurrency().getCurrency();
+        } catch (OperationException e) {
+            Toast.makeText(context, "Lỗi xảy ra: không tìm thấy tiền tệ thích hợp.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendMessage(final String messageContent) {
-        final Context context = this;
-        AppCompatButton btnSendMessage = findViewById(R.id.send_message);
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,11 +117,10 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private void loadRecipients(Bundle bundle) {
-        roomId = bundle.getLong("roomId");
+        roomId = getArguments().getLong("roomId");
         List<Guest> guestList = guestRepository.findGuestByRoomId(roomId);
         List<String> recipientList = convert(guestList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_recipient, recipientList);
-        recipientSelector = findViewById(R.id.recipient_selector);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.item_recipient, recipientList);
         recipientSelector.setAdapter(adapter);
 
     }
@@ -108,12 +140,9 @@ public class SendMessageActivity extends AppCompatActivity {
         Double waterFee = appendWaterProperties(builder, bundle);
         Double cabFee = appendCabProperties(builder, bundle);
         Double internetFee = appendInternetProperties(builder, bundle);
-        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee)) + " VND");
+        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee)) + selectedCurrency.getCurrencyCd());
         String messageContent = builder.toString();
-
-        TextView tvMessageContent = findViewById(R.id.message_content);
-        tvMessageContent.setText(messageContent);
-
+        tvMessage.setText(messageContent);
         return messageContent;
     }
 
@@ -195,10 +224,4 @@ public class SendMessageActivity extends AppCompatActivity {
         return (currentIndex - lastIndex) * fee;
     }
 
-    private void initializeToolbar() {
-        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Message review");
-    }
 }

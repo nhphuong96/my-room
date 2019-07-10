@@ -8,14 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.application.BaseApplication;
-import com.myroom.application.ServiceComponent;
+import com.myroom.core.Constant;
 import com.myroom.database.dao.Currency;
+import com.myroom.exception.OperationException;
+import com.myroom.exception.ValidationException;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.sdo.ReadAvailableCurrencyOut;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,7 +27,7 @@ import javax.inject.Inject;
 public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder> {
 
     private Context context;
-    private List<Currency> availableCurrencyList;
+    private List<Currency> availableCurrencyList = new ArrayList<>();
 
     @Inject
     public ICurrencyService currencyService;
@@ -31,8 +35,13 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
     public CurrencyAdapter(Context context) {
         this.context = context;
         BaseApplication.getServiceComponent(context).inject(this);
-        ReadAvailableCurrencyOut readAvailableCurrencyOut = currencyService.readAvailableCurrency();
-        availableCurrencyList = readAvailableCurrencyOut.getCurrencyList();
+        try {
+            ReadAvailableCurrencyOut readAvailableCurrencyOut = currencyService.readAvailableCurrency();
+            availableCurrencyList.addAll(readAvailableCurrencyOut.getCurrencyList());
+        }
+        catch (OperationException e) {
+            Toast.makeText(context, "Lỗi xảy ra khi đọc danh sách tiền tệ hiện có.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @NonNull
@@ -50,7 +59,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
         currencyViewHolder.id = currency.getId();
         currencyViewHolder.currencyIcon.setImageResource(context.getResources().getIdentifier(currency.getCurrencyIcon(), "drawable", context.getPackageName()));
         currencyViewHolder.currencyCd.setText(currency.getCurrencyCd());
-        currencyViewHolder.selected.setVisibility(currency.isSelected() ? View.VISIBLE : View.INVISIBLE);
+        currencyViewHolder.selected.setVisibility(currency.getIsSelected() == Constant.TRUE ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -74,10 +83,17 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
 
         @Override
         public void onClick(View v) {
-            currencyService.updateSelectedCurrency(id);
-            ReadAvailableCurrencyOut readAvailableCurrencyOut = currencyService.readAvailableCurrency();
-            availableCurrencyList = readAvailableCurrencyOut.getCurrencyList();
-            notifyDataSetChanged();
+            try
+            {
+                currencyService.updateSelectedCurrency(id);
+                ReadAvailableCurrencyOut readAvailableCurrencyOut = currencyService.readAvailableCurrency();
+                availableCurrencyList = readAvailableCurrencyOut.getCurrencyList();
+                notifyDataSetChanged();
+            }
+            catch (ValidationException | OperationException e) {
+                Toast.makeText(context, "Lỗi xảy ra khi cập nhật tiện tệ mới.", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 }

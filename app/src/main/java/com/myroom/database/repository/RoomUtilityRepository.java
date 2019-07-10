@@ -52,7 +52,7 @@ public class RoomUtilityRepository {
                 RoomUtility roomUtility = new RoomUtility();
                 roomUtility.setRoomId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_ROOM_ID.getIndex())));
                 roomUtility.setUtilityId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_UTILITY_ID.getIndex())));
-                roomUtility.setUtilityFee(Integer.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
+                roomUtility.setUtilityFee(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex()));
                 result.add(roomUtility);
             }
             while (c.moveToNext());
@@ -78,7 +78,7 @@ public class RoomUtilityRepository {
                 RoomUtility roomUtility = new RoomUtility();
                 roomUtility.setRoomId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_ROOM_ID.getIndex())));
                 roomUtility.setUtilityId(Integer.parseInt(c.getString(RoomUtility.Column.COLUMN_UTILITY_ID.getIndex())));
-                roomUtility.setUtilityFee(Integer.valueOf(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex())));
+                roomUtility.setUtilityFee(c.getString(RoomUtility.Column.COLUMN_UTILITY_FEE.getIndex()));
                 result.add(roomUtility);
             }
             while (c.moveToNext());

@@ -59,11 +59,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
     private void createCurrencyData(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (1, \"VND\", \"ic_vietnam_flag\", 0)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (2, \"USD\", \"ic_american_flag\", 1)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (3, \"CNY\", \"ic_china_flag\", 1)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (4, \"JPY\", \"ic_japan_flag\", 1)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_decimal) VALUES (5, \"EUR\", \"ic_europe_flag\", 1)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (1, \"VND\", \"ic_vietnam_flag\", 1)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (2, \"USD\", \"ic_american_flag\", 0)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (3, \"CNY\", \"ic_china_flag\", 0)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (4, \"JPY\", \"ic_japan_flag\", 0)");
+        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (5, \"EUR\", \"ic_europe_flag\", 0)");
     }
 
     private String dropTable(String tableRoom) {
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
         tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_CD.getColName(), TEXT));
         tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_ICON.getColName(), TEXT));
-        tableStructures.add(createColumn(Currency.Column.COLUMN_IS_DECIMAL.getColName(), INTEGER));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_IS_SELECTED.getColName(), INTEGER));
         return buildCreateTableQuery(Currency.TABLE_NAME, tableStructures);
     }
 

@@ -34,7 +34,7 @@ public class RoomUtility {
 
     private long roomId;
     private long utilityId;
-    private int utilityFee;
+    private String utilityFee;
 
     public long getRoomId() {
         return roomId;
@@ -52,11 +52,11 @@ public class RoomUtility {
         this.utilityId = utilityId;
     }
 
-    public int getUtilityFee() {
+    public String getUtilityFee() {
         return utilityFee;
     }
 
-    public void setUtilityFee(int utilityFee) {
+    public void setUtilityFee(String utilityFee) {
         this.utilityFee = utilityFee;
     }
 

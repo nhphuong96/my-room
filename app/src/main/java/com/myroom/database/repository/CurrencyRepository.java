@@ -1,5 +1,6 @@
 package com.myroom.database.repository;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -7,8 +8,6 @@ import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
 import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Currency;
-import com.myroom.database.dao.Room;
-import com.myroom.database.dao.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,23 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
 
     @Override
     public Currency find(long id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[] {
+                BaseModel.Column.COLUMN_ID.getColName(),
+                Currency.Column.COLUMN_CURRENCY_CD.getColName(),
+                Currency.Column.COLUMN_CURRENCY_ICON.getColName(),
+                Currency.Column.COLUMN_IS_SELECTED.getColName()
+        };
+        Cursor c = db.query(Currency.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            Currency result = new Currency();
+            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setCurrencyCd(c.getString(Currency.Column.COLUMN_CURRENCY_CD.getIndex()));
+            result.setCurrencyIcon(c.getString(Currency.Column.COLUMN_CURRENCY_ICON.getIndex()));
+            result.setIsSelected(Integer.valueOf(c.getString(Currency.Column.COLUMN_IS_SELECTED.getIndex())));
+            return result;
+        }
         return null;
     }
 
@@ -45,7 +61,7 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
                 currency.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
                 currency.setCurrencyCd(c.getString(Currency.Column.COLUMN_CURRENCY_CD.getIndex()));
                 currency.setCurrencyIcon(c.getString(Currency.Column.COLUMN_CURRENCY_ICON.getIndex()));
-                currency.setIsDecimal(Integer.valueOf(c.getString(Currency.Column.COLUMN_IS_DECIMAL.getIndex())));
+                currency.setIsSelected(Integer.valueOf(c.getString(Currency.Column.COLUMN_IS_SELECTED.getIndex())));
                 result.add(currency);
             }
             while (c.moveToNext());
@@ -60,6 +76,13 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
 
     @Override
     public boolean update(Currency entity) {
-        return false;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Currency.Column.COLUMN_CURRENCY_CD.getColName(), entity.getCurrencyCd());
+        values.put(Currency.Column.COLUMN_CURRENCY_ICON.getColName(), entity.getCurrencyIcon());
+        values.put(Currency.Column.COLUMN_IS_SELECTED.getColName(), entity.getIsSelected());
+        int rowAffected = db.update(Currency.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        return rowAffected > 0;
+
     }
 }

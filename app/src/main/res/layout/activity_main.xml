@@ -31,6 +31,12 @@
             android:layoutAnimation="@anim/layout_animation_fall_down"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No room created."
+            />
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

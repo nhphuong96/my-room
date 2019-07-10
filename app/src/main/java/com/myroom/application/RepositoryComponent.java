@@ -17,6 +17,8 @@ import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.database.repository.UtilityRepository;
+import com.myroom.fragment.CreateBillFragment;
+import com.myroom.fragment.SendMessageFragment;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.IRoomService;
 
@@ -43,6 +45,9 @@ public interface RepositoryComponent {
     void inject(CreateBillActivity createBillActivity);
     void inject(SendMessageActivity sendMessageActivity);
     void inject(GeneralSettingCurrencyActivity generalSettingCurrencyActivity);
+
+    void inject(CreateBillFragment createBillFragment);
+    void inject(SendMessageFragment sendMessageFragment);
 
     RoomRepository getRoomRepository();
     GuestRepository getGuestRepository();

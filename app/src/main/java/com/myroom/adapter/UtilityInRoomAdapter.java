@@ -3,7 +3,6 @@ package com.myroom.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,15 +17,18 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.application.BaseApplication;
+import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.dto.UtilityInRoomItem;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
+import com.myroom.service.ICurrencyService;
 import com.myroom.service.IRoomService;
 import com.myroom.service.sdo.ReadAvailableUtilityIn;
 import com.myroom.service.sdo.ReadAvailableUtilityOut;
+import com.myroom.service.sdo.ReadSelectedCurrencyOut;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,14 +39,17 @@ import javax.inject.Inject;
 import dagger.Provides;
 
 public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdapter.UtilityInRoomViewHolder> {
-    List<UtilityInRoomItem> utilityInRoomItemList;
+    private List<UtilityInRoomItem> utilityInRoomItemList;
     private Context context;
     private Long roomId;
+    private Currency selectedCurrency;
 
     @Inject
     public IRoomService roomService;
     @Inject
     public RoomUtilityRepository roomUtilityRepository;
+    @Inject
+    public ICurrencyService currencyService;
 
     public UtilityInRoomAdapter(Context context, Long roomId) {
         this.context = context;
@@ -52,6 +57,16 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         BaseApplication.getServiceComponent(context).inject(this);
         BaseApplication.getRepositoryComponent(context).inject(this);
         loadAllUtilitiesInRoom();
+        loadSelectedCurrency();
+    }
+
+    private void loadSelectedCurrency() {
+        try {
+            ReadSelectedCurrencyOut readSelectedCurrencyOut = currencyService.readSelectedCurrency();
+            selectedCurrency = readSelectedCurrencyOut.getCurrency();
+        } catch (OperationException e) {
+            Toast.makeText(context, "Lỗi xảy ra khi đọc loại tiền tệ.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadAllUtilitiesInRoom() {
@@ -83,6 +98,7 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         utilityInRoomViewHolder.tvUtilityInRoomName.setText(utilityInRoomItem.getUtilityName());
         utilityInRoomViewHolder.tvUtilityInRoomFee.setText(String.valueOf(utilityInRoomItem.getUtilityFee()));
         utilityInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(utilityInRoomItem.getUtilityIconName(), "drawable", context.getPackageName()));
+        utilityInRoomViewHolder.tvCurrency.setText(selectedCurrency.getCurrencyCd());
     }
 
     @Override
@@ -95,12 +111,14 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         private TextView tvUtilityInRoomFee;
         private Long utilityId;
         private ImageView ivAvatar;
+        private TextView tvCurrency;
 
         public UtilityInRoomViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUtilityInRoomName = itemView.findViewById(R.id.item_utility_in_room_name);
             tvUtilityInRoomFee = itemView.findViewById(R.id.item_utility_in_room_fee);
             ivAvatar = itemView.findViewById(R.id.item_utility_in_room_icon);
+            tvCurrency = itemView.findViewById(R.id.item_utility_currency);
             itemView.setOnClickListener(this);
         }
 
@@ -141,11 +159,11 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
                     RoomUtility roomUtility = new RoomUtility();
                     roomUtility.setRoomId(roomId);
                     roomUtility.setUtilityId(utilityId);
-                    roomUtility.setUtilityFee(Integer.valueOf(etUtilityFee.getText().toString()));
+                    roomUtility.setUtilityFee(etUtilityFee.getText().toString());
                     boolean success = roomUtilityRepository.updateRoomUtility(roomUtility);
                     if (success) {
                         UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(getAdapterPosition());
-                        utilityInRoomItem.setUtilityFee(Integer.valueOf(etUtilityFee.getText().toString()));
+                        utilityInRoomItem.setUtilityFee(etUtilityFee.getText().toString());
                         notifyDataSetChanged();
                         Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                     }

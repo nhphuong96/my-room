@@ -9,27 +9,10 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar" />
 
-
-    <LinearLayout
-        android:id="@+id/linear_layout"
+    <FrameLayout
+        android:id="@+id/activity_create_bill_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        >
-
-    </LinearLayout>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/create_bill_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Xem tin nhắn"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:theme="@style/ButtonTheme"
-        android:fontFamily="sans-serif-medium"
-        android:layout_gravity="center"
-        />
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </LinearLayout>
