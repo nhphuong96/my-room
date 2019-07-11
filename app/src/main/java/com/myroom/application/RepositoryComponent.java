@@ -1,12 +1,8 @@
 package com.myroom.application;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-
 import com.myroom.activity.CreateBillActivity;
 import com.myroom.activity.GeneralSettingCurrencyActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
-import com.myroom.activity.SendMessageActivity;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
 import com.myroom.adapter.RoomAdapter;
@@ -43,7 +39,6 @@ public interface RepositoryComponent {
 
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
     void inject(CreateBillActivity createBillActivity);
-    void inject(SendMessageActivity sendMessageActivity);
     void inject(GeneralSettingCurrencyActivity generalSettingCurrencyActivity);
 
     void inject(CreateBillFragment createBillFragment);

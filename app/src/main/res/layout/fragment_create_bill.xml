@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:text="Xem tin nhắn"
         android:textAllCaps="false"
-        android:textColor="#fff"
         android:theme="@style/ButtonTheme"
         android:fontFamily="sans-serif-medium"
         android:layout_gravity="center"

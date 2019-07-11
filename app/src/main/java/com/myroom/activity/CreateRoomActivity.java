@@ -23,6 +23,7 @@ import com.myroom.exception.ValidationException;
 import com.myroom.service.IRoomService;
 import com.myroom.service.sdo.CreateRoomIn;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -101,22 +102,22 @@ public class CreateRoomActivity extends AppCompatActivity {
                 String idCard = etIdCard.getText().toString();
                 int selectedGenderId = radioGroupGender.getCheckedRadioButtonId();
                 if (assertNotEmpty(etRoomName, roomName) && assertNotEmpty(etGuestName, guestName) && assertNotEmpty(etPhoneNo, phoneNumber)) {
-                    CreateRoomIn createRoomIn = buildCreateRoomIn(roomName, guestName, birthDate, idCard, phoneNumber, selectedGenderId);
                     try {
+                        CreateRoomIn createRoomIn = buildCreateRoomIn(roomName, guestName, birthDate, idCard, phoneNumber, selectedGenderId);
                         roomService.createRoom(createRoomIn);
                         Toast.makeText(CreateRoomActivity.this, "Tạo phòng thành công.", Toast.LENGTH_SHORT).show();
+                        finish();
                     } catch (ValidationException e) {
                         Toast.makeText(CreateRoomActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (OperationException e) {
                         Toast.makeText(CreateRoomActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    finish();
                 }
             }
         };
     }
 
-    private CreateRoomIn buildCreateRoomIn(String roomName, String guestName, String birthDate, String idCard, String phoneNumber, int selectedGenderId) {
+    private CreateRoomIn buildCreateRoomIn(String roomName, String guestName, String birthDate, String idCard, String phoneNumber, int selectedGenderId) throws ValidationException {
         CreateRoomIn createRoomIn = new CreateRoomIn();
         createRoomIn.setRoomName(roomName);
         createRoomIn.setGuestName(guestName);
@@ -129,6 +130,10 @@ public class CreateRoomActivity extends AppCompatActivity {
             if (utilitySelection.getSelected()) {
                 createRoomIn.getUtilityIdList().add(utilitySelection.getUtility().getId());
             }
+        }
+
+        if (CollectionUtils.isEmpty(createRoomIn.getUtilityIdList())) {
+            throw new ValidationException("Bạn phải chọn ít nhất 1 tiện ích.");
         }
         return createRoomIn;
     }

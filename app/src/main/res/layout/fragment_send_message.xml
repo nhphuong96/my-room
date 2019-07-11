@@ -58,7 +58,6 @@
             android:layout_marginTop="15dp"
             android:text="Gửi"
             android:textAllCaps="false"
-            android:textColor="#fff"
             android:theme="@style/ButtonTheme"
             android:fontFamily="sans-serif-medium"
             android:layout_gravity="center"

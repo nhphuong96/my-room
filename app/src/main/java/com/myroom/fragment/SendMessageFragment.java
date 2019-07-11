@@ -140,7 +140,7 @@ public class SendMessageFragment extends Fragment {
         Double waterFee = appendWaterProperties(builder, bundle);
         Double cabFee = appendCabProperties(builder, bundle);
         Double internetFee = appendInternetProperties(builder, bundle);
-        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee)) + selectedCurrency.getCurrencyCd());
+        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee)) + " " + selectedCurrency.getCurrencyCd());
         String messageContent = builder.toString();
         tvMessage.setText(messageContent);
         return messageContent;

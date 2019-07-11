@@ -17,8 +17,11 @@
     </style>
     
     <style name="ButtonTheme" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#2778f9</item>
+        <item name="colorControlHighlight">#8c8c8c</item>
         <item name="colorButtonNormal">@color/btnRoomCreationSubmit</item>
+        <item name="android:textColor">#5c5c5c</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:radius">10dp</item>
     </style>
 
     <style name="ButtonCancelTheme" parent="Theme.AppCompat.Light">
