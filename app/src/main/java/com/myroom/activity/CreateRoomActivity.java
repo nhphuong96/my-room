@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.myroom.R;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.application.BaseApplication;
+import com.myroom.core.GenderFactory;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
 import com.myroom.service.IRoomService;
@@ -124,7 +125,7 @@ public class CreateRoomActivity extends AppCompatActivity {
         createRoomIn.setGuestBirthDate(birthDate);
         createRoomIn.setGuestIdCard(idCard);
         createRoomIn.setGuestPhoneNumber(phoneNumber);
-        createRoomIn.setGender(getGenderAsInt(selectedGenderId));
+        createRoomIn.setGender(GenderFactory.getGenderAsInt(selectedGenderId));
         createRoomIn.setUtilityIdList(new ArrayList<Long>());
         for (CreateRoomUtilityAdapter.UtilitySelection utilitySelection : adapter.getUtilitySelectionList()) {
             if (utilitySelection.getSelected()) {
@@ -136,13 +137,6 @@ public class CreateRoomActivity extends AppCompatActivity {
             throw new ValidationException("Bạn phải chọn ít nhất 1 tiện ích.");
         }
         return createRoomIn;
-    }
-
-    private int getGenderAsInt(int genderId) {
-        if (genderId == R.id.radioButton_male) {
-            return 1;
-        }
-        return 0;
     }
 
     private boolean assertNotEmpty(EditText etField, String fieldValue) {

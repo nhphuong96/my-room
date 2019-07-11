@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dialog_create_guest_in_room_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="Text View"
+            android:padding="5dp"
+            android:textColor="#fff"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="Tên khách : "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <EditText
+            android:id="@+id/create_guest_in_room_name"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="Số điện thoại : "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <EditText
+            android:id="@+id/create_guest_in_room_phone"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:text="Giới tính : "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/create_guest_in_room_gender"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButton_male"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Nam"
+                />
+
+            <RadioButton
+                android:id="@+id/radioButton_female"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nữ"
+                android:fontFamily="sans-serif-medium"
+                />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="Ngày sinh : "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <EditText
+            android:id="@+id/create_guest_in_room_birthdate"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="Số CMND : "
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <EditText
+            android:id="@+id/create_guest_in_room_id_card"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="end"
+        >
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/create_guest_in_room_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Hủy"
+            android:textSize="12dp"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/ButtonCancelTheme"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/create_guest_in_room_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Tạo"
+            android:textAllCaps="false"
+            android:theme="@style/ButtonTheme"
+            android:fontFamily="sans-serif-medium"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

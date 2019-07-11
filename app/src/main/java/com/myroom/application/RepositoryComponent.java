@@ -16,6 +16,7 @@ import com.myroom.database.repository.UtilityRepository;
 import com.myroom.fragment.CreateBillFragment;
 import com.myroom.fragment.SendMessageFragment;
 import com.myroom.service.ICurrencyService;
+import com.myroom.service.IGuestService;
 import com.myroom.service.IRoomService;
 
 import javax.inject.Singleton;
@@ -36,6 +37,7 @@ public interface RepositoryComponent {
 
     void inject(IRoomService roomService);
     void inject(ICurrencyService currencyService);
+    void inject(IGuestService guestService);
 
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
     void inject(CreateBillActivity createBillActivity);
