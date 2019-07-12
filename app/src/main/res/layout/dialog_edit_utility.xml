@@ -73,7 +73,6 @@
             android:text="Hủy"
             android:textSize="12dp"
             android:textAllCaps="false"
-            android:textColor="#fff"
             android:theme="@style/ButtonCancelTheme"
             android:fontFamily="sans-serif-medium"
             />

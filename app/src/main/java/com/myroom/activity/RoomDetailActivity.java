@@ -54,7 +54,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Thông tin phòng");
+        actionBar.setTitle("Phòng đang thuê");
     }
 
     private void getExtraInputs() {

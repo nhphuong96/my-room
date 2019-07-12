@@ -4,6 +4,7 @@ import com.myroom.activity.CreateRoomActivity;
 import com.myroom.adapter.CurrencyAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
 import com.myroom.adapter.RoomAdapter;
+import com.myroom.adapter.RoomInformationAdapter;
 import com.myroom.adapter.UtilityInRoomAdapter;
 import com.myroom.fragment.CreateBillFragment;
 import com.myroom.fragment.GuestInRoomFragment;
@@ -27,6 +28,7 @@ public interface ServiceComponent {
     void inject(CreateBillFragment createBillFragment);
     void inject(SendMessageFragment sendMessageFragment);
     void inject(GuestInRoomFragment guestInRoomFragment);
+    void inject(RoomInformationAdapter roomInformationAdapter);
     IRoomService getRoomService();
     ICurrencyService getCurrencyService();
     IGuestService getGuestService();

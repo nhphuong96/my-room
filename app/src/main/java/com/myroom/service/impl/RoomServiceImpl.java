@@ -2,6 +2,7 @@ package com.myroom.service.impl;
 
 import com.myroom.application.BaseApplication;
 import com.myroom.core.Assert;
+import com.myroom.core.RoomInfoKey;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
 import com.myroom.database.repository.RoomUtilityRepository;
@@ -20,6 +21,9 @@ import com.myroom.service.sdo.DeleteRoomIn;
 import com.myroom.service.sdo.DeleteRoomOut;
 import com.myroom.service.sdo.ReadAvailableUtilityIn;
 import com.myroom.service.sdo.ReadAvailableUtilityOut;
+import com.myroom.service.sdo.ReadRoomInformationIn;
+import com.myroom.service.sdo.ReadRoomInformationOut;
+import com.myroom.service.sdo.RoomInfo;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -111,6 +115,25 @@ public class RoomServiceImpl implements IRoomService {
             deleteRoomOut.getAfftectedRoomId().add(roomId);
         }
         return deleteRoomOut;
+    }
+
+    @Override
+    public ReadRoomInformationOut readRoomInformation(ReadRoomInformationIn readRoomInformationIn) throws ValidationException, OperationException {
+        Assert.assertNotNull(readRoomInformationIn, "readRoomInformationIn must not be null.");
+        Assert.assertNotNull(readRoomInformationIn.getRoomId(), "readRoomInformationIn.roomId must not be null.");
+
+        ReadRoomInformationOut readRoomInformationOut = new ReadRoomInformationOut();
+        readRoomInformationOut.setRoomInfoList(new ArrayList<RoomInfo>());
+        readRoomInformationOut.getRoomInfoList().add(collectRoomName(readRoomInformationIn.getRoomId()));
+        return readRoomInformationOut;
+    }
+
+    private RoomInfo collectRoomName(long roomId) {
+        Room room = roomRepository.find(roomId);
+        RoomInfo roomInfo = new RoomInfo();
+        roomInfo.setKey(RoomInfoKey.ROOM_NAME.getDenotation());
+        roomInfo.setValue(room.getRoomName());
+        return roomInfo;
     }
 
     private Guest buildGuestObject(CreateRoomIn createRoomIn, long roomId) {
