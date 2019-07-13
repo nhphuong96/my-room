@@ -42,6 +42,7 @@ public class CreateBillFragment extends Fragment {
     private View waterView;
     private View cabView;
     private View internetView;
+    private View roomView;
     private AppCompatButton button;
     private Currency selectedCurrency;
 
@@ -106,6 +107,7 @@ public class CreateBillFragment extends Fragment {
                     putWaterProperties(bundle);
                     putCabProperties(bundle);
                     putInternetProperties(bundle);
+                    putRoomProperties(bundle);
                     new AlertDialog.Builder(parentContext)
                             .setTitle("Tạo tin nhắn").setMessage("Bạn có chắc các thông tin đã đủ và tạo tin nhắn?")
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
@@ -124,9 +126,22 @@ public class CreateBillFragment extends Fragment {
         });
     }
 
+    private void putRoomProperties(Bundle bundle) throws ValidationException {
+        if (internetView != null) {
+            EditText counter = roomView.findViewById(R.id.counter);
+            TextView fee = roomView.findViewById(R.id.unit_fee);
+            if (StringUtils.isBlank(counter.getText())) {
+                counter.setError("Bắt buộc.");
+                throw new ValidationException();
+            }
+            bundle.putString("roomCounter", counter.getText().toString());
+            bundle.putString("roomFee", fee.getText().toString());
+        }
+    }
+
     private void putInternetProperties(Bundle bundle) throws ValidationException {
         if (internetView != null) {
-            EditText counter = internetView.findViewById(R.id.internet_counter);
+            EditText counter = internetView.findViewById(R.id.counter);
             TextView fee = internetView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
@@ -140,7 +155,7 @@ public class CreateBillFragment extends Fragment {
     private void putCabProperties(Bundle bundle) throws ValidationException
     {
         if (cabView != null) {
-            EditText counter = cabView.findViewById(R.id.cab_counter);
+            EditText counter = cabView.findViewById(R.id.counter);
             TextView fee = cabView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
@@ -154,7 +169,7 @@ public class CreateBillFragment extends Fragment {
     private void putWaterProperties(Bundle bundle) throws ValidationException
     {
         if (waterView != null) {
-            EditText counter = waterView.findViewById(R.id.water_counter);
+            EditText counter = waterView.findViewById(R.id.counter);
             TextView fee = waterView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
@@ -206,25 +221,47 @@ public class CreateBillFragment extends Fragment {
                     addLineSeparator(linearLayout);
                     internetCalculationLayout(linearLayout, roomUtility);
                 }
+                else if (id == 5L) {
+                    addLineSeparator(linearLayout);
+                    roomCalculatorLayout(linearLayout, roomUtility);
+                }
             }
         }
     }
 
+    private void roomCalculatorLayout(LinearLayout root, RoomUtility roomUtility) {
+        roomView = getLayoutInflater().inflate(R.layout.view_calculator, null);
+        TextView tvUnitFee = roomView.findViewById(R.id.unit_fee);
+        tvUnitFee.setText(String.valueOf(roomUtility.getUtilityFee()));
+        TextView tvCurrency= roomView.findViewById(R.id.currency);
+        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        EditText etCounter = roomView.findViewById(R.id.counter);
+        etCounter.setText(String.valueOf(1));
+        etCounter.setEnabled(false);
+        TextView tvUtilityName = roomView.findViewById(R.id.view_calculator_utility_name);
+        tvUtilityName.setText("Phí phòng");
+        root.addView(roomView);
+    }
+
     private void internetCalculationLayout(LinearLayout root, RoomUtility internetUtility) {
-        internetView = getLayoutInflater().inflate(R.layout.view_internet_calculator, null);
+        internetView = getLayoutInflater().inflate(R.layout.view_calculator, null);
         TextView tvUnitFee = internetView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(internetUtility.getUtilityFee()));
         TextView tvCurrency= internetView.findViewById(R.id.currency);
         tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        TextView tvUtilityName = internetView.findViewById(R.id.view_calculator_utility_name);
+        tvUtilityName.setText("Internet");
         root.addView(internetView);
     }
 
     private void cabCalculationLayout(LinearLayout root, RoomUtility cabUtility) {
-        cabView = getLayoutInflater().inflate(R.layout.view_cab_calculator, null);
+        cabView = getLayoutInflater().inflate(R.layout.view_calculator, null);
         TextView tvUnitFee = cabView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(cabUtility.getUtilityFee()));
         TextView tvCurrency= cabView.findViewById(R.id.currency);
         tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        TextView tvUtilityName = cabView.findViewById(R.id.view_calculator_utility_name);
+        tvUtilityName.setText("Cab");
         root.addView(cabView);
     }
 
@@ -238,11 +275,13 @@ public class CreateBillFragment extends Fragment {
     }
 
     private void waterCalculationLayout(LinearLayout root, RoomUtility waterUtility) {
-        waterView = getLayoutInflater().inflate(R.layout.view_water_calculator, null);
+        waterView = getLayoutInflater().inflate(R.layout.view_calculator, null);
         TextView tvUnitFee = waterView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(waterUtility.getUtilityFee()));
         TextView tvCurrency= waterView.findViewById(R.id.currency);
         tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        TextView tvUtilityName = waterView.findViewById(R.id.view_calculator_utility_name);
+        tvUtilityName.setText("Nước");
         root.addView(waterView);
     }
 

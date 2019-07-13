@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.myroom.database.repository.CurrencyRepository;
 import com.myroom.database.repository.GuestRepository;
+import com.myroom.database.repository.PaymentRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.database.repository.UtilityRepository;
@@ -47,7 +48,13 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    CurrencyRepository prodiveCurrencyRepository() {
+    CurrencyRepository provideCurrencyRepository() {
         return new CurrencyRepository();
+    }
+
+    @Provides
+    @Singleton
+    PaymentRepository providePaymentRepository() {
+        return new PaymentRepository();
     }
 }

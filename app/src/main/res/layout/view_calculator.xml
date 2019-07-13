@@ -19,13 +19,13 @@
         >
 
         <TextView
+            android:id="@+id/view_calculator_utility_name"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Nước : "
+            android:text="Cab: "
             android:textSize="12sp"
             android:fontFamily="sans-serif-medium"
             />
-
     </LinearLayout>
 
     <LinearLayout
@@ -33,34 +33,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="4">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            android:text="("
-            />
-
         <EditText
-            android:id="@+id/water_counter"
+            android:id="@+id/counter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Đơn vị"
             android:inputType="number"
             android:maxLines="1"
+            android:fontFamily="sans-serif-medium"
             android:maxLength="3"
-            android:fontFamily="sans-serif-medium"
             android:textSize="12dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            android:text=")"
-            />
 
     </LinearLayout>
 
@@ -69,7 +52,6 @@
         android:layout_height="fill_parent"
         android:gravity="center"
         android:layout_weight="1.5">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +59,6 @@
             android:fontFamily="sans-serif-medium"
             android:text="x "
             />
-
         <TextView
             android:id="@+id/unit_fee"
             android:layout_width="wrap_content"
@@ -96,6 +77,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="VND"
             />
+
     </LinearLayout>
 
 

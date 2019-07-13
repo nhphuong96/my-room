@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.application.BaseApplication;
+import com.myroom.core.NumberFormatter;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
@@ -96,7 +97,7 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
         UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(i);
         utilityInRoomViewHolder.utilityId = utilityInRoomItem.getUtilityId();
         utilityInRoomViewHolder.tvUtilityInRoomName.setText(utilityInRoomItem.getUtilityName());
-        utilityInRoomViewHolder.tvUtilityInRoomFee.setText(String.valueOf(utilityInRoomItem.getUtilityFee()));
+        utilityInRoomViewHolder.tvUtilityInRoomFee.setText(NumberFormatter.formatThousandNumberSeparator(String.valueOf(utilityInRoomItem.getUtilityFee())));
         utilityInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(utilityInRoomItem.getUtilityIconName(), "drawable", context.getPackageName()));
         utilityInRoomViewHolder.tvCurrency.setText(selectedCurrency.getCurrencyCd());
     }

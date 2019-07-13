@@ -5,6 +5,7 @@ import com.myroom.activity.GeneralSettingCurrencyActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
+import com.myroom.adapter.PaymentHistoryAdapter;
 import com.myroom.adapter.RoomAdapter;
 import com.myroom.adapter.UtilityAdapter;
 import com.myroom.adapter.UtilityInRoomAdapter;
@@ -34,6 +35,7 @@ public interface RepositoryComponent {
     void inject(UtilityAdapter utilityAdapter);
     void inject(UtilityInRoomAdapter utilityInRoomAdapter);
     void inject(GuestInRoomAdapter guestInRoomAdapter);
+    void inject(PaymentHistoryAdapter paymentHistoryAdapter);
 
     void inject(IRoomService roomService);
     void inject(ICurrencyService currencyService);

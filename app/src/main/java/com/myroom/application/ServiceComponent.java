@@ -11,6 +11,7 @@ import com.myroom.fragment.GuestInRoomFragment;
 import com.myroom.fragment.SendMessageFragment;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.IGuestService;
+import com.myroom.service.IMessageService;
 import com.myroom.service.IRoomService;
 
 import javax.inject.Singleton;
@@ -32,4 +33,5 @@ public interface ServiceComponent {
     IRoomService getRoomService();
     ICurrencyService getCurrencyService();
     IGuestService getGuestService();
+    IMessageService getMessageService();
 }

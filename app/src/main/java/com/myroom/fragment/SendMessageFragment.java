@@ -26,8 +26,12 @@ import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
 import com.myroom.database.repository.GuestRepository;
 import com.myroom.exception.OperationException;
+import com.myroom.exception.ValidationException;
 import com.myroom.service.ICurrencyService;
+import com.myroom.service.IMessageService;
 import com.myroom.service.impl.CurrencyServiceImpl;
+import com.myroom.service.sdo.SendMessageIn;
+import com.myroom.utils.DateUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,6 +55,8 @@ public class SendMessageFragment extends Fragment {
     public GuestRepository guestRepository;
     @Inject
     public ICurrencyService currencyService;
+    @Inject
+    public IMessageService messageService;
 
     public static Fragment newInstance(Bundle bundle) {
         SendMessageFragment sendMessageFragment = new SendMessageFragment();
@@ -96,24 +102,34 @@ public class SendMessageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(context)
-                        .setTitle("Send message")
-                        .setMessage("Are you sure you want to send bill to the recipient?")
-                        .setNegativeButton("NO", null)
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        .setTitle("Gửi tin nhắn")
+                        .setMessage("Bạn có chắc muốn gửi hóa đơn tới người này?")
+                        .setNegativeButton("Không", null)
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String selectedItem = (String) recipientSelector.getSelectedItem();
-                                String phoneNo = selectedItem.split(" - ")[1];
-                                SmsManager smsManager = SmsManager.getDefault();
-                                smsManager.sendTextMessage(phoneNo, null, messageContent, null, null);
-                                Toast.makeText(context, String.format("Message sent to %s successfully.", phoneNo), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(context, MainActivity.class);
-                                context.startActivity(intent);
+                                try {
+                                    String selectedItem = (String) recipientSelector.getSelectedItem();
+                                    String phoneNo = selectedItem.split(" - ")[1];
+                                    messageService.sendMessage(convertSendMessageIn(phoneNo, messageContent));
+                                    Toast.makeText(context, String.format("Hóa đơn gửi tới %s thành công.", phoneNo), Toast.LENGTH_SHORT).show();
+                                } catch (ValidationException e) {
+                                    Toast.makeText(context, String.format("Hóa đơn gửi không thành công."), Toast.LENGTH_SHORT).show();
+                                } catch (OperationException e) {
+                                    Toast.makeText(context, String.format("Hóa đơn gửi không thành công."), Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .show();
             }
         });
+    }
+
+    private SendMessageIn convertSendMessageIn(String phoneNo, String messageContent) {
+        SendMessageIn sendMessageIn = new SendMessageIn();
+        sendMessageIn.setMessageContent(messageContent);
+        sendMessageIn.setRecipient(phoneNo);
+        return sendMessageIn;
     }
 
     private void loadRecipients(Bundle bundle) {
@@ -135,15 +151,34 @@ public class SendMessageFragment extends Fragment {
 
     private String createBillMessage(Bundle bundle) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Tien nha " + new SimpleDateFormat("dd/MM/yyyy").format(new Date())).append("\n");
+        builder.append("Tien nha " + DateUtils.convertDateToStringAsDDMMYYYY(new Date())).append("\n");
         Double electricityFee = appendElectricityProperties(builder, bundle);
         Double waterFee = appendWaterProperties(builder, bundle);
         Double cabFee = appendCabProperties(builder, bundle);
         Double internetFee = appendInternetProperties(builder, bundle);
-        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee)) + " " + selectedCurrency.getCurrencyCd());
+        Double roomFee = appendRoomProperties(builder, bundle);
+        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee + roomFee)) + " " + selectedCurrency.getCurrencyCd());
         String messageContent = builder.toString();
         tvMessage.setText(messageContent);
         return messageContent;
+    }
+
+    private Double appendRoomProperties(StringBuilder builder, Bundle bundle) {
+        String roomCounter = bundle.getString("roomCounter");
+        String roomFee = bundle.getString("roomFee");
+        if (StringUtils.isBlank(roomCounter) || StringUtils.isBlank(roomFee)) {
+            return 0D;
+        }
+        Integer counter = Integer.valueOf(roomCounter);
+        Double fee = Double.valueOf(roomFee);
+        builder.append("Tiền nhà: ");
+        builder.append(counter);
+        builder.append(" x ");
+        builder.append(NumberFormatter.formatThousandNumberSeparator(String.valueOf(fee)));
+        builder.append(" = ");
+        builder.append(NumberFormatter.formatThousandNumberSeparator(String.valueOf(counter * fee)));
+        builder.append("\n");
+        return counter * fee;
     }
 
     private Double appendInternetProperties(StringBuilder builder, Bundle bundle) {

@@ -188,6 +188,7 @@ public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.
                             notifyDataSetChanged();
                             Toast.makeText(context, "Cập nhật thông tin thành công.", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            return;
                         }
                         Toast.makeText(context, "Cập nhật thông tin thất bại.", Toast.LENGTH_SHORT).show();
                     }

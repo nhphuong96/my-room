@@ -8,6 +8,7 @@ import com.myroom.core.Constant;
 import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
+import com.myroom.database.dao.Payment;
 import com.myroom.database.dao.Room;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
@@ -20,7 +21,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "myroomdb";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TEXT = "TEXT";
     private static final String INTEGER = "INTEGER";
@@ -37,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(createUtilityTable());
         db.execSQL(createRoomUtilityTable());
         db.execSQL(createCurrencyTable());
+        db.execSQL(createPaymentTable());
         
         createUtilityData(db);
         createCurrencyData(db);
@@ -56,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (2, \"Nước\", \"ic_water\")");
         db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (3, \"Cab\", \"ic_tv\")");
         db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (4, \"Internet\", \"ic_internet\")");
+        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (5, \"Phí thuê phòng\", \"ic_room\")");
     }
 
     private void createCurrencyData(SQLiteDatabase db) {
@@ -68,6 +71,20 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String dropTable(String tableRoom) {
         return "DROP TABLE IF EXISTS " + tableRoom;
+    }
+
+    private String createPaymentTable() {
+        List<String> tableStructures = new ArrayList<>();
+        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_CREATION_DATE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_PAYMENT_DATE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_ELECTRICITY_FEE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_WATER_FEE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_CAB_FEE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_INTERNET_FEE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_ROOM_FEE.getColName(), TEXT));
+        return buildCreateTableQuery(Payment.TABLE_NAME, tableStructures);
     }
 
     private String createCurrencyTable() {
