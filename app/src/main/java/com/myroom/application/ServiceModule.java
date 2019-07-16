@@ -6,10 +6,12 @@ import com.myroom.service.ICurrencyService;
 import com.myroom.service.IGuestService;
 import com.myroom.service.IMessageService;
 import com.myroom.service.IRoomService;
+import com.myroom.service.IUtilityService;
 import com.myroom.service.impl.CurrencyServiceImpl;
 import com.myroom.service.impl.GuestServiceImpl;
 import com.myroom.service.impl.MessageServiceImpl;
 import com.myroom.service.impl.RoomServiceImpl;
+import com.myroom.service.impl.UtilityServiceImpl;
 
 import javax.inject.Singleton;
 
@@ -34,4 +36,8 @@ public abstract class ServiceModule {
     @Binds
     @Singleton
     abstract IMessageService bindMessageService(MessageServiceImpl messageServiceImpl);
+
+    @Binds
+    @Singleton
+    abstract IUtilityService bindUtilityService(UtilityServiceImpl utilityServiceImpl);
 }

@@ -1,9 +1,9 @@
 package com.myroom.database.dao;
 
-public class Room extends BaseModel {
+public class Room {
     public static final String TABLE_NAME = "room";
     public enum Column {
-
+        COLUMN_ROOM_KEY(0, "room_key"),
         COLUMN_ROOM_NAME(1, "room_name");
 
         private int index;
@@ -31,9 +31,18 @@ public class Room extends BaseModel {
         }
     }
 
+    private long roomKey;
     private String roomName;
 
     public Room() {
+    }
+
+    public long getRoomKey() {
+        return roomKey;
+    }
+
+    public void setRoomKey(long roomKey) {
+        this.roomKey = roomKey;
     }
 
     public Room(String roomName) {
@@ -46,12 +55,5 @@ public class Room extends BaseModel {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
-    }
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomName='" + roomName + '\'' +
-                '}';
     }
 }

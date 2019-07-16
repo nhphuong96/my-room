@@ -15,34 +15,20 @@ import com.myroom.core.NumberFormatter;
 import com.myroom.database.dao.Payment;
 import com.myroom.database.repository.PaymentRepository;
 import com.myroom.exception.OperationException;
+import com.myroom.utils.DateUtils;
 
-import java.text.SimpleDateFormat;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAdapter.PaymentHistoryViewHolder> {
 
     private Context context;
-    private long roomId;
     private List<Payment> paymentList;
 
-    @Inject
-    public PaymentRepository paymentRepository;
-
-    public PaymentHistoryAdapter(Context context, long roomId) {
+    public PaymentHistoryAdapter(Context context, List<Payment> paymentList) {
         this.context = context;
-        this.roomId = roomId;
-        BaseApplication.getRepositoryComponent(context).inject(this);
-        loadAllPaymentHistory();
-    }
-
-    private void loadAllPaymentHistory() {
-        try {
-            paymentList = paymentRepository.findPaymentByRoomId(roomId);
-        } catch (OperationException e) {
-            Toast.makeText(context, "Lỗi xảy ra: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        this.paymentList = paymentList;
     }
 
     @NonNull
@@ -58,16 +44,26 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
     public void onBindViewHolder(@NonNull PaymentHistoryViewHolder paymentHistoryViewHolder, int i) {
         Payment payment = paymentList.get(i);
         paymentHistoryViewHolder.tvTotalFee.setText(calculateTotalFee(payment));
-        paymentHistoryViewHolder.tvPaymentDate.setText(new SimpleDateFormat("dd/MM/YYYY hh:mm:ss").format(payment.getPaymentDate()));
+        paymentHistoryViewHolder.tvPaymentDate.setText(DateUtils.convertDateToStringAsDDMMYYYYHHMMSS(payment.getCreationDate()));
     }
 
     private String calculateTotalFee(Payment payment) {
         Double total = 0D;
-        total += Double.valueOf(payment.getElectricityFee());
-        total += Double.valueOf(payment.getWaterFee());
-        total += Double.valueOf(payment.getCabFee());
-        total += Double.valueOf(payment.getInternetFee());
-        total += Double.valueOf(payment.getRoomFee());
+        if (StringUtils.isNotEmpty(payment.getElectricityFee())) {
+            total += Double.valueOf(payment.getElectricityFee());
+        }
+        if (StringUtils.isNotEmpty(payment.getWaterFee())) {
+            total += Double.valueOf(payment.getWaterFee());
+        }
+        if (StringUtils.isNotEmpty(payment.getCabFee())) {
+            total += Double.valueOf(payment.getCabFee());
+        }
+        if (StringUtils.isNotEmpty(payment.getInternetFee())) {
+            total += Double.valueOf(payment.getInternetFee());
+        }
+        if (StringUtils.isNotEmpty(payment.getRoomFee())) {
+            total += Double.valueOf(payment.getRoomFee());
+        }
         return NumberFormatter.formatThousandNumberSeparator(String.valueOf(total));
     }
 

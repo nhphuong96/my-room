@@ -129,7 +129,7 @@ public class CreateRoomActivity extends AppCompatActivity {
         createRoomIn.setUtilityIdList(new ArrayList<Long>());
         for (CreateRoomUtilityAdapter.UtilitySelection utilitySelection : adapter.getUtilitySelectionList()) {
             if (utilitySelection.getSelected()) {
-                createRoomIn.getUtilityIdList().add(utilitySelection.getUtility().getId());
+                createRoomIn.getUtilityIdList().add(utilitySelection.getUtility().getUtilityKey());
             }
         }
 

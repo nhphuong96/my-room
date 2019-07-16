@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteRoomIn {
-    private List<Long> roomIdList;
+    private List<Long> roomKeyList;
 
-    public DeleteRoomIn() {
-        roomIdList = new ArrayList<>();
+    public List<Long> getRoomKeyList() {
+        return roomKeyList;
     }
 
-    public List<Long> getRoomIdList() {
-        return roomIdList;
-    }
-
-    public void setRoomIdList(List<Long> roomIdList) {
-        this.roomIdList = roomIdList;
+    public void setRoomKeyList(List<Long> roomKeyList) {
+        this.roomKeyList = roomKeyList;
     }
 }

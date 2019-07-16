@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.myroom.fragment.GuestInRoomFragment;
+import com.myroom.fragment.PaymentHistoryFragment;
 import com.myroom.fragment.RoomInformationFragment;
 import com.myroom.fragment.UtilityInRoomFragment;
 
@@ -25,6 +26,7 @@ public class RoomDetailPagerAdapter extends FragmentPagerAdapter {
             case 0: return RoomInformationFragment.newInstance(roomId);
             case 1: return GuestInRoomFragment.newInstance(roomId);
             case 2: return UtilityInRoomFragment.newInstance(roomId);
+            case 3: return PaymentHistoryFragment.newInstance(roomId);
             default: return null;
         }
     }
@@ -36,12 +38,13 @@ public class RoomDetailPagerAdapter extends FragmentPagerAdapter {
             case 0: return "Thông tin";
             case 1: return "Khách phòng";
             case 2: return "Tiện ích";
+            case 3: return "Hóa đơn";
             default: return StringUtils.EMPTY;
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

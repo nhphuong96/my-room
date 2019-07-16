@@ -15,6 +15,7 @@ import com.myroom.exception.ValidationException;
 import com.myroom.database.dao.Guest;
 import com.myroom.database.dao.Room;
 import com.myroom.service.IRoomService;
+import com.myroom.service.IUtilityService;
 import com.myroom.service.sdo.CreateRoomIn;
 import com.myroom.service.sdo.CreateRoomOut;
 import com.myroom.service.sdo.DeleteRoomIn;
@@ -38,10 +39,12 @@ public class RoomServiceImpl implements IRoomService {
     @Inject public GuestRepository guestRepository;
     @Inject public UtilityRepository utilityRepository;
     @Inject public RoomUtilityRepository roomUtilityRepository;
+    @Inject public IUtilityService utilityService;
 
     @Inject
     public RoomServiceImpl() {
         BaseApplication.getRepositoryComponent(BaseApplication.getContextComponent().getContext()).inject(this);
+        BaseApplication.getServiceComponent(BaseApplication.getContextComponent().getContext()).inject(this);
     }
 
     @Override
@@ -76,18 +79,19 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public ReadAvailableUtilityOut readAvailableUtility(ReadAvailableUtilityIn readAvailableUtilityIn) throws ValidationException, OperationException {
         Assert.assertNotNull(readAvailableUtilityIn, "ReadAvailableUtilityIn must not be null.");
-        Assert.assertNotNull(readAvailableUtilityIn.getRoomId(), "ReadAvailableUtilityIn.roomId must not be null.");
+        Assert.assertNotNull(readAvailableUtilityIn.getRoomKey(), "ReadAvailableUtilityIn.roomId must not be null.");
 
         ReadAvailableUtilityOut readAvailableUtilityOut = new ReadAvailableUtilityOut();
         readAvailableUtilityOut.setUtilityInRoomItemList(new ArrayList<UtilityInRoomItem>());
 
         //Read all utilities in room
-        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomId(readAvailableUtilityIn.getRoomId());
+        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomId(readAvailableUtilityIn.getRoomKey());
         if (CollectionUtils.isNotEmpty(roomUtilityList)) {
             for (RoomUtility rUtility: roomUtilityList) {
-                Utility utility = utilityRepository.find(rUtility.getUtilityId());
+                Utility utility = utilityRepository.find(rUtility.getUtilityKey());
                 UtilityInRoomItem utilityInRoomItem = new UtilityInRoomItem();
-                utilityInRoomItem.setUtilityId(utility.getId());
+                utilityInRoomItem.setUtilityKey(utility.getUtilityKey());
+                utilityInRoomItem.setUtilityId(utility.getUtilityId());
                 utilityInRoomItem.setUtilityName(utility.getName());
                 utilityInRoomItem.setUtilityFee(rUtility.getUtilityFee());
                 utilityInRoomItem.setUtilityIconName(utility.getIcon());
@@ -100,10 +104,10 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public DeleteRoomOut deleteRoom(DeleteRoomIn deleteRoomIn) throws ValidationException, OperationException {
         Assert.assertNotNull(deleteRoomIn, "DeleteRoomIn must not be null.");
-        Assert.assertNotNull(deleteRoomIn.getRoomIdList(), "DeleteRoomIn.RoomIdList must not be null.");
+        Assert.assertNotNull(deleteRoomIn.getRoomKeyList(), "DeleteRoomIn.RoomKeyList must not be null.");
 
         DeleteRoomOut deleteRoomOut = new DeleteRoomOut();
-        for (Long roomId : deleteRoomIn.getRoomIdList()) {
+        for (Long roomId : deleteRoomIn.getRoomKeyList()) {
             boolean deletedUtilitySuccess = roomUtilityRepository.deleteRoomUtilityByRoomId(roomId);
             if (!deletedUtilitySuccess) {
                 throw new OperationException("Error occurred while deleting Utility in Room");

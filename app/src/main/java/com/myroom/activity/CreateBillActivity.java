@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.myroom.R;
+import com.myroom.core.Constant;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.fragment.CreateBillFragment;
 import com.myroom.fragment.SendMessageFragment;
@@ -48,7 +49,7 @@ public class CreateBillActivity extends AppCompatActivity implements OnDataPasse
     }
 
     private void getExtraData() {
-        roomId = getIntent().getExtras().getLong("roomId");
+        roomId = getIntent().getExtras().getLong(Constant.ROOM_KEY_NAME);
     }
 
     private void initializeToolbar(String title) {

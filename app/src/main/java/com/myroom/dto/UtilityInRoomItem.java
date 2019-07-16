@@ -1,16 +1,25 @@
 package com.myroom.dto;
 
 public class UtilityInRoomItem {
-    private long utilityId;
+    private long utilityKey;
+    private String utilityId;
     private String utilityName;
     private String utilityFee;
     private String utilityIconName;
 
-    public long getUtilityId() {
+    public long getUtilityKey() {
+        return utilityKey;
+    }
+
+    public void setUtilityKey(long utilityKey) {
+        this.utilityKey = utilityKey;
+    }
+
+    public String getUtilityId() {
         return utilityId;
     }
 
-    public void setUtilityId(long utilityId) {
+    public void setUtilityId(String utilityId) {
         this.utilityId = utilityId;
     }
 

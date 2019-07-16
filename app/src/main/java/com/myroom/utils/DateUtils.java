@@ -12,34 +12,40 @@ public final class DateUtils {
     }
 
     public static String convertDateToStringAsDDMMYYYYHHMMSS(Date date) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
-            return sdf.format(date);
-        }
-        catch (Exception e) {
-            //NOP
+        if (date != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                return sdf.format(date);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
         }
         return null;
     }
 
     public static Date convertStringToDateAsDDMMYYYYHHMMSS(String dateAsString) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat();
-            return sdf.parse(dateAsString);
-        }
-        catch (Exception e) {
-            //NOP
+        if (StringUtils.isNotEmpty(dateAsString)) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat();
+                return sdf.parse(dateAsString);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
         }
         return null;
     }
 
     public static String convertDateToStringAsDDMMYYYY(Date date) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
-            return sdf.format(date);
-        }
-        catch (Exception e) {
-            //NOP
+        if (date != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                return sdf.format(date);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
         }
         return null;
     }

@@ -1,10 +1,12 @@
 package com.myroom.service.impl;
 
 import com.myroom.application.BaseApplication;
+import com.myroom.core.Assert;
 import com.myroom.core.Constant;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.repository.CurrencyRepository;
 import com.myroom.exception.OperationException;
+import com.myroom.exception.ValidationException;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.sdo.ReadAvailableCurrencyOut;
 import com.myroom.service.sdo.ReadSelectedCurrencyOut;
@@ -58,24 +60,38 @@ public class CurrencyServiceImpl implements ICurrencyService {
     }
 
     @Override
-    public void updateSelectedCurrency(long id) {
+    public void updateSelectedCurrency(long key) {
         for (Currency currency : availableCurrencyList) {
-            if (currency.getId() == id) {
+            if (currency.getCurrencyKey() == key) {
                 currency.setIsSelected(Constant.TRUE);
                 //Update database
-                Currency selectedCurrency = currencyRepository.find(id);
+                Currency selectedCurrency = currencyRepository.find(key);
                 selectedCurrency.setIsSelected(Constant.TRUE);
                 currencyRepository.update(selectedCurrency);
             }
             else {
                 if (currency.getIsSelected() == Constant.TRUE)
                 {
-                    Currency unselectCurrency = currencyRepository.find(currency.getId());
+                    Currency unselectCurrency = currencyRepository.find(currency.getCurrencyKey());
                     unselectCurrency.setIsSelected(Constant.FALSE);
                     currencyRepository.update(unselectCurrency);
                 }
                 currency.setIsSelected(Constant.FALSE);
             }
         }
+    }
+
+    @Override
+    public long readCurrencyKey(String currencyId) throws ValidationException, OperationException {
+        Assert.assertNotNull(currencyId, "currencyId must not be null.");
+        Currency currency = currencyRepository.findById(currencyId);
+        return currency.getCurrencyKey();
+    }
+
+    @Override
+    public String readCurrencyId(long currencyKey) throws ValidationException, OperationException {
+        Assert.assertNotNull(currencyKey, "currencyKey must not be null.");
+        Currency currency = currencyRepository.find(currencyKey);
+        return currency.getCurrencyId();
     }
 }

@@ -50,7 +50,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
     @Override
     public void onBindViewHolder(@NonNull UtilityViewHolder utilityViewHolder, int i) {
         Utility utility = utilityList.get(i);
-        utilityViewHolder.utilityId = utility.getId();
+        utilityViewHolder.utilityKey = utility.getUtilityKey();
         utilityViewHolder.tvUtilityName.setText(utility.getName());
     }
 
@@ -61,7 +61,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
 
     public class UtilityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView tvUtilityName;
-        private long utilityId;
+        private long utilityKey;
         public UtilityViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUtilityName = itemView.findViewById(R.id.item_utility_name);
@@ -83,7 +83,7 @@ public class UtilityAdapter extends RecyclerView.Adapter<UtilityAdapter.UtilityV
                         public void onClick(DialogInterface dialog, int which) {
                             int pos = getAdapterPosition();
                             Utility utility = utilityList.get(pos);
-                            if (utilityRepository.delete(utility.getId())) {
+                            if (utilityRepository.delete(utility.getUtilityKey())) {
                                 utilityList.remove(pos);
                                 Toast.makeText(context, "Delete utility " + utility.getName() + " successfully.", Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();

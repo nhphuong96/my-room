@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Room;
 import com.myroom.database.dao.Utility;
 
@@ -34,18 +33,41 @@ public class UtilityRepository implements IObjectRepository<Utility> {
     }
 
     @Override
-    public Utility find(long id) {
+    public Utility find(long key) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
+                Utility.Column.COLUMN_UTILITY_KEY.getColName(),
+                Utility.Column.COLUMN_UTILITY_ID.getColName(),
                 Utility.Column.COLUMN_UTILITY_NAME.getColName(),
                 Utility.Column.COLUMN_UTILITY_ICON.getColName()
         };
-        Cursor c = db.query(Utility.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query(Utility.TABLE_NAME, columns, Utility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?", new String[] {String.valueOf(key)}, null, null, null, null);
 
         if (c.moveToFirst()) {
             Utility result = new Utility();
-            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setUtilityKey(Integer.parseInt(c.getString(Utility.Column.COLUMN_UTILITY_KEY.getIndex())));
+            result.setUtilityId(c.getString(Utility.Column.COLUMN_UTILITY_ID.getIndex()));
+            result.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
+            result.setIcon(c.getString(Utility.Column.COLUMN_UTILITY_ICON.getIndex()));
+            return result;
+        }
+        return null;
+    }
+
+    public Utility findById(String id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[] {
+                Utility.Column.COLUMN_UTILITY_KEY.getColName(),
+                Utility.Column.COLUMN_UTILITY_ID.getColName(),
+                Utility.Column.COLUMN_UTILITY_NAME.getColName(),
+                Utility.Column.COLUMN_UTILITY_ICON.getColName()
+        };
+        Cursor c = db.query(Utility.TABLE_NAME, columns, Utility.Column.COLUMN_UTILITY_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            Utility result = new Utility();
+            result.setUtilityKey(Integer.parseInt(c.getString(Utility.Column.COLUMN_UTILITY_KEY.getIndex())));
+            result.setUtilityId(c.getString(Utility.Column.COLUMN_UTILITY_ID.getIndex()));
             result.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
             result.setIcon(c.getString(Utility.Column.COLUMN_UTILITY_ICON.getIndex()));
             return result;
@@ -62,8 +84,9 @@ public class UtilityRepository implements IObjectRepository<Utility> {
         if (c.moveToFirst()) {
             do {
                 Utility utility = new Utility();
-                utility.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
-                utility.setName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
+                utility.setUtilityKey(Integer.parseInt(c.getString(Utility.Column.COLUMN_UTILITY_KEY.getIndex())));
+                utility.setUtilityId(c.getString(Utility.Column.COLUMN_UTILITY_ID.getIndex()));
+                utility.setName(c.getString(Utility.Column.COLUMN_UTILITY_NAME.getIndex()));
                 utility.setIcon(c.getString(Utility.Column.COLUMN_UTILITY_ICON.getIndex()));
                 result.add(utility);
             }
@@ -75,7 +98,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
     @Override
     public boolean delete(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Utility.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Utility.TABLE_NAME, Utility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
         return rowAffected > 0;
     }
 
@@ -85,7 +108,7 @@ public class UtilityRepository implements IObjectRepository<Utility> {
         ContentValues values = new ContentValues();
         values.put(Utility.Column.COLUMN_UTILITY_NAME.getColName(), entity.getName());
         values.put(Utility.Column.COLUMN_UTILITY_ICON.getColName(), entity.getIcon());
-        int rowAffected = db.update(Utility.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        int rowAffected = db.update(Utility.TABLE_NAME, values, Utility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?", new String[]{String.valueOf(entity.getUtilityKey())});
         return rowAffected > 0;
     }
 }

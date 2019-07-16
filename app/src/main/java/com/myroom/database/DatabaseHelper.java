@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.myroom.core.Constant;
-import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
 import com.myroom.database.dao.Payment;
@@ -54,19 +53,19 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
     private void createUtilityData(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (1, \"Điện\", \"ic_electricity\")");
-        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (2, \"Nước\", \"ic_water\")");
-        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (3, \"Cab\", \"ic_tv\")");
-        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (4, \"Internet\", \"ic_internet\")");
-        db.execSQL("INSERT INTO utility (id, utility_name, utility_icon) VALUES (5, \"Phí thuê phòng\", \"ic_room\")");
+        db.execSQL("INSERT INTO utility (utility_key, utility_id, utility_name, utility_icon) VALUES (1, \"ELECTRICITY\", \"Điện\", \"ic_electricity\")");
+        db.execSQL("INSERT INTO utility (utility_key, utility_id, utility_name, utility_icon) VALUES (2, \"WATER\", \"Nước\", \"ic_water\")");
+        db.execSQL("INSERT INTO utility (utility_key, utility_id, utility_name, utility_icon) VALUES (3, \"CAB\", \"Cab\", \"ic_tv\")");
+        db.execSQL("INSERT INTO utility (utility_key, utility_id, utility_name, utility_icon) VALUES (4, \"INTERNET\", \"Internet\", \"ic_internet\")");
+        db.execSQL("INSERT INTO utility (utility_key, utility_id, utility_name, utility_icon) VALUES (5, \"ROOM\", \"Phí thuê phòng\", \"ic_room\")");
     }
 
     private void createCurrencyData(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (1, \"VND\", \"ic_vietnam_flag\", 1)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (2, \"USD\", \"ic_american_flag\", 0)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (3, \"CNY\", \"ic_china_flag\", 0)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (4, \"JPY\", \"ic_japan_flag\", 0)");
-        db.execSQL("INSERT INTO currency (id, currency_cd, currency_icon, is_selected) VALUES (5, \"EUR\", \"ic_europe_flag\", 0)");
+        db.execSQL("INSERT INTO currency (currency_key, currency_id, currency_icon, is_selected) VALUES (1, \"VND\", \"ic_vietnam_flag\", 1)");
+        db.execSQL("INSERT INTO currency (currency_key, currency_id, currency_icon, is_selected) VALUES (2, \"USD\", \"ic_american_flag\", 0)");
+        db.execSQL("INSERT INTO currency (currency_key, currency_id, currency_icon, is_selected) VALUES (3, \"CNY\", \"ic_china_flag\", 0)");
+        db.execSQL("INSERT INTO currency (currency_key, currency_id, currency_icon, is_selected) VALUES (4, \"JPY\", \"ic_japan_flag\", 0)");
+        db.execSQL("INSERT INTO currency (currency_key, currency_id, currency_icon, is_selected) VALUES (5, \"EUR\", \"ic_europe_flag\", 0)");
     }
 
     private String dropTable(String tableRoom) {
@@ -75,8 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createPaymentTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
-        tableStructures.add(createColumn(Payment.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_PAYMENT_KEY.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_ROOM_KEY.getColName(), INTEGER));
         tableStructures.add(createColumn(Payment.Column.COLUMN_CREATION_DATE.getColName(), TEXT));
         tableStructures.add(createColumn(Payment.Column.COLUMN_PAYMENT_DATE.getColName(), TEXT));
         tableStructures.add(createColumn(Payment.Column.COLUMN_ELECTRICITY_FEE.getColName(), TEXT));
@@ -89,8 +88,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createCurrencyTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
-        tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_CD.getColName(), TEXT));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_KEY.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_ID.getColName(), TEXT));
         tableStructures.add(createColumn(Currency.Column.COLUMN_CURRENCY_ICON.getColName(), TEXT));
         tableStructures.add(createColumn(Currency.Column.COLUMN_IS_SELECTED.getColName(), INTEGER));
         return buildCreateTableQuery(Currency.TABLE_NAME, tableStructures);
@@ -98,14 +97,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createRoomTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Room.Column.COLUMN_ROOM_KEY.getColName(), INTEGER_PRIMARY_KEY));
         tableStructures.add(createColumn(Room.Column.COLUMN_ROOM_NAME.getColName(), TEXT));
         return buildCreateTableQuery(Room.TABLE_NAME, tableStructures);
     }
 
     private String createGuestTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Guest.Column.COLUMN_GUEST_KEY.getColName(), INTEGER_PRIMARY_KEY));
         tableStructures.add(createColumn(Guest.Column.COLUMN_GUEST_NAME.getColName(), TEXT));
         tableStructures.add(createColumn(Guest.Column.COLUMN_BIRTH_DATE.getColName(), TEXT));
         tableStructures.add(createColumn(Guest.Column.COLUMN_ID_CARD.getColName(), TEXT));
@@ -117,7 +116,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createUtilityTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(BaseModel.Column.COLUMN_ID.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_KEY.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_ID.getColName(), TEXT));
         tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_NAME.getColName(), TEXT));
         tableStructures.add(createColumn(Utility.Column.COLUMN_UTILITY_ICON.getColName(), TEXT));
         return buildCreateTableQuery(Utility.TABLE_NAME, tableStructures);
@@ -125,11 +125,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     private String createRoomUtilityTable() {
         List<String> tableStructures = new ArrayList<>();
-        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), INTEGER));
-        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), INTEGER));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_ROOM_KEY.getColName(), INTEGER));
+        tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_KEY.getColName(), INTEGER));
         tableStructures.add(createColumn(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(),TEXT));
-        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_ROOM_ID.getColName(), Room.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName()));
-        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_UTILITY_ID.getColName(), Utility.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName()));
+        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_ROOM_KEY.getColName(), Room.TABLE_NAME, Room.Column.COLUMN_ROOM_KEY.getColName()));
+        tableStructures.add(createForeignKey(RoomUtility.Column.COLUMN_UTILITY_KEY.getColName(), Utility.TABLE_NAME, Utility.Column.COLUMN_UTILITY_KEY.getColName()));
         return buildCreateTableQuery(RoomUtility.TABLE_NAME, tableStructures);
     }
 

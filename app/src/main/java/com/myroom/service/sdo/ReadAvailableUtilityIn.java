@@ -1,13 +1,13 @@
 package com.myroom.service.sdo;
 
 public class ReadAvailableUtilityIn {
-    private long roomId;
+    private long roomKey;
 
-    public long getRoomId() {
-        return roomId;
+    public long getRoomKey() {
+        return roomKey;
     }
 
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
+    public void setRoomKey(long roomKey) {
+        this.roomKey = roomKey;
     }
 }

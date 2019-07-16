@@ -1,9 +1,10 @@
 package com.myroom.database.dao;
 
-public class Currency extends BaseModel {
+public class Currency {
     public static final String TABLE_NAME = "currency";
     public enum Column {
-        COLUMN_CURRENCY_CD(1, "currency_cd"),
+        COLUMN_CURRENCY_KEY(0, "currency_key"),
+        COLUMN_CURRENCY_ID(1, "currency_id"),
         COLUMN_CURRENCY_ICON(2, "currency_icon"),
         COLUMN_IS_SELECTED(3, "is_selected");
 
@@ -32,16 +33,25 @@ public class Currency extends BaseModel {
         }
     }
 
-    private String currencyCd;
+    private long currencyKey;
+    private String currencyId;
     private String currencyIcon;
     private int isSelected;
 
-    public String getCurrencyCd() {
-        return currencyCd;
+    public long getCurrencyKey() {
+        return currencyKey;
     }
 
-    public void setCurrencyCd(String currencyCd) {
-        this.currencyCd = currencyCd;
+    public void setCurrencyKey(long currencyKey) {
+        this.currencyKey = currencyKey;
+    }
+
+    public String getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
     }
 
     public String getCurrencyIcon() {

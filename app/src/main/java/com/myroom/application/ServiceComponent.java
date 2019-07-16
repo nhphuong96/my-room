@@ -13,6 +13,7 @@ import com.myroom.service.ICurrencyService;
 import com.myroom.service.IGuestService;
 import com.myroom.service.IMessageService;
 import com.myroom.service.IRoomService;
+import com.myroom.service.IUtilityService;
 
 import javax.inject.Singleton;
 
@@ -30,8 +31,10 @@ public interface ServiceComponent {
     void inject(SendMessageFragment sendMessageFragment);
     void inject(GuestInRoomFragment guestInRoomFragment);
     void inject(RoomInformationAdapter roomInformationAdapter);
+    void inject(IRoomService roomService);
     IRoomService getRoomService();
     ICurrencyService getCurrencyService();
     IGuestService getGuestService();
     IMessageService getMessageService();
+    IUtilityService getUtilityService();
 }

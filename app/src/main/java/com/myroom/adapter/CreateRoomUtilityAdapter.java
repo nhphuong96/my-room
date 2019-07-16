@@ -14,6 +14,7 @@ import com.myroom.R;
 import com.myroom.application.BaseApplication;
 import com.myroom.database.repository.UtilityRepository;
 import com.myroom.database.dao.Utility;
+import com.myroom.service.IUtilityService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
 
 public class CreateRoomUtilityAdapter extends RecyclerView.Adapter<CreateRoomUtilityAdapter.CreateRoomUtilityViewHolder> {
 
-    @Inject public UtilityRepository utilityDAO;
+    @Inject public IUtilityService utilityService;
     private List<UtilitySelection> utilitySelectionList;
 
     public CreateRoomUtilityAdapter(Context context) {
@@ -32,7 +33,7 @@ public class CreateRoomUtilityAdapter extends RecyclerView.Adapter<CreateRoomUti
 
     private void initializeUtilitySelectionList() {
         utilitySelectionList = new ArrayList<>();
-        List<Utility> allUtilities = utilityDAO.findAll();
+        List<Utility> allUtilities = utilityService.readAllAvailableUtility();
         for (Utility utility : allUtilities) {
             utilitySelectionList.add(new UtilitySelection(utility, false));
         }

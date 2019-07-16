@@ -25,6 +25,7 @@ import com.myroom.R;
 import com.myroom.adapter.GuestInRoomAdapter;
 import com.myroom.application.BaseApplication;
 import com.myroom.core.Assert;
+import com.myroom.core.Constant;
 import com.myroom.core.GenderFactory;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
@@ -46,7 +47,7 @@ public class GuestInRoomFragment extends Fragment {
 
     public static GuestInRoomFragment newInstance(long roomId) {
         Bundle args = new Bundle();
-        args.putLong("roomId", roomId);
+        args.putLong(Constant.ROOM_KEY_NAME, roomId);
         GuestInRoomFragment fragment = new GuestInRoomFragment();
         fragment.setArguments(args);
         return fragment;
@@ -134,12 +135,12 @@ public class GuestInRoomFragment extends Fragment {
         createGuestIn.setGuestBirthday(guestBirthday);
         createGuestIn.setGuestIdCard(guestIdCard);
         createGuestIn.setGender(GenderFactory.getGenderAsInt(selectedGenderId));
-        createGuestIn.setRoomId(getArguments().getLong("roomId"));
+        createGuestIn.setRoomId(getArguments().getLong(Constant.ROOM_KEY_NAME));
         return createGuestIn;
     }
 
     private void loadGuestInRoom() {
-        long roomId = getArguments().getLong("roomId");
+        long roomId = getArguments().getLong(Constant.ROOM_KEY_NAME);
         if (roomId != -1) {
             adapter = new GuestInRoomAdapter(parentContext, roomId);
             layoutManager = new LinearLayoutManager(parentContext);

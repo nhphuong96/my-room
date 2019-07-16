@@ -122,9 +122,9 @@ public class GuestInRoomAdapter extends RecyclerView.Adapter<GuestInRoomAdapter.
                             Guest guest = guestList.get(getAdapterPosition());
                             try {
                                 DeleteGuestIn deleteGuestIn = new DeleteGuestIn();
-                                deleteGuestIn.setGuestIdList(Arrays.asList(guest.getId()));
+                                deleteGuestIn.setGuestIdList(Arrays.asList(guest.getGuestKey()));
                                 DeleteGuestOut deleteGuestOut = guestService.deleteGuest(deleteGuestIn);
-                                if (deleteGuestOut.getDeletedIdList().contains(guest.getId())) {
+                                if (deleteGuestOut.getDeletedIdList().contains(guest.getGuestKey())) {
                                     guestList.remove(guest);
                                     notifyDataSetChanged();
                                     Toast.makeText(context, "Xóa khách thành công", Toast.LENGTH_SHORT).show();

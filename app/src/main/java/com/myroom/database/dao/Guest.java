@@ -1,8 +1,9 @@
 package com.myroom.database.dao;
 
-public class Guest extends BaseModel {
+public class Guest {
     public static final String TABLE_NAME = "guest";
     public enum Column {
+        COLUMN_GUEST_KEY(0, "guest_key"),
         COLUMN_GUEST_NAME(1, "guest_name"),
         COLUMN_BIRTH_DATE(2, "birth_date"),
         COLUMN_ID_CARD(3, "id_card"),
@@ -35,6 +36,7 @@ public class Guest extends BaseModel {
         }
     }
 
+    private long guestKey;
     private String guestName;
     private String birthDate;
     private String idCard;
@@ -52,6 +54,14 @@ public class Guest extends BaseModel {
         this.phoneNumber = phoneNumber;
         this.roomId = roomId;
         this.gender = gender;
+    }
+
+    public long getGuestKey() {
+        return guestKey;
+    }
+
+    public void setGuestKey(long guestKey) {
+        this.guestKey = guestKey;
     }
 
     public String getGuestName() {

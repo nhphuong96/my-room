@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.myroom.R;
 import com.myroom.adapter.RoomInformationAdapter;
+import com.myroom.core.Constant;
 
 public class RoomInformationFragment extends Fragment {
 
@@ -24,7 +25,7 @@ public class RoomInformationFragment extends Fragment {
 
     public static RoomInformationFragment newInstance(long roomId) {
         Bundle args = new Bundle();
-        args.putLong("roomId", roomId);
+        args.putLong(Constant.ROOM_KEY_NAME, roomId);
         RoomInformationFragment fragment = new RoomInformationFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,7 +48,7 @@ public class RoomInformationFragment extends Fragment {
 
     private void loadRoomInformation() {
         layoutManager = new LinearLayoutManager(parentContext);
-        adapter = new RoomInformationAdapter(parentContext, getArguments().getLong("roomId"));
+        adapter = new RoomInformationAdapter(parentContext, getArguments().getLong(Constant.ROOM_KEY_NAME));
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);

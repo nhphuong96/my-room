@@ -2,11 +2,12 @@ package com.myroom.database.dao;
 
 import java.util.Date;
 
-public class Payment extends BaseModel {
+public class Payment {
 
     public static final String TABLE_NAME = "payment";
     public enum Column {
-        COLUMN_ROOM_ID(1, "room_id"),
+        COLUMN_PAYMENT_KEY(0, "payment_key"),
+        COLUMN_ROOM_KEY(1, "room_key"),
         COLUMN_CREATION_DATE(2, "creation_date"),
         COLUMN_PAYMENT_DATE(3, "payment_date"),
         COLUMN_ELECTRICITY_FEE(4, "electricity_fee"),
@@ -40,7 +41,8 @@ public class Payment extends BaseModel {
         }
     }
 
-    private long roomId;
+    private long paymentKey;
+    private long roomKey;
     private Date creationDate;
     private Date paymentDate;
     private String electricityFee;
@@ -49,12 +51,20 @@ public class Payment extends BaseModel {
     private String internetFee;
     private String roomFee;
 
-    public long getRoomId() {
-        return roomId;
+    public long getPaymentKey() {
+        return paymentKey;
     }
 
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
+    public void setPaymentKey(long paymentKey) {
+        this.paymentKey = paymentKey;
+    }
+
+    public long getRoomKey() {
+        return roomKey;
+    }
+
+    public void setRoomKey(long roomKey) {
+        this.roomKey = roomKey;
     }
 
     public Date getCreationDate() {

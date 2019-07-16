@@ -56,9 +56,9 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder currencyViewHolder, int i) {
         Currency currency = availableCurrencyList.get(i);
-        currencyViewHolder.id = currency.getId();
+        currencyViewHolder.currencyKey = currency.getCurrencyKey();
         currencyViewHolder.currencyIcon.setImageResource(context.getResources().getIdentifier(currency.getCurrencyIcon(), "drawable", context.getPackageName()));
-        currencyViewHolder.currencyCd.setText(currency.getCurrencyCd());
+        currencyViewHolder.currencyId.setText(currency.getCurrencyId());
         currencyViewHolder.selected.setVisibility(currency.getIsSelected() == Constant.TRUE ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -69,14 +69,14 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
 
     public class CurrencyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView currencyIcon;
-        private TextView currencyCd;
+        private TextView currencyId;
         private ImageView selected;
-        private long id;
+        private long currencyKey;
 
         public CurrencyViewHolder(@NonNull View itemView) {
             super(itemView);
             currencyIcon = itemView.findViewById(R.id.item_setting_currency_icon);
-            currencyCd = itemView.findViewById(R.id.item_setting_currency_cd);
+            currencyId = itemView.findViewById(R.id.item_setting_currency_cd);
             selected = itemView.findViewById(R.id.item_setting_currency_selected);
             itemView.setOnClickListener(this);
         }
@@ -85,7 +85,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
         public void onClick(View v) {
             try
             {
-                currencyService.updateSelectedCurrency(id);
+                currencyService.updateSelectedCurrency(currencyKey);
                 ReadAvailableCurrencyOut readAvailableCurrencyOut = currencyService.readAvailableCurrency();
                 availableCurrencyList = readAvailableCurrencyOut.getCurrencyList();
                 notifyDataSetChanged();

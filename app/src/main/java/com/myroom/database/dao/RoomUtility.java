@@ -3,8 +3,8 @@ package com.myroom.database.dao;
 public class RoomUtility {
     public static final String TABLE_NAME = "room_utility";
     public enum Column {
-        COLUMN_ROOM_ID(0, "room_id"),
-        COLUMN_UTILITY_ID(1, "utility_id"),
+        COLUMN_ROOM_KEY(0, "room_key"),
+        COLUMN_UTILITY_KEY(1, "utility_key"),
         COLUMN_UTILITY_FEE(2, "utility_fee");
 
         private int index;
@@ -32,24 +32,24 @@ public class RoomUtility {
         }
     }
 
-    private long roomId;
-    private long utilityId;
+    private long roomKey;
+    private long utilityKey;
     private String utilityFee;
 
-    public long getRoomId() {
-        return roomId;
+    public long getRoomKey() {
+        return roomKey;
     }
 
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
+    public void setRoomKey(long roomKey) {
+        this.roomKey = roomKey;
     }
 
-    public long getUtilityId() {
-        return utilityId;
+    public long getUtilityKey() {
+        return utilityKey;
     }
 
-    public void setUtilityId(long utilityId) {
-        this.utilityId = utilityId;
+    public void setUtilityKey(long utilityKey) {
+        this.utilityKey = utilityKey;
     }
 
     public String getUtilityFee() {
@@ -60,12 +60,4 @@ public class RoomUtility {
         this.utilityFee = utilityFee;
     }
 
-    @Override
-    public String toString() {
-        return "RoomUtilityRepository{" +
-                "roomId=" + roomId +
-                ", utilityId=" + utilityId +
-                ", utilityFee=" + utilityFee +
-                '}';
-    }
 }

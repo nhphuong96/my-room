@@ -1,10 +1,12 @@
 package com.myroom.database.dao;
 
-public class Utility extends BaseModel {
+public class Utility {
     public static final String TABLE_NAME = "utility";
     public enum Column {
-        COLUMN_UTILITY_NAME(1, "utility_name"),
-        COLUMN_UTILITY_ICON(2, "utility_icon");
+        COLUMN_UTILITY_KEY(0, "utility_key"),
+        COLUMN_UTILITY_ID(1, "utility_id"),
+        COLUMN_UTILITY_NAME(2, "utility_name"),
+        COLUMN_UTILITY_ICON(3, "utility_icon");
 
         private int index;
         private String colName;
@@ -31,8 +33,26 @@ public class Utility extends BaseModel {
         }
     }
 
+    private long utilityKey;
+    private String utilityId;
     private String name;
     private String icon;
+
+    public long getUtilityKey() {
+        return utilityKey;
+    }
+
+    public void setUtilityKey(long utilityKey) {
+        this.utilityKey = utilityKey;
+    }
+
+    public String getUtilityId() {
+        return utilityId;
+    }
+
+    public void setUtilityId(String utilityId) {
+        this.utilityId = utilityId;
+    }
 
     public String getName() {
         return name;

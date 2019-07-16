@@ -8,5 +8,7 @@ import com.myroom.service.sdo.ReadSelectedCurrencyOut;
 public interface ICurrencyService {
     ReadSelectedCurrencyOut readSelectedCurrency() throws OperationException;
     ReadAvailableCurrencyOut readAvailableCurrency() throws OperationException;
-    void updateSelectedCurrency(long id) throws ValidationException, OperationException;
+    void updateSelectedCurrency(long key) throws ValidationException, OperationException;
+    long readCurrencyKey(String currencyId) throws ValidationException, OperationException;
+    String readCurrencyId(long currencyKey) throws ValidationException, OperationException;
 }

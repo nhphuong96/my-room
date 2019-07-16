@@ -18,6 +18,7 @@ import com.myroom.R;
 import com.myroom.activity.CreateBillActivity;
 import com.myroom.activity.RoomDetailActivity;
 import com.myroom.application.BaseApplication;
+import com.myroom.core.Constant;
 import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.exception.OperationException;
@@ -57,7 +58,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         private TextView txtGuestName;
         private AppCompatButton btnCreateBill;
         private ImageView ivAvatar;
-        private long roomId;
+        private long roomKey;
 
         public RoomViewHolder(View v) {
             super(v);
@@ -72,7 +73,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, CreateBillActivity.class);
-                    intent.putExtra("roomId", roomId);
+                    intent.putExtra(Constant.ROOM_KEY_NAME, roomKey);
                     context.startActivity(intent);
                 }
             });
@@ -81,7 +82,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, RoomDetailActivity.class);
-            intent.putExtra("roomId", roomId);
+            intent.putExtra(Constant.ROOM_KEY_NAME, roomKey);
             context.startActivity(intent);
         }
 
@@ -129,7 +130,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         ImageView imageView = roomViewHolder.ivAvatar;
 
         Room room = roomList.get(i);
-        roomViewHolder.roomId = room.getId();
+        roomViewHolder.roomKey = room.getRoomKey();
         txtRoomName.setText(room.getRoomName());
         Guest roomLeader = findRoomLeader(room);
         if (roomLeader != null) {
@@ -146,7 +147,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     private DeleteRoomIn buildDeleteRoomIn(Room room) {
         DeleteRoomIn deleteRoomIn = new DeleteRoomIn();
-        deleteRoomIn.getRoomIdList().add(room.getId());
+        deleteRoomIn.getRoomKeyList().add(room.getRoomKey());
         return deleteRoomIn;
     }
 
@@ -155,7 +156,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
     private Guest findRoomLeader(Room room) {
-        long roomId = room.getId();
+        long roomId = room.getRoomKey();
         List<Guest> guestsInRoom = guestRepository.findGuestByRoomId(roomId);
         if (CollectionUtils.isNotEmpty(guestsInRoom)) {
             return guestsInRoom.get(0);

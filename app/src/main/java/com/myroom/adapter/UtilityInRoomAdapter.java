@@ -20,7 +20,6 @@ import com.myroom.application.BaseApplication;
 import com.myroom.core.NumberFormatter;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.RoomUtility;
-import com.myroom.database.dao.Utility;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.dto.UtilityInRoomItem;
 import com.myroom.exception.OperationException;
@@ -36,8 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import dagger.Provides;
 
 public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdapter.UtilityInRoomViewHolder> {
     private List<UtilityInRoomItem> utilityInRoomItemList;
@@ -72,7 +69,7 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
 
     private void loadAllUtilitiesInRoom() {
         ReadAvailableUtilityIn readAvailableUtilityIn = new ReadAvailableUtilityIn();
-        readAvailableUtilityIn.setRoomId(roomId);
+        readAvailableUtilityIn.setRoomKey(roomId);
         try {
             ReadAvailableUtilityOut readAvailableUtilityOut = roomService.readAvailableUtility(readAvailableUtilityIn);
             utilityInRoomItemList = readAvailableUtilityOut.getUtilityInRoomItemList();
@@ -95,11 +92,11 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
     @Override
     public void onBindViewHolder(@NonNull UtilityInRoomViewHolder utilityInRoomViewHolder, int i) {
         UtilityInRoomItem utilityInRoomItem = utilityInRoomItemList.get(i);
-        utilityInRoomViewHolder.utilityId = utilityInRoomItem.getUtilityId();
+        utilityInRoomViewHolder.utilityId = utilityInRoomItem.getUtilityKey();
         utilityInRoomViewHolder.tvUtilityInRoomName.setText(utilityInRoomItem.getUtilityName());
         utilityInRoomViewHolder.tvUtilityInRoomFee.setText(NumberFormatter.formatThousandNumberSeparator(String.valueOf(utilityInRoomItem.getUtilityFee())));
         utilityInRoomViewHolder.ivAvatar.setImageResource(context.getResources().getIdentifier(utilityInRoomItem.getUtilityIconName(), "drawable", context.getPackageName()));
-        utilityInRoomViewHolder.tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        utilityInRoomViewHolder.tvCurrency.setText(selectedCurrency.getCurrencyId());
     }
 
     @Override
@@ -158,8 +155,8 @@ public class UtilityInRoomAdapter extends RecyclerView.Adapter<UtilityInRoomAdap
                     }
 
                     RoomUtility roomUtility = new RoomUtility();
-                    roomUtility.setRoomId(roomId);
-                    roomUtility.setUtilityId(utilityId);
+                    roomUtility.setRoomKey(roomId);
+                    roomUtility.setUtilityKey(utilityId);
                     roomUtility.setUtilityFee(etUtilityFee.getText().toString());
                     boolean success = roomUtilityRepository.updateRoomUtility(roomUtility);
                     if (success) {

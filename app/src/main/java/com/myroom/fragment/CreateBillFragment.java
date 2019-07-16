@@ -19,12 +19,15 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.application.BaseApplication;
+import com.myroom.core.Constant;
+import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.repository.RoomUtilityRepository;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
 import com.myroom.service.ICurrencyService;
+import com.myroom.service.IUtilityService;
 import com.myroom.service.OnDataPasser;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -51,12 +54,14 @@ public class CreateBillFragment extends Fragment {
     @Inject
     public RoomUtilityRepository roomUtilityRepository;
     @Inject
+    public IUtilityService utilityService;
+    @Inject
     public ICurrencyService currencyService;
 
     public static Fragment newInstance(Long roomId) {
         CreateBillFragment createBillFragment = new CreateBillFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("roomId", roomId);
+        bundle.putLong(Constant.ROOM_KEY_NAME, roomId);
         createBillFragment.setArguments(bundle);
         return createBillFragment;
     }
@@ -82,27 +87,26 @@ public class CreateBillFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         BaseApplication.getRepositoryComponent(parentContext).inject(this);
         BaseApplication.getServiceComponent(parentContext).inject(this);
-        loadSelectedCurrency();
-        render();
-        submitCreateBill();
-
-    }
-
-    private void loadSelectedCurrency() {
         try {
-            selectedCurrency = currencyService.readSelectedCurrency().getCurrency();
-        } catch (OperationException e) {
-            Toast.makeText(parentContext, "Lỗi xảy ra: Không tìm được tiền tệ.", Toast.LENGTH_SHORT).show();
+            loadSelectedCurrency();
+            render();
+            setUpCreateBill();
+        } catch (ValidationException | OperationException e) {
+            Toast.makeText(parentContext, "Lỗi xảy ra: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    public void submitCreateBill() {
+    private void loadSelectedCurrency() throws OperationException {
+        selectedCurrency = currencyService.readSelectedCurrency().getCurrency();
+    }
+
+    public void setUpCreateBill() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     final Bundle bundle = new Bundle();
-                    bundle.putLong("roomId", getArguments().getLong("roomId"));
+                    bundle.putLong(Constant.ROOM_KEY_NAME, getArguments().getLong(Constant.ROOM_KEY_NAME));
                     putElectricityProperties(bundle);
                     putWaterProperties(bundle);
                     putCabProperties(bundle);
@@ -134,8 +138,7 @@ public class CreateBillFragment extends Fragment {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putString("roomCounter", counter.getText().toString());
-            bundle.putString("roomFee", fee.getText().toString());
+            bundle.putInt("roomCounter", Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -147,8 +150,7 @@ public class CreateBillFragment extends Fragment {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putString("internetCounter", counter.getText().toString());
-            bundle.putString("internetFee", fee.getText().toString());
+            bundle.putInt("internetCounter", Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -161,8 +163,7 @@ public class CreateBillFragment extends Fragment {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putString("cabCounter", counter.getText().toString());
-            bundle.putString("cabFee", fee.getText().toString());
+            bundle.putInt("cabCounter", Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -175,8 +176,7 @@ public class CreateBillFragment extends Fragment {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putString("waterCounter", counter.getText().toString());
-            bundle.putString("waterFee", fee.getText().toString());
+            bundle.putInt(Constant.WATER_INDEX, Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -193,37 +193,39 @@ public class CreateBillFragment extends Fragment {
                 currentIndex.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putString("electricityLastIndex", lastIndex.getText().toString());
-            bundle.putString("electricityCurrentIndex", currentIndex.getText().toString());
-            bundle.putString("electricityFee", fee.getText().toString());
+            bundle.putInt(Constant.ELECTRICITY_LAST_INDEX_NAME, Integer.valueOf(lastIndex.getText().toString()));
+            bundle.putInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME, Integer.valueOf(currentIndex.getText().toString()));
         }
     }
 
-    private void render() {
+    private void render() throws ValidationException, OperationException {
         Bundle bundle = this.getArguments();
-        Long roomId = bundle.getLong("roomId");
+        Long roomId = bundle.getLong(Constant.ROOM_KEY_NAME);
         List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomId(roomId);
         if (CollectionUtils.isNotEmpty(roomUtilityList)) {
             for (RoomUtility roomUtility : roomUtilityList) {
-                long id = roomUtility.getUtilityId();
-                if (id == 1L) {
-                    electricityCalculationLayout(linearLayout, roomUtility);
-                }
-                else if (id == 2L) {
-                    addLineSeparator(linearLayout);
-                    waterCalculationLayout(linearLayout, roomUtility);
-                }
-                else if (id == 3L) {
-                    addLineSeparator(linearLayout);
-                    cabCalculationLayout(linearLayout, roomUtility);
-                }
-                else if (id == 4L) {
-                    addLineSeparator(linearLayout);
-                    internetCalculationLayout(linearLayout, roomUtility);
-                }
-                else if (id == 5L) {
-                    addLineSeparator(linearLayout);
-                    roomCalculatorLayout(linearLayout, roomUtility);
+                String utilityId = utilityService.readUtilityId(roomUtility.getUtilityKey());
+                switch (UtilityId.valueOf(utilityId)) {
+                    case ELECTRICITY:
+                        electricityCalculationLayout(linearLayout, roomUtility);
+                        break;
+                    case WATER:
+                        addLineSeparator(linearLayout);
+                        waterCalculationLayout(linearLayout, roomUtility);
+                        break;
+                    case CAB:
+                        addLineSeparator(linearLayout);
+                        cabCalculationLayout(linearLayout, roomUtility);
+                        break;
+                    case INTERNET:
+                        addLineSeparator(linearLayout);
+                        internetCalculationLayout(linearLayout, roomUtility);
+                        break;
+                    case ROOM:
+                        addLineSeparator(linearLayout);
+                        roomCalculatorLayout(linearLayout, roomUtility);
+                        break;
+                    default:
                 }
             }
         }
@@ -234,7 +236,7 @@ public class CreateBillFragment extends Fragment {
         TextView tvUnitFee = roomView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(roomUtility.getUtilityFee()));
         TextView tvCurrency= roomView.findViewById(R.id.currency);
-        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        tvCurrency.setText(selectedCurrency.getCurrencyId());
         EditText etCounter = roomView.findViewById(R.id.counter);
         etCounter.setText(String.valueOf(1));
         etCounter.setEnabled(false);
@@ -248,7 +250,7 @@ public class CreateBillFragment extends Fragment {
         TextView tvUnitFee = internetView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(internetUtility.getUtilityFee()));
         TextView tvCurrency= internetView.findViewById(R.id.currency);
-        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        tvCurrency.setText(selectedCurrency.getCurrencyId());
         TextView tvUtilityName = internetView.findViewById(R.id.view_calculator_utility_name);
         tvUtilityName.setText("Internet");
         root.addView(internetView);
@@ -259,7 +261,7 @@ public class CreateBillFragment extends Fragment {
         TextView tvUnitFee = cabView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(cabUtility.getUtilityFee()));
         TextView tvCurrency= cabView.findViewById(R.id.currency);
-        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        tvCurrency.setText(selectedCurrency.getCurrencyId());
         TextView tvUtilityName = cabView.findViewById(R.id.view_calculator_utility_name);
         tvUtilityName.setText("Cab");
         root.addView(cabView);
@@ -270,7 +272,7 @@ public class CreateBillFragment extends Fragment {
         TextView tvUnitFee = electricityView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(electricityUtility.getUtilityFee()));
         TextView tvCurrency= electricityView.findViewById(R.id.currency);
-        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        tvCurrency.setText(selectedCurrency.getCurrencyId());
         root.addView(electricityView);
     }
 
@@ -279,7 +281,7 @@ public class CreateBillFragment extends Fragment {
         TextView tvUnitFee = waterView.findViewById(R.id.unit_fee);
         tvUnitFee.setText(String.valueOf(waterUtility.getUtilityFee()));
         TextView tvCurrency= waterView.findViewById(R.id.currency);
-        tvCurrency.setText(selectedCurrency.getCurrencyCd());
+        tvCurrency.setText(selectedCurrency.getCurrencyId());
         TextView tvUtilityName = waterView.findViewById(R.id.view_calculator_utility_name);
         tvUtilityName.setText("Nước");
         root.addView(waterView);

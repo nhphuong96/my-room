@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.adapter.RoomDetailPagerAdapter;
+import com.myroom.core.Constant;
 
 public class RoomDetailActivity extends AppCompatActivity {
 
@@ -59,9 +60,9 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     private void getExtraInputs() {
         Intent intent = getIntent();
-        Long roomId = intent.getLongExtra("roomId", -1L);
+        Long roomKey = intent.getLongExtra(Constant.ROOM_KEY_NAME, -1L);
         if (roomId != -1) {
-            this.roomId = Long.valueOf(roomId);
+            this.roomId = Long.valueOf(roomKey);
         }
         else {
             Toast.makeText(this, "Không tìm thấy roomId.", Toast.LENGTH_SHORT).show();

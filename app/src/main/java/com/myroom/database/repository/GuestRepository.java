@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Guest;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
     public List<Guest> findGuestByRoomId(long roomId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
+                Guest.Column.COLUMN_GUEST_KEY.getColName(),
                 Guest.Column.COLUMN_GUEST_NAME.getColName(),
                 Guest.Column.COLUMN_BIRTH_DATE.getColName(),
                 Guest.Column.COLUMN_ID_CARD.getColName(),
@@ -39,7 +38,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
         if (c.moveToFirst()) {
             do {
                 Guest guest = new Guest();
-                guest.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+                guest.setGuestKey(Integer.parseInt(c.getString(Guest.Column.COLUMN_GUEST_KEY.getIndex())));
                 guest.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
                 guest.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
                 guest.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
@@ -71,7 +70,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
     public Guest find(long id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
+                Guest.Column.COLUMN_GUEST_KEY.getColName(),
                 Guest.Column.COLUMN_GUEST_NAME.getColName(),
                 Guest.Column.COLUMN_BIRTH_DATE.getColName(),
                 Guest.Column.COLUMN_ID_CARD.getColName(),
@@ -79,11 +78,11 @@ public class GuestRepository implements IObjectRepository<Guest> {
                 Guest.Column.COLUMN_ROOM_ID.getColName(),
                 Guest.Column.COLUMN_GENDER.getColName()
         };
-        Cursor c = db.query(Guest.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query(Guest.TABLE_NAME, columns, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
 
         if (c.moveToFirst()) {
             Guest result = new Guest();
-            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setGuestKey(Integer.parseInt(c.getString(Guest.Column.COLUMN_GUEST_KEY.getIndex())));
             result.setGuestName(c.getString(Guest.Column.COLUMN_GUEST_NAME.getIndex()));
             result.setBirthDate(c.getString(Guest.Column.COLUMN_BIRTH_DATE.getIndex()));
             result.setIdCard(c.getString(Guest.Column.COLUMN_ID_CARD.getIndex()));
@@ -103,7 +102,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
     @Override
     public boolean delete(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Guest.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Guest.TABLE_NAME, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
         return rowAffected > 0;
     }
 
@@ -117,7 +116,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
         values.put(Guest.Column.COLUMN_PHONE_NUMBER.getColName(), entity.getPhoneNumber());
         values.put(Guest.Column.COLUMN_ROOM_ID.getColName(), entity.getRoomId());
         values.put(Guest.Column.COLUMN_GENDER.getColName(), entity.getGender());
-        int rowAffected = db.update(Guest.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        int rowAffected = db.update(Guest.TABLE_NAME, values, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[]{String.valueOf(entity.getGuestKey())});
         return rowAffected > 0;
     }
 }

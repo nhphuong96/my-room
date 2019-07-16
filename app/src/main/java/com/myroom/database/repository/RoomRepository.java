@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
-import com.myroom.database.dao.BaseModel;
 import com.myroom.database.dao.Room;
 
 import java.util.ArrayList;
@@ -38,13 +37,13 @@ public class RoomRepository implements IObjectRepository<Room> {
     public Room find(long id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
-                BaseModel.Column.COLUMN_ID.getColName(),
+                Room.Column.COLUMN_ROOM_KEY.getColName(),
                 Room.Column.COLUMN_ROOM_NAME.getColName(),
         };
-        Cursor c = db.query(Room.TABLE_NAME, columns, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query(Room.TABLE_NAME, columns, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
         if (c.moveToFirst()) {
             Room result = new Room();
-            result.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+            result.setRoomKey(Integer.parseInt(c.getString(Room.Column.COLUMN_ROOM_KEY.getIndex())));
             result.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
             return result;
         }
@@ -60,7 +59,7 @@ public class RoomRepository implements IObjectRepository<Room> {
         if (c.moveToFirst()) {
             do {
                 Room room = new Room();
-                room.setId(Integer.parseInt(c.getString(BaseModel.Column.COLUMN_ID.getIndex())));
+                room.setRoomKey(Integer.parseInt(c.getString(Room.Column.COLUMN_ROOM_KEY.getIndex())));
                 room.setRoomName(c.getString(Room.Column.COLUMN_ROOM_NAME.getIndex()));
                 result.add(room);
             }
@@ -72,7 +71,7 @@ public class RoomRepository implements IObjectRepository<Room> {
     @Override
     public boolean delete(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Room.TABLE_NAME, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Room.TABLE_NAME, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
         return rowAffected > 0;
     }
 
@@ -81,7 +80,7 @@ public class RoomRepository implements IObjectRepository<Room> {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Room.Column.COLUMN_ROOM_NAME.getColName(), entity.getRoomName());
-        int rowAffected = db.update(Room.TABLE_NAME, values, BaseModel.Column.COLUMN_ID.getColName() + " = ?", new String[]{String.valueOf(entity.getId())});
+        int rowAffected = db.update(Room.TABLE_NAME, values, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[]{String.valueOf(entity.getRoomKey())});
         return rowAffected > 0;
     }
 }
