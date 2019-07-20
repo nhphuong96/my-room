@@ -3,9 +3,9 @@ package com.myroom.builder;
 import com.myroom.core.NumberFormatter;
 import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Currency;
-import com.myroom.dto.UtilityInRoomItem;
+import com.myroom.service.sdo.ReadUtilityInRoomOut;
+import com.myroom.service.sdo.UtilityInRoomItem;
 import com.myroom.service.sdo.CreateMessageIn;
-import com.myroom.service.sdo.ReadAvailableUtilityOut;
 import com.myroom.utils.DateUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class MessageBuilder {
     private CreateMessageIn createMessageIn;
-    private ReadAvailableUtilityOut readAvailableUtilityOut;
+    private ReadUtilityInRoomOut readAvailableUtilityOut;
     private Currency selectedCurrency;
     private Double electricityFee;
     private Double waterFee;
@@ -111,7 +111,7 @@ public class MessageBuilder {
 
     private UtilityInRoomItem findUtility(UtilityId utilityId) throws IllegalArgumentException {
         for (UtilityInRoomItem item : readAvailableUtilityOut.getUtilityInRoomItemList()) {
-            if (item.getUtilityId().equals(utilityId)) {
+            if (item.getUtilityId().equals(utilityId.name())) {
                 return item;
             }
         }
@@ -123,7 +123,7 @@ public class MessageBuilder {
         return this;
     }
 
-    public MessageBuilder setReadAvailableUtilityOut(ReadAvailableUtilityOut readAvailableUtilityOut) {
+    public MessageBuilder setReadAvailableUtilityOut(ReadUtilityInRoomOut readAvailableUtilityOut) {
         this.readAvailableUtilityOut = readAvailableUtilityOut;
         return this;
     }

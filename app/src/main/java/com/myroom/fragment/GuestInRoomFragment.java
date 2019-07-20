@@ -135,7 +135,7 @@ public class GuestInRoomFragment extends Fragment {
         createGuestIn.setGuestBirthday(guestBirthday);
         createGuestIn.setGuestIdCard(guestIdCard);
         createGuestIn.setGender(GenderFactory.getGenderAsInt(selectedGenderId));
-        createGuestIn.setRoomId(getArguments().getLong(Constant.ROOM_KEY_NAME));
+        createGuestIn.setRoomKey(getArguments().getLong(Constant.ROOM_KEY_NAME));
         return createGuestIn;
     }
 

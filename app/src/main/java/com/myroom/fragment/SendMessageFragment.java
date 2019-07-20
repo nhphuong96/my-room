@@ -28,8 +28,10 @@ import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.IMessageService;
+import com.myroom.service.IPaymentService;
 import com.myroom.service.sdo.CreateMessageIn;
 import com.myroom.service.sdo.CreateMessageOut;
+import com.myroom.service.sdo.CreatePaymentIn;
 import com.myroom.service.sdo.IndexPair;
 import com.myroom.service.sdo.SendMessageIn;
 
@@ -47,6 +49,7 @@ public class SendMessageFragment extends Fragment {
     private AppCompatSpinner recipientSelector;
     private AppCompatButton btnSendMessage;
     private long roomKey;
+    private String messageContent;
 
     @Inject
     public GuestRepository guestRepository;
@@ -55,7 +58,7 @@ public class SendMessageFragment extends Fragment {
     @Inject
     public IMessageService messageService;
     @Inject
-    public PaymentRepository paymentRepository;
+    public IPaymentService paymentService;
 
     public static Fragment newInstance(Bundle bundle) {
         SendMessageFragment sendMessageFragment = new SendMessageFragment();
@@ -80,8 +83,19 @@ public class SendMessageFragment extends Fragment {
         BaseApplication.getRepositoryComponent(context).inject(this);
         BaseApplication.getServiceComponent(context).inject(this);
         getExtraData();
+        createMessage();
         loadRecipients();
         setUpSendMessage();
+    }
+
+    private void createMessage() {
+        try {
+            CreateMessageOut createMessageOut = messageService.createMessage(collectCreateMessageIn());
+            messageContent = createMessageOut.getMessageContent();
+            tvMessage.setText(messageContent);
+        } catch (ValidationException | OperationException e) {
+            Toast.makeText(context, "không tạo được message", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getExtraData() {
@@ -101,6 +115,7 @@ public class SendMessageFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
                                     sendMessage();
+                                    createPayment();
                                     getActivity().finish();
                                 } catch (ValidationException | OperationException e) {
                                     Toast.makeText(context, String.format("Hóa đơn gửi không thành công."), Toast.LENGTH_SHORT).show();
@@ -112,10 +127,25 @@ public class SendMessageFragment extends Fragment {
         });
     }
 
+    private void createPayment() throws ValidationException, OperationException {
+        paymentService.createPayment(collectCreatePaymentIn());
+    }
+
+    private CreatePaymentIn collectCreatePaymentIn() {
+        Bundle bundle = getArguments();
+        CreatePaymentIn createPaymentIn = new CreatePaymentIn();
+        createPaymentIn.setRoomKey(roomKey);
+        createPaymentIn.setElectricityIndices(new IndexPair(bundle.getInt(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
+        createPaymentIn.setWaterIndex(bundle.getInt(Constant.WATER_INDEX));
+        createPaymentIn.setCabIndex(bundle.getInt(Constant.CAB_INDEX));
+        createPaymentIn.setInternetIndex(bundle.getInt(Constant.INTERNET_INDEX));
+        createPaymentIn.setRoomIndex(bundle.getInt(Constant.ROOM_INDEX));
+        return createPaymentIn;
+    }
+
     private void sendMessage() throws ValidationException, OperationException {
-        CreateMessageOut createMessageOut = messageService.createMessage(collectCreateMessageIn());
         String recipientPhoneNumber = getSelectedPhoneNumber();
-        messageService.sendMessage(convertSendMessageIn(recipientPhoneNumber, createMessageOut.getMessageContent()));
+        messageService.sendMessage(convertSendMessageIn(recipientPhoneNumber, messageContent));
         Toast.makeText(context, String.format("Hóa đơn gửi tới %s thành công.", recipientPhoneNumber), Toast.LENGTH_SHORT).show();
     }
 
@@ -127,6 +157,7 @@ public class SendMessageFragment extends Fragment {
     private CreateMessageIn collectCreateMessageIn() {
         Bundle bundle = getArguments();
         CreateMessageIn createMessageIn = new CreateMessageIn();
+        createMessageIn.setRoomKey(roomKey);
         createMessageIn.setElectricityIndices(new IndexPair(bundle.getInt(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
         createMessageIn.setWaterIndex(bundle.getInt(Constant.WATER_INDEX));
         createMessageIn.setCabIndex(bundle.getInt(Constant.CAB_INDEX));

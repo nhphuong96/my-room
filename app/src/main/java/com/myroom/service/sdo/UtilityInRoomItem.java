@@ -1,4 +1,4 @@
-package com.myroom.dto;
+package com.myroom.service.sdo;
 
 public class UtilityInRoomItem {
     private long utilityKey;

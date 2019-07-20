@@ -1,6 +1,5 @@
 package com.myroom.activity;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -126,14 +125,14 @@ public class CreateRoomActivity extends AppCompatActivity {
         createRoomIn.setGuestIdCard(idCard);
         createRoomIn.setGuestPhoneNumber(phoneNumber);
         createRoomIn.setGender(GenderFactory.getGenderAsInt(selectedGenderId));
-        createRoomIn.setUtilityIdList(new ArrayList<Long>());
+        createRoomIn.setUtilityKeyList(new ArrayList<Long>());
         for (CreateRoomUtilityAdapter.UtilitySelection utilitySelection : adapter.getUtilitySelectionList()) {
             if (utilitySelection.getSelected()) {
-                createRoomIn.getUtilityIdList().add(utilitySelection.getUtility().getUtilityKey());
+                createRoomIn.getUtilityKeyList().add(utilitySelection.getUtility().getUtilityKey());
             }
         }
 
-        if (CollectionUtils.isEmpty(createRoomIn.getUtilityIdList())) {
+        if (CollectionUtils.isEmpty(createRoomIn.getUtilityKeyList())) {
             throw new ValidationException("Bạn phải chọn ít nhất 1 tiện ích.");
         }
         return createRoomIn;

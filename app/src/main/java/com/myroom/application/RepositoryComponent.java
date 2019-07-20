@@ -19,6 +19,7 @@ import com.myroom.fragment.SendMessageFragment;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.IGuestService;
 import com.myroom.service.IMessageService;
+import com.myroom.service.IPaymentService;
 import com.myroom.service.IRoomService;
 import com.myroom.service.IUtilityService;
 
@@ -43,6 +44,7 @@ public interface RepositoryComponent {
     void inject(IGuestService guestService);
     void inject(IMessageService messageService);
     void inject(IUtilityService utilityService);
+    void inject(IPaymentService paymentService);
 
     void inject(GeneralSettingUtilityActivity generalSettingUtilityActivity);
     void inject(CreateBillActivity createBillActivity);

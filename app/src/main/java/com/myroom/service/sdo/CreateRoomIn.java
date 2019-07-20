@@ -9,7 +9,7 @@ public class CreateRoomIn {
     private String guestIdCard;
     private String guestPhoneNumber;
     private int gender;
-    private List<Long> utilityIdList;
+    private List<Long> utilityKeyList;
 
     public String getRoomName() {
         return roomName;
@@ -19,12 +19,12 @@ public class CreateRoomIn {
         this.roomName = roomName;
     }
 
-    public List<Long> getUtilityIdList() {
-        return utilityIdList;
+    public List<Long> getUtilityKeyList() {
+        return utilityKeyList;
     }
 
-    public void setUtilityIdList(List<Long> utilityIdList) {
-        this.utilityIdList = utilityIdList;
+    public void setUtilityKeyList(List<Long> utilityKeyList) {
+        this.utilityKeyList = utilityKeyList;
     }
 
     public String getGuestName() {

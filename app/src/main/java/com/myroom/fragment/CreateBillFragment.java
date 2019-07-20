@@ -133,24 +133,22 @@ public class CreateBillFragment extends Fragment {
     private void putRoomProperties(Bundle bundle) throws ValidationException {
         if (internetView != null) {
             EditText counter = roomView.findViewById(R.id.counter);
-            TextView fee = roomView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putInt("roomCounter", Integer.valueOf(counter.getText().toString()));
+            bundle.putInt(Constant.ROOM_INDEX, Integer.valueOf(counter.getText().toString()));
         }
     }
 
     private void putInternetProperties(Bundle bundle) throws ValidationException {
         if (internetView != null) {
             EditText counter = internetView.findViewById(R.id.counter);
-            TextView fee = internetView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putInt("internetCounter", Integer.valueOf(counter.getText().toString()));
+            bundle.putInt(Constant.INTERNET_INDEX, Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -158,12 +156,11 @@ public class CreateBillFragment extends Fragment {
     {
         if (cabView != null) {
             EditText counter = cabView.findViewById(R.id.counter);
-            TextView fee = cabView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putInt("cabCounter", Integer.valueOf(counter.getText().toString()));
+            bundle.putInt(Constant.CAB_INDEX, Integer.valueOf(counter.getText().toString()));
         }
     }
 
@@ -171,7 +168,6 @@ public class CreateBillFragment extends Fragment {
     {
         if (waterView != null) {
             EditText counter = waterView.findViewById(R.id.counter);
-            TextView fee = waterView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(counter.getText())) {
                 counter.setError("Bắt buộc.");
                 throw new ValidationException();
@@ -184,7 +180,6 @@ public class CreateBillFragment extends Fragment {
         if (electricityView != null) {
             EditText currentIndex = electricityView.findViewById(R.id.electricity_current_index);
             EditText lastIndex = electricityView.findViewById(R.id.electricity_last_index);
-            TextView fee = electricityView.findViewById(R.id.unit_fee);
             if (StringUtils.isBlank(lastIndex.getText())) {
                 lastIndex.setError("Bắt buộc.");
                 throw new ValidationException();
@@ -201,7 +196,7 @@ public class CreateBillFragment extends Fragment {
     private void render() throws ValidationException, OperationException {
         Bundle bundle = this.getArguments();
         Long roomId = bundle.getLong(Constant.ROOM_KEY_NAME);
-        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomId(roomId);
+        List<RoomUtility> roomUtilityList = roomUtilityRepository.findRoomUtilityByRoomKey(roomId);
         if (CollectionUtils.isNotEmpty(roomUtilityList)) {
             for (RoomUtility roomUtility : roomUtilityList) {
                 String utilityId = utilityService.readUtilityId(roomUtility.getUtilityKey());

@@ -12,8 +12,8 @@ import com.myroom.service.sdo.ReadRoomInformationIn;
 import com.myroom.service.sdo.ReadRoomInformationOut;
 
 public interface IRoomService {
-    CreateRoomOut createRoom(CreateRoomIn createRoomIn) throws ValidationException, OperationException;
-    ReadAvailableUtilityOut readAvailableUtility(ReadAvailableUtilityIn readAvailableUtilityIn) throws ValidationException, OperationException;
+    void createRoom(CreateRoomIn createRoomIn) throws ValidationException, OperationException;
+    //ReadAvailableUtilityOut readAvailableUtility(ReadAvailableUtilityIn readAvailableUtilityIn) throws ValidationException, OperationException;
     DeleteRoomOut deleteRoom(DeleteRoomIn deleteRoomIn) throws ValidationException, OperationException;
     ReadRoomInformationOut readRoomInformation(ReadRoomInformationIn readRoomInformationIn) throws ValidationException, OperationException;
 }

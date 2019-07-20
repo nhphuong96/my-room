@@ -31,7 +31,7 @@ public class GuestServiceImpl implements IGuestService {
     @Override
     public void createGuest(CreateGuestIn createGuestIn) throws ValidationException, OperationException {
         Assert.assertNotNull(createGuestIn, "createGuestIn must not be null.");
-        Assert.assertNotNull(createGuestIn.getRoomId(), "createGuestIn.roomId must not be null.");
+        Assert.assertNotNull(createGuestIn.getRoomKey(), "createGuestIn.roomId must not be null.");
         Assert.assertNotNull(createGuestIn.getGuestName(), "createGuestIn.guestName must not be null.");
         Assert.assertNotNull(createGuestIn.getGuestPhone(), "createGuestIn.guestPhone must not be null.");
 
@@ -74,7 +74,7 @@ public class GuestServiceImpl implements IGuestService {
         guest.setGender(createGuestIn.getGender());
         guest.setIdCard(createGuestIn.getGuestIdCard());
         guest.setBirthDate(createGuestIn.getGuestBirthday());
-        guest.setRoomId(createGuestIn.getRoomId());
+        guest.setRoomId(createGuestIn.getRoomKey());
         return guest;
     }
 }

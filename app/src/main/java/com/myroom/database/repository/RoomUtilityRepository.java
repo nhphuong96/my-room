@@ -21,17 +21,17 @@ public class RoomUtilityRepository {
         dbHelper = new DatabaseHelper(BaseApplication.getContextComponent().getContext());
     }
 
-    public long addRoomUtility(long roomId, long utilityId, int utilityFee) {
+    public long addRoomUtility(long roomKey, long utilityKey, double utilityFee) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(RoomUtility.Column.COLUMN_ROOM_KEY.getColName(), roomId);
-        values.put(RoomUtility.Column.COLUMN_UTILITY_KEY.getColName(), utilityId);
+        values.put(RoomUtility.Column.COLUMN_ROOM_KEY.getColName(), roomKey);
+        values.put(RoomUtility.Column.COLUMN_UTILITY_KEY.getColName(), utilityKey);
         values.put(RoomUtility.Column.COLUMN_UTILITY_FEE.getColName(), utilityFee);
         long id = db.insertOrThrow(RoomUtility.TABLE_NAME, null, values);
         return id;
     }
 
-    public List<RoomUtility> findRoomUtility(long roomId, long utilityId) {
+    public List<RoomUtility> findRoomUtility(long roomKey, long utilityKey) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 RoomUtility.Column.COLUMN_ROOM_KEY.getColName(),
@@ -41,7 +41,7 @@ public class RoomUtilityRepository {
         Cursor c = db.query(RoomUtility.TABLE_NAME, columns,
                 RoomUtility.Column.COLUMN_ROOM_KEY.getColName() + " = ? AND "
                         + RoomUtility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?",
-                    new String[] { String.valueOf(roomId), String.valueOf(utilityId) }, null, null, null, null);
+                    new String[] { String.valueOf(roomKey), String.valueOf(utilityKey) }, null, null, null, null);
 
         List<RoomUtility> result = new ArrayList<>();
         if (c.moveToFirst()) {
@@ -58,7 +58,7 @@ public class RoomUtilityRepository {
         return result;
     }
 
-    public List<RoomUtility> findRoomUtilityByRoomId(long roomId) {
+    public List<RoomUtility> findRoomUtilityByRoomKey(long roomKey) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 RoomUtility.Column.COLUMN_ROOM_KEY.getColName(),
@@ -67,7 +67,7 @@ public class RoomUtilityRepository {
         };
         Cursor c = db.query(RoomUtility.TABLE_NAME, columns,
                     RoomUtility.Column.COLUMN_ROOM_KEY.getColName() + " = ?",
-                    new String[] {String.valueOf(roomId)}, null, null, null, null);
+                    new String[] {String.valueOf(roomKey)}, null, null, null, null);
 
         List<RoomUtility> result = new ArrayList<>();
         if (c.moveToFirst()) {
@@ -84,20 +84,20 @@ public class RoomUtilityRepository {
         return result;
     }
 
-    public boolean deleteRoomUtility(long roomId, long utilityId) {
+    public boolean deleteRoomUtility(long roomKey, long utilityKey) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowAffected = db.delete(RoomUtility.TABLE_NAME,
                 RoomUtility.Column.COLUMN_ROOM_KEY.getColName() + " = ?"
                 + RoomUtility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?",
-                new String[]{String.valueOf(roomId), String.valueOf(utilityId)});
+                new String[]{String.valueOf(roomKey), String.valueOf(utilityKey)});
         return rowAffected > 0;
     }
 
-    public boolean deleteRoomUtilityByRoomId(long roomId) {
+    public boolean deleteRoomUtilityByRoomKey(long roomKey) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowAffected = db.delete(RoomUtility.TABLE_NAME,
                 RoomUtility.Column.COLUMN_ROOM_KEY.getColName() + " = ?",
-                new String[]{String.valueOf(roomId)});
+                new String[]{String.valueOf(roomKey)});
         return rowAffected > 0;
     }
 

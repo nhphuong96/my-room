@@ -10,10 +10,12 @@ public final class Constant {
     public static final String SPACE = " ";
     public static final Integer TRUE = 1;
     public static final Integer FALSE = 0;
+    public static final String DATE_FORMAT_STANDARD = "dd/MM/yyyy";
+    public static final String DATE_FORMAT_WITH_TIME = "dd/MM/yyyy hh:mm:ss";
 
     public static final String ROOM_KEY_NAME = "roomKey";
     public static final String ELECTRICITY_LAST_INDEX_NAME = "electricityLastIndex";
-    public static final String ELECTRICITY_CURRENT_INDEX_NAME = "electricityLastIndex";
+    public static final String ELECTRICITY_CURRENT_INDEX_NAME = "electricityCurrentIndex";
     public static final String WATER_INDEX = "waterIndex";
     public static final String CAB_INDEX = "cabIndex";
     public static final String INTERNET_INDEX = "internetIndex";

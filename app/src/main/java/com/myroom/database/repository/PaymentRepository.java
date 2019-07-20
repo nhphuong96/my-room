@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.myroom.application.BaseApplication;
 import com.myroom.database.DatabaseHelper;
+import com.myroom.database.dao.Guest;
 import com.myroom.database.dao.Payment;
 import com.myroom.exception.OperationException;
 import com.myroom.utils.DateUtils;
@@ -31,7 +32,7 @@ public class PaymentRepository implements IObjectRepository<Payment> {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Payment.Column.COLUMN_ROOM_KEY.getColName(), entity.getRoomKey());
-        values.put(Payment.Column.COLUMN_CREATION_DATE.getColName(), DateUtils.convertDateToStringAsDDMMYYYY(entity.getCreationDate()));
+        values.put(Payment.Column.COLUMN_CREATION_DATE.getColName(), DateUtils.convertDateToStringAsDDMMYYYYHHMMSS(entity.getCreationDate()));
         values.put(Payment.Column.COLUMN_PAYMENT_DATE.getColName(), StringUtils.EMPTY);
         values.put(Payment.Column.COLUMN_ELECTRICITY_FEE.getColName(), entity.getElectricityFee());
         values.put(Payment.Column.COLUMN_WATER_FEE.getColName(), entity.getWaterFee());
@@ -53,8 +54,16 @@ public class PaymentRepository implements IObjectRepository<Payment> {
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
+    public boolean delete(long paymentKey) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowAffected = db.delete(Payment.TABLE_NAME, Payment.Column.COLUMN_PAYMENT_KEY.getColName() + " = ?", new String[]{String.valueOf(paymentKey)});
+        return rowAffected > 0;
+    }
+
+    public boolean deleteByRoom(long roomKey) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowAffected = db.delete(Payment.TABLE_NAME, Payment.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[]{String.valueOf(roomKey)});
+        return rowAffected > 0;
     }
 
     @Override

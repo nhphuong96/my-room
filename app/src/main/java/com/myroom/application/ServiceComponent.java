@@ -12,6 +12,7 @@ import com.myroom.fragment.SendMessageFragment;
 import com.myroom.service.ICurrencyService;
 import com.myroom.service.IGuestService;
 import com.myroom.service.IMessageService;
+import com.myroom.service.IPaymentService;
 import com.myroom.service.IRoomService;
 import com.myroom.service.IUtilityService;
 
@@ -37,4 +38,5 @@ public interface ServiceComponent {
     IGuestService getGuestService();
     IMessageService getMessageService();
     IUtilityService getUtilityService();
+    IPaymentService getPaymentService();
 }

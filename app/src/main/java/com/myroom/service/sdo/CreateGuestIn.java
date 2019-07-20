@@ -1,19 +1,19 @@
 package com.myroom.service.sdo;
 
 public class CreateGuestIn {
-    private long roomId;
+    private long roomKey;
     private String guestName;
     private String guestPhone;
     private String guestIdCard;
     private String guestBirthday;
     private int gender;
 
-    public long getRoomId() {
-        return roomId;
+    public long getRoomKey() {
+        return roomKey;
     }
 
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
+    public void setRoomKey(long roomKey) {
+        this.roomKey = roomKey;
     }
 
     public String getGuestName() {
