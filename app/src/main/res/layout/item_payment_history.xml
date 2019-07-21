@@ -16,8 +16,11 @@
 
     <TextView
         android:id="@+id/item_payment_history_payment_fee"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="fill_parent"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:text="Text View"
@@ -29,10 +32,25 @@
         android:layout_weight="1"/>
 
     <TextView
-        android:id="@+id/item_payment_history_payment_date"
-        android:layout_width="wrap_content"
+        android:id="@+id/item_payment_history_creation_date"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:text="Text View"
+        />
+
+    <TextView
+        android:id="@+id/item_payment_history_payment_date"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
         android:layout_marginRight="10dp"
         android:text="Text View"
         />

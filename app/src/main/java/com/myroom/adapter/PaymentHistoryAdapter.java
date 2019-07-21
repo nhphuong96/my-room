@@ -44,7 +44,13 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
     public void onBindViewHolder(@NonNull PaymentHistoryViewHolder paymentHistoryViewHolder, int i) {
         Payment payment = paymentList.get(i);
         paymentHistoryViewHolder.tvTotalFee.setText(calculateTotalFee(payment));
-        paymentHistoryViewHolder.tvPaymentDate.setText(DateUtils.convertDateToStringAsDDMMYYYYHHMMSS(payment.getCreationDate()));
+        if (payment.getPaymentDate() != null) {
+            paymentHistoryViewHolder.tvPaymentDate.setText(DateUtils.convertDateToStringAsDDMMYYYYHHMMSS(payment.getPaymentDate()));
+        }
+        else {
+            paymentHistoryViewHolder.tvPaymentDate.setText("Chưa thanh toán");
+        }
+        paymentHistoryViewHolder.tvCreationDate.setText(DateUtils.convertDateToStringAsDDMMYYYYHHMMSS(payment.getCreationDate()));
     }
 
     private String calculateTotalFee(Payment payment) {
@@ -75,11 +81,13 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
     public class PaymentHistoryViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTotalFee;
         private TextView tvPaymentDate;
+        private TextView tvCreationDate;
 
         public PaymentHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTotalFee = itemView.findViewById(R.id.item_payment_history_payment_fee);
             tvPaymentDate = itemView.findViewById(R.id.item_payment_history_payment_date);
+            tvCreationDate = itemView.findViewById(R.id.item_payment_history_creation_date);
         }
     }
 }
