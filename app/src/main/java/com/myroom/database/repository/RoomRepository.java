@@ -34,13 +34,13 @@ public class RoomRepository implements IObjectRepository<Room> {
     }
 
     @Override
-    public Room find(long id) {
+    public Room find(long key) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 Room.Column.COLUMN_ROOM_KEY.getColName(),
                 Room.Column.COLUMN_ROOM_NAME.getColName(),
         };
-        Cursor c = db.query(Room.TABLE_NAME, columns, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query(Room.TABLE_NAME, columns, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[] {String.valueOf(key)}, null, null, null, null);
         if (c.moveToFirst()) {
             Room result = new Room();
             result.setRoomKey(Integer.parseInt(c.getString(Room.Column.COLUMN_ROOM_KEY.getIndex())));
@@ -69,9 +69,9 @@ public class RoomRepository implements IObjectRepository<Room> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(long key) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Room.TABLE_NAME, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Room.TABLE_NAME, Room.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[]{String.valueOf(key)});
         return rowAffected > 0;
     }
 

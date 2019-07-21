@@ -188,8 +188,8 @@ public class CreateBillFragment extends Fragment {
                 currentIndex.setError("Bắt buộc.");
                 throw new ValidationException();
             }
-            bundle.putInt(Constant.ELECTRICITY_LAST_INDEX_NAME, Integer.valueOf(lastIndex.getText().toString()));
-            bundle.putInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME, Integer.valueOf(currentIndex.getText().toString()));
+            bundle.putString(Constant.ELECTRICITY_LAST_INDEX_NAME, lastIndex.getText().toString());
+            bundle.putString(Constant.ELECTRICITY_CURRENT_INDEX_NAME, currentIndex.getText().toString());
         }
     }
 

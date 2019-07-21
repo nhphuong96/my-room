@@ -1,27 +1,30 @@
 package com.myroom.service.sdo;
 
 public class IndexPair {
-    private Integer lastIndex;
-    private Integer currentIndex;
+    private String lastIndex;
+    private String currentIndex;
 
-    public IndexPair(Integer lastIndex, Integer currentIndex) {
+    public IndexPair() {
+    }
+
+    public IndexPair(String lastIndex, String currentIndex) {
         this.lastIndex = lastIndex;
         this.currentIndex = currentIndex;
     }
 
-    public Integer getLastIndex() {
+    public String getLastIndex() {
         return lastIndex;
     }
 
-    public void setLastIndex(Integer lastIndex) {
+    public void setLastIndex(String lastIndex) {
         this.lastIndex = lastIndex;
     }
 
-    public Integer getCurrentIndex() {
+    public String getCurrentIndex() {
         return currentIndex;
     }
 
-    public void setCurrentIndex(Integer currentIndex) {
+    public void setCurrentIndex(String currentIndex) {
         this.currentIndex = currentIndex;
     }
 }

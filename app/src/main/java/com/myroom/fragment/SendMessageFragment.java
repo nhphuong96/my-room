@@ -135,7 +135,7 @@ public class SendMessageFragment extends Fragment {
         Bundle bundle = getArguments();
         CreatePaymentIn createPaymentIn = new CreatePaymentIn();
         createPaymentIn.setRoomKey(roomKey);
-        createPaymentIn.setElectricityIndices(new IndexPair(bundle.getInt(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
+        createPaymentIn.setElectricityIndices(new IndexPair(bundle.getString(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getString(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
         createPaymentIn.setWaterIndex(bundle.getInt(Constant.WATER_INDEX));
         createPaymentIn.setCabIndex(bundle.getInt(Constant.CAB_INDEX));
         createPaymentIn.setInternetIndex(bundle.getInt(Constant.INTERNET_INDEX));
@@ -158,7 +158,7 @@ public class SendMessageFragment extends Fragment {
         Bundle bundle = getArguments();
         CreateMessageIn createMessageIn = new CreateMessageIn();
         createMessageIn.setRoomKey(roomKey);
-        createMessageIn.setElectricityIndices(new IndexPair(bundle.getInt(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getInt(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
+        createMessageIn.setElectricityIndices(new IndexPair(bundle.getString(Constant.ELECTRICITY_LAST_INDEX_NAME), bundle.getString(Constant.ELECTRICITY_CURRENT_INDEX_NAME)));
         createMessageIn.setWaterIndex(bundle.getInt(Constant.WATER_INDEX));
         createMessageIn.setCabIndex(bundle.getInt(Constant.CAB_INDEX));
         createMessageIn.setInternetIndex(bundle.getInt(Constant.INTERNET_INDEX));

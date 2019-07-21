@@ -14,7 +14,8 @@ public class Payment {
         COLUMN_WATER_FEE(5, "water_fee"),
         COLUMN_CAB_FEE(6, "cab_fee"),
         COLUMN_INTERNET_FEE(7, "internet_fee"),
-        COLUMN_ROOM_FEE(8, "room_fee");
+        COLUMN_ROOM_FEE(8, "room_fee"),
+        COLUMN_IS_PAID(9, "is_paid");
 
         private int index;
         private String colName;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.myroom.adapter.UtilityInRoomAdapter;
 import com.myroom.core.Constant;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Guest;
@@ -11,6 +12,7 @@ import com.myroom.database.dao.Payment;
 import com.myroom.database.dao.Room;
 import com.myroom.database.dao.RoomUtility;
 import com.myroom.database.dao.Utility;
+import com.myroom.database.dao.UtilityIndex;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(createRoomUtilityTable());
         db.execSQL(createCurrencyTable());
         db.execSQL(createPaymentTable());
+        db.execSQL(createUtilityIndexTable());
         
         createUtilityData(db);
         createCurrencyData(db);
@@ -83,7 +86,20 @@ public class DatabaseHelper extends SQLiteOpenHelper
         tableStructures.add(createColumn(Payment.Column.COLUMN_CAB_FEE.getColName(), TEXT));
         tableStructures.add(createColumn(Payment.Column.COLUMN_INTERNET_FEE.getColName(), TEXT));
         tableStructures.add(createColumn(Payment.Column.COLUMN_ROOM_FEE.getColName(), TEXT));
+        tableStructures.add(createColumn(Payment.Column.COLUMN_IS_PAID.getColName(), INTEGER));
         return buildCreateTableQuery(Payment.TABLE_NAME, tableStructures);
+    }
+
+    private String createUtilityIndexTable() {
+        List<String> tableStructures = new ArrayList<>();
+        tableStructures.add(createColumn(UtilityIndex.Column.COLUMN_UTILITY_INDEX_KEY.getColName(), INTEGER_PRIMARY_KEY));
+        tableStructures.add(createColumn(UtilityIndex.Column.COLUMN_PAYMENT_KEY.getColName(), INTEGER));
+        tableStructures.add(createColumn(UtilityIndex.Column.COLUMN_UTILITY_KEY.getColName(), INTEGER));
+        tableStructures.add(createColumn(UtilityIndex.Column.COLUMN_LAST_INDEX.getColName(), TEXT));
+        tableStructures.add(createColumn(UtilityIndex.Column.COLUMN_CURRENT_INDEX.getColName(), TEXT));
+        tableStructures.add(createForeignKey(UtilityIndex.Column.COLUMN_PAYMENT_KEY.getColName(), Payment.TABLE_NAME, Payment.Column.COLUMN_PAYMENT_KEY.getColName()));
+        tableStructures.add(createForeignKey(UtilityIndex.Column.COLUMN_UTILITY_KEY.getColName(), Utility.TABLE_NAME, Utility.Column.COLUMN_UTILITY_KEY.getColName()));
+        return buildCreateTableQuery(UtilityIndex.TABLE_NAME, tableStructures);
     }
 
     private String createCurrencyTable() {
@@ -136,8 +152,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private String createColumn(String name, String type) {
         return name + Constant.SPACE + type;
     }
-    private String createForeignKey(String columnName, String foreignTable, String foreignColum) {
-        return String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", columnName, foreignTable, foreignColum);
+    private String createForeignKey(String columnName, String foreignTable, String foreignColumn) {
+        return String.format("FOREIGN KEY (%s) REFERENCES %s (%s)", columnName, foreignTable, foreignColumn);
     }
 
     private String buildCreateTableQuery(String tableName, List<String> tableStructure) {

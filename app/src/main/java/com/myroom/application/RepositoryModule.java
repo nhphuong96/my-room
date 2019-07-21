@@ -7,6 +7,7 @@ import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.PaymentRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.RoomUtilityRepository;
+import com.myroom.database.repository.UtilityIndexRepository;
 import com.myroom.database.repository.UtilityRepository;
 
 import javax.inject.Singleton;
@@ -56,5 +57,11 @@ public class RepositoryModule {
     @Singleton
     PaymentRepository providePaymentRepository() {
         return new PaymentRepository();
+    }
+
+    @Provides
+    @Singleton
+    UtilityIndexRepository provideUtilityIndexRepository() {
+        return new UtilityIndexRepository();
     }
 }

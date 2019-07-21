@@ -37,6 +37,7 @@ public class PaymentHistoryFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     private LinearLayout emptyView;
+    private LinearLayout fullView;
 
     @Inject
     public PaymentRepository paymentRepository;
@@ -55,6 +56,7 @@ public class PaymentHistoryFragment extends Fragment {
         parentContext = container.getContext();
         View view = inflater.inflate(R.layout.fragment_payment_history, container, false);
         recyclerView = view.findViewById(R.id.payment_history_list);
+        fullView = view.findViewById(R.id.payment_history_full_view);
         emptyView = view.findViewById(R.id.payment_history_empty_view);
         return view;
     }
@@ -66,11 +68,11 @@ public class PaymentHistoryFragment extends Fragment {
         List<Payment> paymentList = loadAllPaymentHistory();
         if (CollectionUtils.isEmpty(paymentList)) {
             emptyView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            fullView.setVisibility(View.GONE);
         }
         else {
             setupPaymentList(paymentList);
-            recyclerView.setVisibility(View.VISIBLE);
+            fullView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
 

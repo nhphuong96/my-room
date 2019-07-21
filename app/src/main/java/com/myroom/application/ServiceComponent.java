@@ -3,6 +3,7 @@ package com.myroom.application;
 import com.myroom.activity.CreateRoomActivity;
 import com.myroom.adapter.CurrencyAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
+import com.myroom.adapter.PaymentHistoryAdapter;
 import com.myroom.adapter.RoomAdapter;
 import com.myroom.adapter.RoomInformationAdapter;
 import com.myroom.adapter.UtilityInRoomAdapter;
@@ -33,6 +34,7 @@ public interface ServiceComponent {
     void inject(GuestInRoomFragment guestInRoomFragment);
     void inject(RoomInformationAdapter roomInformationAdapter);
     void inject(IRoomService roomService);
+    void inject(PaymentHistoryAdapter paymentHistoryAdapter);
     IRoomService getRoomService();
     ICurrencyService getCurrencyService();
     IGuestService getGuestService();

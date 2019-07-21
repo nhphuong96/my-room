@@ -27,7 +27,7 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
     }
 
     @Override
-    public Currency find(long currencyKey) {
+    public Currency find(long key) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 Currency.Column.COLUMN_CURRENCY_KEY.getColName(),
@@ -35,7 +35,7 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
                 Currency.Column.COLUMN_CURRENCY_ICON.getColName(),
                 Currency.Column.COLUMN_IS_SELECTED.getColName()
         };
-        Cursor c = db.query(Currency.TABLE_NAME, columns, Currency.Column.COLUMN_CURRENCY_KEY.getColName() + " = ?", new String[] {String.valueOf(currencyKey)}, null, null, null, null);
+        Cursor c = db.query(Currency.TABLE_NAME, columns, Currency.Column.COLUMN_CURRENCY_KEY.getColName() + " = ?", new String[] {String.valueOf(key)}, null, null, null, null);
 
         if (c.moveToFirst()) {
             Currency result = new Currency();
@@ -90,7 +90,7 @@ public class CurrencyRepository implements  IObjectRepository<Currency> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(long key) {
         return false;
     }
 

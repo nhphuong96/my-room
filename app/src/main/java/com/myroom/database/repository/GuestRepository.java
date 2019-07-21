@@ -67,7 +67,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
     }
 
     @Override
-    public Guest find(long id) {
+    public Guest find(long key) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[] {
                 Guest.Column.COLUMN_GUEST_KEY.getColName(),
@@ -78,7 +78,7 @@ public class GuestRepository implements IObjectRepository<Guest> {
                 Guest.Column.COLUMN_ROOM_ID.getColName(),
                 Guest.Column.COLUMN_GENDER.getColName()
         };
-        Cursor c = db.query(Guest.TABLE_NAME, columns, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query(Guest.TABLE_NAME, columns, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[] {String.valueOf(key)}, null, null, null, null);
 
         if (c.moveToFirst()) {
             Guest result = new Guest();
@@ -100,9 +100,9 @@ public class GuestRepository implements IObjectRepository<Guest> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(long key) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Guest.TABLE_NAME, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Guest.TABLE_NAME, Guest.Column.COLUMN_GUEST_KEY.getColName() + " = ?", new String[]{String.valueOf(key)});
         return rowAffected > 0;
     }
 

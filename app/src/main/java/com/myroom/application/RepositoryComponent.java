@@ -5,13 +5,16 @@ import com.myroom.activity.GeneralSettingCurrencyActivity;
 import com.myroom.activity.GeneralSettingUtilityActivity;
 import com.myroom.adapter.CreateRoomUtilityAdapter;
 import com.myroom.adapter.GuestInRoomAdapter;
+import com.myroom.adapter.PaymentHistoryAdapter;
 import com.myroom.adapter.RoomAdapter;
 import com.myroom.adapter.UtilityAdapter;
 import com.myroom.adapter.UtilityInRoomAdapter;
+import com.myroom.database.dao.UtilityIndex;
 import com.myroom.database.repository.CurrencyRepository;
 import com.myroom.database.repository.GuestRepository;
 import com.myroom.database.repository.RoomRepository;
 import com.myroom.database.repository.RoomUtilityRepository;
+import com.myroom.database.repository.UtilityIndexRepository;
 import com.myroom.database.repository.UtilityRepository;
 import com.myroom.fragment.CreateBillFragment;
 import com.myroom.fragment.PaymentHistoryFragment;
@@ -38,6 +41,7 @@ public interface RepositoryComponent {
     void inject(UtilityAdapter utilityAdapter);
     void inject(UtilityInRoomAdapter utilityInRoomAdapter);
     void inject(GuestInRoomAdapter guestInRoomAdapter);
+    void inject(PaymentHistoryAdapter paymentHistoryAdapter);
 
     void inject(IRoomService roomService);
     void inject(ICurrencyService currencyService);
@@ -59,4 +63,5 @@ public interface RepositoryComponent {
     UtilityRepository getUtilityRepository();
     RoomUtilityRepository getRoomUtilityRepository();
     CurrencyRepository getCurrencyRepository();
+    UtilityIndexRepository getUtilityIndexRepository();
 }

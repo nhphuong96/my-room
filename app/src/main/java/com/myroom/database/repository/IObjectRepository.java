@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface IObjectRepository<T> {
     long add(T entity);
-    T find(long id);
+    T find(long key);
     List<T> findAll();
-    boolean delete(long id);
+    boolean delete(long key);
     boolean update(T entity);
 }

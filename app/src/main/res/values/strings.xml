@@ -6,4 +6,11 @@
     <string name="ic_water_avatar_name">ic_water</string>
     <string name="ic_cab_avatar_name">ic_cab</string>
     <string name="ic_internet_avatar_name">ic_internet</string>
+    <string name="last_index_text">- Số cũ: %1$s kWh</string>
+    <string name="current_index_text">- Số mới: %1$s kWh</string>
+    <string name="price_with_vnd">%1$s VNĐ</string>
+    <string name="price_with_cny">%1$s CNY</string>
+    <string name="price_with_jpy">%1$s JPY</string>
+    <string name="price_with_eur">%1$s EUR</string>
+    <string name="price_with_usd">%1$s USD</string>
 </resources>

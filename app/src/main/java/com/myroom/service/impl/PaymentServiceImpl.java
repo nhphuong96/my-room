@@ -3,17 +3,18 @@ package com.myroom.service.impl;
 import com.myroom.application.BaseApplication;
 import com.myroom.builder.PaymentBuilder;
 import com.myroom.core.Assert;
+import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Payment;
+import com.myroom.database.dao.UtilityIndex;
 import com.myroom.database.repository.PaymentRepository;
+import com.myroom.database.repository.UtilityIndexRepository;
 import com.myroom.exception.OperationException;
 import com.myroom.exception.ValidationException;
 import com.myroom.service.IPaymentService;
-import com.myroom.service.IRoomService;
 import com.myroom.service.IUtilityService;
 import com.myroom.service.sdo.CreatePaymentIn;
 import com.myroom.service.sdo.DeletePaymentIn;
-import com.myroom.service.sdo.ReadAvailableUtilityIn;
-import com.myroom.service.sdo.ReadAvailableUtilityOut;
+import com.myroom.service.sdo.IndexPair;
 import com.myroom.service.sdo.ReadUtilityInRoomIn;
 import com.myroom.service.sdo.ReadUtilityInRoomOut;
 
@@ -25,6 +26,8 @@ public class PaymentServiceImpl implements IPaymentService {
     public PaymentRepository paymentRepository;
     @Inject
     public IUtilityService utilityService;
+    @Inject
+    public UtilityIndexRepository utilityIndexRepository;
 
     @Inject
     public PaymentServiceImpl() {
@@ -40,13 +43,16 @@ public class PaymentServiceImpl implements IPaymentService {
         Payment payment = paymentBuilder.setCreatePaymentIn(createPaymentIn)
                 .setReadAvailableUtilityOut(readUtilityInRoomOut)
                 .build();
-        long id = paymentRepository.add(payment);
-        if (id <= 0) {
+        long paymentKey = paymentRepository.add(payment);
+        if (paymentKey <= 0) {
             throw new OperationException("Không thể thêm hóa đơn.");
         }
+
+        long utilityIndexKey = utilityIndexRepository.add(convertUtilityIndex(paymentKey, createPaymentIn.getElectricityIndices()));
+        if (utilityIndexKey <= 0) {
+            throw new OperationException("Không thể thêm chỉ số tiện ích của điện năng.");
+        }
     }
-
-
 
     @Override
     public void deletePayment(DeletePaymentIn deletePaymentIn) throws ValidationException, OperationException {
@@ -57,6 +63,15 @@ public class PaymentServiceImpl implements IPaymentService {
         if (!success) {
             throw new OperationException("Không thể xóa hóa đơn.");
         }
+    }
+
+    private UtilityIndex convertUtilityIndex(long paymentKey, IndexPair electricityIndexPair) throws ValidationException, OperationException {
+        UtilityIndex utilityIndex = new UtilityIndex();
+        utilityIndex.setPaymentKey(paymentKey);
+        utilityIndex.setUtilityKey(utilityService.readUtilityKey(UtilityId.ELECTRICITY.name()));
+        utilityIndex.setLastIndex(String.valueOf(electricityIndexPair.getLastIndex()));
+        utilityIndex.setCurrentIndex(String.valueOf(electricityIndexPair.getCurrentIndex()));
+        return utilityIndex;
     }
 
     private ReadUtilityInRoomIn convertReadUtilityInRoomIn(CreatePaymentIn createPaymentIn) {

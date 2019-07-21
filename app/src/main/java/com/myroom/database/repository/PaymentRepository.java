@@ -44,7 +44,7 @@ public class PaymentRepository implements IObjectRepository<Payment> {
     }
 
     @Override
-    public Payment find(long id) {
+    public Payment find(long key) {
         return null;
     }
 
@@ -54,9 +54,9 @@ public class PaymentRepository implements IObjectRepository<Payment> {
     }
 
     @Override
-    public boolean delete(long paymentKey) {
+    public boolean delete(long key) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Payment.TABLE_NAME, Payment.Column.COLUMN_PAYMENT_KEY.getColName() + " = ?", new String[]{String.valueOf(paymentKey)});
+        int rowAffected = db.delete(Payment.TABLE_NAME, Payment.Column.COLUMN_PAYMENT_KEY.getColName() + " = ?", new String[]{String.valueOf(key)});
         return rowAffected > 0;
     }
 

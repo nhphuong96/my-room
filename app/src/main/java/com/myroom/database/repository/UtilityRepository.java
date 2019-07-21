@@ -96,9 +96,9 @@ public class UtilityRepository implements IObjectRepository<Utility> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(long key) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowAffected = db.delete(Utility.TABLE_NAME, Utility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?", new String[]{String.valueOf(id)});
+        int rowAffected = db.delete(Utility.TABLE_NAME, Utility.Column.COLUMN_UTILITY_KEY.getColName() + " = ?", new String[]{String.valueOf(key)});
         return rowAffected > 0;
     }
 

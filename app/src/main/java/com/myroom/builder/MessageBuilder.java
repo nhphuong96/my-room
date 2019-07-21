@@ -94,8 +94,8 @@ public class MessageBuilder {
     private String buildElectricityMessage() throws IllegalArgumentException {
         if (createMessageIn.getElectricityIndices() != null) {
             UtilityInRoomItem electricityItem = findUtility(UtilityId.ELECTRICITY);
-            Integer lastIndex = createMessageIn.getElectricityIndices().getLastIndex();
-            Integer currentIndex = createMessageIn.getElectricityIndices().getCurrentIndex();
+            Integer lastIndex = Integer.valueOf(createMessageIn.getElectricityIndices().getLastIndex());
+            Integer currentIndex = Integer.valueOf(createMessageIn.getElectricityIndices().getCurrentIndex());
             Integer consume = currentIndex - lastIndex;
             Double total  = consume * Double.valueOf(electricityItem.getUtilityFee());
             electricityFee  = total;

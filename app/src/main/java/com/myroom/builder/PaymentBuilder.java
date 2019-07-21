@@ -51,8 +51,8 @@ public class PaymentBuilder {
 
     private String calculateElectricityFee() {
         UtilityInRoomItem item = findUtility(UtilityId.ELECTRICITY);
-        Double total = Calculator.calculate(createPaymentIn.getElectricityIndices().getCurrentIndex(),
-                                            createPaymentIn.getElectricityIndices().getLastIndex(),
+        Double total = Calculator.calculate(Integer.valueOf(createPaymentIn.getElectricityIndices().getCurrentIndex()),
+                                            Integer.valueOf(createPaymentIn.getElectricityIndices().getLastIndex()),
                                             Double.valueOf(item.getUtilityFee()));
         return total.toString();
     }
