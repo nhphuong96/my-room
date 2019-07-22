@@ -1,7 +1,7 @@
-package com.myroom.core;
+package com.myroom.utils;
 
-public final class NumberFormatter {
-    private NumberFormatter() {
+public final class FormattedNumberUtils {
+    private FormattedNumberUtils() {
 
     }
 

@@ -6,6 +6,10 @@ import java.util.List;
 public class DeleteRoomIn {
     private List<Long> roomKeyList;
 
+    public DeleteRoomIn() {
+        this.roomKeyList = new ArrayList<>();
+    }
+
     public List<Long> getRoomKeyList() {
         return roomKeyList;
     }

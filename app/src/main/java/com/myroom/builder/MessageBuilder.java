@@ -1,6 +1,6 @@
 package com.myroom.builder;
 
-import com.myroom.core.NumberFormatter;
+import com.myroom.utils.FormattedNumberUtils;
 import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Currency;
 import com.myroom.service.sdo.ReadUtilityInRoomOut;
@@ -30,7 +30,7 @@ public class MessageBuilder {
         builder.append(buildCabMessage());
         builder.append(buildInternetMessage());
         builder.append(buildRoomMessage());
-        builder.append("TONG CONG: " + NumberFormatter.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee + roomFee)) + " " + selectedCurrency.getCurrencyId());
+        builder.append("TONG CONG: " + FormattedNumberUtils.formatThousandNumberSeparator(String.valueOf(electricityFee + waterFee + cabFee + internetFee + roomFee)) + " " + selectedCurrency.getCurrencyId());
         String messageContent = builder.toString();
         return messageContent;
     }

@@ -51,6 +51,7 @@ public class Payment {
     private String cabFee;
     private String internetFee;
     private String roomFee;
+    private Integer isPaid;
 
     public long getPaymentKey() {
         return paymentKey;
@@ -122,5 +123,13 @@ public class Payment {
 
     public void setRoomFee(String roomFee) {
         this.roomFee = roomFee;
+    }
+
+    public Integer getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Integer isPaid) {
+        this.isPaid = isPaid;
     }
 }

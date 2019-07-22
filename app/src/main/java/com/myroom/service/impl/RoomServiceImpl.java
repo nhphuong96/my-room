@@ -61,7 +61,6 @@ public class RoomServiceImpl implements IRoomService {
         DeleteRoomOut deleteRoomOut = new DeleteRoomOut();
         for (Long roomKey : deleteRoomIn.getRoomKeyList()) {
             utilityService.deleteUtilityInRoom(convertDeleteUtilityInRoom(roomKey));
-
             paymentService.deletePayment(convertDeletePaymentIn(roomKey));
             boolean deletedRoomSuccess = roomRepository.delete(roomKey);
             if (!deletedRoomSuccess) {

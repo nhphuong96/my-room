@@ -30,6 +30,43 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:gravity="center"
+        android:paddingRight="20dp"
+        >
+
+        <TextView
+            android:id="@+id/paid_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="ĐÃ THANH TOÁN"
+            android:textColor="#3ddb8c"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:background="@drawable/text_view_paid_status_bg"
+            />
+
+        <TextView
+            android:id="@+id/unpaid_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="CHƯA THANH TOÁN"
+            android:textColor="#e64353"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:background="@drawable/text_view_unpaid_status_bg"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >

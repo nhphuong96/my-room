@@ -39,6 +39,7 @@ public class PaymentRepository implements IObjectRepository<Payment> {
         values.put(Payment.Column.COLUMN_CAB_FEE.getColName(), entity.getCabFee());
         values.put(Payment.Column.COLUMN_INTERNET_FEE.getColName(), entity.getInternetFee());
         values.put(Payment.Column.COLUMN_ROOM_FEE.getColName(), entity.getRoomFee());
+        values.put(Payment.Column.COLUMN_IS_PAID.getColName(), entity.getIsPaid());
         long id = db.insertOrThrow(Payment.TABLE_NAME, null, values);
         return id;
     }
@@ -82,7 +83,8 @@ public class PaymentRepository implements IObjectRepository<Payment> {
                 Payment.Column.COLUMN_WATER_FEE.getColName(),
                 Payment.Column.COLUMN_CAB_FEE.getColName(),
                 Payment.Column.COLUMN_INTERNET_FEE.getColName(),
-                Payment.Column.COLUMN_ROOM_FEE.getColName()
+                Payment.Column.COLUMN_ROOM_FEE.getColName(),
+                Payment.Column.COLUMN_IS_PAID.getColName()
         };
         Cursor c = db.query(Payment.TABLE_NAME, columns, Payment.Column.COLUMN_ROOM_KEY.getColName() + " = ?", new String[] {String.valueOf(roomId)}, null, null, null, null);
 
@@ -99,6 +101,7 @@ public class PaymentRepository implements IObjectRepository<Payment> {
                 payment.setCabFee(c.getString(Payment.Column.COLUMN_CAB_FEE.getIndex()));
                 payment.setInternetFee(c.getString(Payment.Column.COLUMN_INTERNET_FEE.getIndex()));
                 payment.setRoomFee(c.getString(Payment.Column.COLUMN_ROOM_FEE.getIndex()));
+                payment.setIsPaid(Integer.valueOf(c.getString(Payment.Column.COLUMN_IS_PAID.getIndex())));
                 paymentsInRoom.add(payment);
             }
             while (c.moveToNext());

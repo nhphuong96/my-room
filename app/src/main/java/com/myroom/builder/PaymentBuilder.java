@@ -1,6 +1,7 @@
 package com.myroom.builder;
 
 import com.myroom.core.Calculator;
+import com.myroom.core.Constant;
 import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Payment;
 import com.myroom.service.sdo.ReadUtilityInRoomOut;
@@ -22,6 +23,7 @@ public class PaymentBuilder {
         payment.setCabFee(calculateCabFee());
         payment.setInternetFee(calculateInternetFee());
         payment.setRoomFee(calculateRoomFee());
+        payment.setIsPaid(Constant.FALSE);
         return payment;
     }
 

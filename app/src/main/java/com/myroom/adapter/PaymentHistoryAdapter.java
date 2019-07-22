@@ -2,7 +2,6 @@ package com.myroom.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +15,7 @@ import android.widget.Toast;
 
 import com.myroom.R;
 import com.myroom.application.BaseApplication;
-import com.myroom.core.CurrencyId;
-import com.myroom.core.NumberFormatter;
+import com.myroom.utils.FormattedNumberUtils;
 import com.myroom.core.UtilityId;
 import com.myroom.database.dao.Currency;
 import com.myroom.database.dao.Payment;
@@ -33,6 +31,7 @@ import com.myroom.utils.DateUtils;
 import com.myroom.utils.FormattedTextUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -102,6 +101,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             paymentHistoryViewHolder.cabFee = payment.getCabFee();
             paymentHistoryViewHolder.internetFee = payment.getInternetFee();
             paymentHistoryViewHolder.roomFee = payment.getRoomFee();
+            paymentHistoryViewHolder.isPaid = BooleanUtils.toBoolean(payment.getIsPaid());
             if (electricityIndexPair != null) {
                 IndexPair indexPair = new IndexPair();
                 indexPair.setLastIndex(electricityIndexPair.getLastIndex());
@@ -144,7 +144,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         if (StringUtils.isNotEmpty(payment.getRoomFee())) {
             total += Double.valueOf(payment.getRoomFee());
         }
-        return NumberFormatter.formatThousandNumberSeparator(String.valueOf(total));
+        return FormattedNumberUtils.formatThousandNumberSeparator(String.valueOf(total));
     }
 
     @Override
@@ -162,6 +162,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         private String cabFee;
         private String internetFee;
         private String roomFee;
+        private boolean isPaid;
 
         public PaymentHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,14 +189,22 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             TextView tvCabFee = dialog.findViewById(R.id.payment_history_detail_cab_fee);
             TextView tvInternetFee = dialog.findViewById(R.id.payment_history_detail_internet_fee);
             TextView tvRoomFee = dialog.findViewById(R.id.payment_history_detail_room_fee);
+            TextView tvPaidStatus = dialog.findViewById(R.id.paid_status);
+            TextView tvUnpaidStatus = dialog.findViewById(R.id.unpaid_status);
 
-            tvElectricityFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), NumberFormatter.formatThousandNumberSeparator(electricityFee)));
+            tvElectricityFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), FormattedNumberUtils.formatThousandNumberSeparator(electricityFee)));
             tvElectricityLastIndex.setText(String.format(FormattedTextUtils.getLastIndexFormattedText(context), electricityPairIndex.getLastIndex()));
             tvElectricityCurrentIndex.setText(String.format(FormattedTextUtils.getCurrentIndexFormattedText(context), electricityPairIndex.getCurrentIndex()));
-            tvWaterFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), NumberFormatter.formatThousandNumberSeparator(waterFee)));
-            tvCabFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), NumberFormatter.formatThousandNumberSeparator(cabFee)));
-            tvInternetFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), NumberFormatter.formatThousandNumberSeparator(internetFee)));
-            tvRoomFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), NumberFormatter.formatThousandNumberSeparator(roomFee)));
+            tvWaterFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), FormattedNumberUtils.formatThousandNumberSeparator(waterFee)));
+            tvCabFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), FormattedNumberUtils.formatThousandNumberSeparator(cabFee)));
+            tvInternetFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), FormattedNumberUtils.formatThousandNumberSeparator(internetFee)));
+            tvRoomFee.setText(String.format(FormattedTextUtils.getPriceWithCurrencyTextFormat(context, selectedCurrency), FormattedNumberUtils.formatThousandNumberSeparator(roomFee)));
+            if (isPaid) {
+                tvPaidStatus.setVisibility(View.VISIBLE);
+            }
+            else {
+                tvUnpaidStatus.setVisibility(View.VISIBLE);
+            }
 
             AppCompatButton btnPay = dialog.findViewById(R.id.payment_history_detail_pay);
 
